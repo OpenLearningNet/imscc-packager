@@ -1,11 +1,12 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
     build: {
         lib: {
             // Could also be a dictionary or array of multiple entry points
-            entry: resolve(__dirname, 'src/main.ts'),
+            entry: resolve(__dirname, 'src/imscc-packager.ts'),
             name: 'ImsccPackager',
             // the proper extensions will be added
             fileName: 'imscc-packager',
@@ -18,9 +19,14 @@ export default defineConfig({
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {
-                    JSZip: 'jszip',
+                    jszip: 'JSZip',
                 },
             },
         },
     },
+    plugins: [
+        dts({
+            exclude: ['src/exampleStructure.ts', 'src/demo.ts'],
+        }),
+    ],
 })

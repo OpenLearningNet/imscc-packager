@@ -1,0 +1,48 @@
+{
+  "name": "@openlearning/imscc-packager",
+  "type": "module",
+  "private": false,
+  "version": "0.0.2",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/imscc-packager.umd.cjs",
+  "module": "./dist/imscc-packager.js",
+  "exports": {
+    ".": {
+      "import": "./dist/imscc-packager.js",
+      "require": "./dist/imscc-packager.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "description": "Package JSON course structure into an IMSCC package",
+  "keywords": [
+    "imscc",
+    "ed1tech",
+    "ims",
+    "common",
+    "cartridge"
+  ],
+  "author": "David Collien",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenLearningNet/imscc-packager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpenLearningNet/imscc-packager/issues"
+  },
+  "homepage": "https://github.com/OpenLearningNet/imscc-packager#readme"
+}
