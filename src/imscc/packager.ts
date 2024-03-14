@@ -153,9 +153,6 @@ export const packageCourse = async (courseContent: Course, generatorComment: str
           resourcePage.attachments = resourceAttachments;
         }
 
-        console.log("Adding file to zip", filePath)
-        console.log("Content", resourcePage.content)
-
         zip.file(filePath, resourcePage.content);
 
         return resourcePage;
