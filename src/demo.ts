@@ -1,5 +1,5 @@
 import { COURSE } from './exampleStructure';
-import { packageCourse } from './imscc/packager';
+import { generateImscc } from './imscc-packager';
 import './style.css'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -36,10 +36,8 @@ packageButton.addEventListener('click', async () => {
   const courseStructure = parseCourseStructure();
 
   if (courseStructure) {
-    const [zip, manifest] = await packageCourse(courseStructure);
-    const zipData = await zip.generateAsync({ type: "blob" });
-    console.log(manifest);
-    const url = URL.createObjectURL(zipData);
+    const zipBlob = await generateImscc(courseStructure);
+    const url = URL.createObjectURL(zipBlob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'course.imscc';

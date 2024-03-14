@@ -3,7 +3,7 @@
 Usage:
 
 ```
-import { packageCourse } from '@openlearning/imscc-packager';
+import { generateImscc } from '@openlearning/imscc-packager';
 
 packageButton.addEventListener('click', async () => {
   const courseStructure = {
@@ -47,10 +47,8 @@ packageButton.addEventListener('click', async () => {
   };
 
   if (courseStructure) {
-    const [zip, manifest] = await packageCourse(courseStructure);
-    const zipData = await zip.generateAsync({ type: "blob" });
-    console.log(manifest);
-    const url = URL.createObjectURL(zipData);
+    const zipBlob = await generateImscc(courseStructure);
+    const url = URL.createObjectURL(zipBlob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'course.imscc';
