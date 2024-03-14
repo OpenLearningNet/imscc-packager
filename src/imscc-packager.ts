@@ -1,2 +1,2 @@
 export { packageCourse } from './imscc/packager';
-export type { Course as CourseContent, Page, Module, Attachment } from './imscc/types';
+export type { Course, Page, Module, Attachment } from './imscc/types';
