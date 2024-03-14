@@ -208,3 +208,9 @@ export const packageCourse = async (courseContent: Course, generatorComment: str
 
   return [zip, manifestFileContents];
 };
+
+export const generateImscc = async (course: Course): Promise<Blob> => {
+  const [zip, _manifest] = await packageCourse(course);
+  const zipBlob = await zip.generateAsync({ type: "blob" });
+  return zipBlob;
+}
