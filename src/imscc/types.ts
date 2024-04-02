@@ -37,5 +37,15 @@ export interface Course {
   description: string;
   language?: string; // e.g. "en-GB"
   modules: Module[];
-  pageStyles?: string;
+}
+
+export interface Config {
+  classes: {
+    [className: string]: string;
+  };
+  cssMode:
+    | "inline-replace"
+    | "inline-preserve"
+    | "stylesheet-tag"
+    | "stylesheet-link";
 }

@@ -3,7 +3,6 @@ import { Course } from "./imscc/types";
 export const COURSE: Course = {
   title: "Course Title",
   description: "Course description",
-  pageStyles: "body { background-color: #f0f0f0; }",
   modules: [
     {
       title: "Module 1",
@@ -35,7 +34,8 @@ export const COURSE: Course = {
         {
           title: "Page 3",
           type: "webcontent",
-          content: "<p>Another page in another module</p>\n",
+          content:
+            '<p>Another page in another module</p><div class="container">this is a container</div>\n',
         },
       ],
     },
