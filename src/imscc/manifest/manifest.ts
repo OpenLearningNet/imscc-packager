@@ -1,22 +1,22 @@
 import { ImsItem, ImsManifest, ImsOrganization, ImsResource } from "./types";
+import { DEFAULT_VERSION, manifest_attributes_for_version } from "./versions";
 
 const INDENT = 2;
 
 const indent = (text: string, indent: number = INDENT) => text.split("\n").map(line => " ".repeat(indent) + line).join("\n");
 
-const MANIFEST_ATTRS = ` xmlns="http://www.imsglobal.org/xsd/imsccv1p3/imscp_v1p1" xmlns:lomimscc="http://ltsc.ieee.org/xsd/imsccv1p3/LOM/manifest" xmlns:lom="http://ltsc.ieee.org/xsd/imsccv1p3/LOM/resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p3/imscp_v1p1 http://www.imsglobal.org/profile/cc/ccv1p3/ccv1p3_imscp_v1p2_v1p0.xsd http://ltsc.ieee.org/xsd/imsccv1p3/LOM/manifest http://www.imsglobal.org/profile/cc/ccv1p3/LOM/ccv1p3_lommanifest_v1p0.xsd http://ltsc.ieee.org/xsd/imsccv1p3/LOM/resource http://www.imsglobal.org/profile/cc/ccv1p3/LOM/ccv1p3_lomresource_v1p0.xsd"`;
 
 const manifestTemplate = ({ identifier, metadata, organizations, resources, generatorComment }: ImsManifest) => `<?xml version="1.0" encoding="UTF-8"?>
 <!--${generatorComment}-->
-<manifest identifier="${identifier}"${MANIFEST_ATTRS}>
+<manifest identifier="${identifier}" ${manifest_attributes_for_version(metadata.version)}>
 ${metadataTemplate(metadata)}
 ${organizationsTemplate(organizations)}
 ${resourcesTemplate(resources)}
 </manifest>`;
 
-const metadataTemplate = ({ title, language, description }: ImsManifest["metadata"]) => indent(`<metadata>
+const metadataTemplate = ({ title, language, description, version = DEFAULT_VERSION }: ImsManifest["metadata"]) => indent(`<metadata>
   <schema>IMS Common Cartridge</schema>
-  <schemaversion>1.3.0</schemaversion>
+  <schemaversion>${version}</schemaversion>
   <lomimscc:lom>
     <lomimscc:general>
       <lomimscc:title>

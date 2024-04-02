@@ -1,7 +1,10 @@
+import { Version } from "./versions";
+
 export interface ImsMetadata {
   title: string;
   description: string;
   language: string;
+  version?: Version;
 }
 
 export interface ImsOrganization {

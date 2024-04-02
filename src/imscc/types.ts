@@ -1,13 +1,17 @@
 import { ImsResourceType } from "./manifest/types";
 
-export type ResourceType = "webcontent" | "weblink" | "discussion" | "assessment";
+export type ResourceType =
+  | "webcontent"
+  | "weblink"
+  | "discussion"
+  | "assessment";
 
 export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
-  "webcontent": "webcontent",
-  "weblink": "imswl_xmlv1p1",
-  "discussion": "imsdt_xmlv1p1",
-  "assessment": "imsqti_xmlv1p2/imscc_xmlv1p1/assessment"
-}
+  webcontent: "webcontent",
+  weblink: "imswl_xmlv1p1",
+  discussion: "imsdt_xmlv1p1",
+  assessment: "imsqti_xmlv1p2/imscc_xmlv1p1/assessment",
+};
 
 export interface Attachment {
   blob?: Blob;
@@ -33,4 +37,5 @@ export interface Course {
   description: string;
   language?: string; // e.g. "en-GB"
   modules: Module[];
+  pageStyles?: string;
 }
