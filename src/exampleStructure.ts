@@ -1,4 +1,4 @@
-import { Course } from "./imscc/types";
+import { Course, Page } from "./imscc/types";
 
 export const COURSE: Course = {
   title: "Course Title",
@@ -41,3 +41,11 @@ export const COURSE: Course = {
     },
   ],
 };
+
+
+export const PAGE: Page = {
+  "title": "Example Page",
+  "type": "assessment",
+  "content": "TODO!!!",
+  "attachments": []
+}

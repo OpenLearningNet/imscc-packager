@@ -1,17 +1,18 @@
-import { ImsResourceType } from "./manifest/types";
-
 export type ResourceType =
   | "webcontent"
   | "weblink"
   | "discussion"
   | "assessment";
 
+export type ImsResourceType = "webcontent" | "imswl_xmlv1p1" | "imsdt_xmlv1p1" | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment";
+  
 export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   webcontent: "webcontent",
   weblink: "imswl_xmlv1p1",
   discussion: "imsdt_xmlv1p1",
   assessment: "imsqti_xmlv1p2/imscc_xmlv1p1/assessment",
 };
+
 
 export interface Attachment {
   blob?: Blob;
@@ -48,4 +49,19 @@ export interface Config {
     | "inline-preserve"
     | "stylesheet-tag"
     | "stylesheet-link";
+}
+
+export interface ResourceAttachment extends Attachment {
+  filePath: string;
+}
+
+export interface ResourcePage extends Page {
+  id: string;
+  filePath: string;
+  dependencies?: string[];
+  attachments?: ResourceAttachment[];
+}
+
+export interface ResourceModule extends Module {
+  pages: ResourcePage[];
 }

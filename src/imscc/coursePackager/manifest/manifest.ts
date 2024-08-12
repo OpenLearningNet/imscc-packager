@@ -1,5 +1,5 @@
+import { DEFAULT_VERSION, manifest_attributes_for_version } from "../versions";
 import { ImsItem, ImsManifest, ImsOrganization, ImsResource } from "./types";
-import { DEFAULT_VERSION, manifest_attributes_for_version } from "./versions";
 
 const INDENT = 2;
 
