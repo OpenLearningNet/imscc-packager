@@ -1,8 +1,4 @@
-import {
-  Config,
-  Course,
-  Page,
-} from "./types";
+import { Config, Course, Page } from "./types";
 
 import { Version } from "./coursePackager/versions";
 import { packageCourse } from "./coursePackager/packager";
@@ -29,9 +25,9 @@ export const generateImscc = async (
 
 export const generateContentPackage = async (
   page: Page,
-  description: string,
+  description: string
 ): Promise<Blob> => {
   const [zip, _manifest] = await packageContent(page, description);
   const zipBlob = await zip.generateAsync({ type: "blob" });
   return zipBlob;
-}
+};

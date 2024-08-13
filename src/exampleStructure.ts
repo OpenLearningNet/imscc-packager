@@ -42,10 +42,9 @@ export const COURSE: Course = {
   ],
 };
 
-
 export const PAGE: Page = {
-  "title": "Example Page",
-  "type": "assessment",
-  "content": "TODO!!!",
-  "attachments": []
-}
+  title: "Example Page",
+  type: "assessment",
+  content: "TODO!!!",
+  attachments: [],
+};

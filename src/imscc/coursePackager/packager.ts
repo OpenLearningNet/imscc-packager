@@ -1,12 +1,10 @@
-
 import JSZip from "jszip";
-import { Config, Course, ResourceAttachment, ResourceModule, ResourcePage } from "../types";
+import { Config, Course, ResourceModule, ResourcePage } from "../types";
 import { DEFAULT_VERSION, Version } from "./versions";
 import { ImsItem, ImsManifest, ImsResource } from "./manifest/types";
 import { randomId } from "../common";
 import { cssFromConfig } from "../resource/html";
-import { addPage, DOCUMENT_GENERATORS, nextFilePath, pageResource, processContent } from "../resource";
-import { CONTENT_DIR, FILEBASE_PLACEHOLDER, FILES_DIR } from "../constants";
+import { addPage, pageResource } from "../resource";
 import { manifestXml } from "./manifest/manifest";
 
 const moduleItem = (module: ResourceModule): ImsItem => ({
@@ -20,7 +18,6 @@ const moduleItem = (module: ResourceModule): ImsItem => ({
     })
   ),
 });
-
 
 export const packageCourse = async (
   courseContent: Course,
@@ -56,18 +53,20 @@ export const packageCourse = async (
 
     modules.push({
       title: module.title,
-      pages: module.pages.map((page) => addPage(
-        zip,
-        page,
-        pathPrefix,
-        {
-          content: contentFiles,
-          attachments: attachmentFiles,
-          activities: activityFiles
-        },
-        globalDependencies,
-        options
-      )),
+      pages: module.pages.map((page) =>
+        addPage(
+          zip,
+          page,
+          pathPrefix,
+          {
+            content: contentFiles,
+            attachments: attachmentFiles,
+            activities: activityFiles,
+          },
+          globalDependencies,
+          options
+        )
+      ),
     });
   });
 
@@ -80,18 +79,18 @@ export const packageCourse = async (
       acc.concat(
         page.attachments
           ? page.attachments.map((attachment): ImsResource => {
-            const id = randomId("MEDIA");
+              const id = randomId("MEDIA");
 
-            page.dependencies = page.dependencies || [];
-            page.dependencies.push(id);
-            return {
-              identifier: id,
-              type: "webcontent",
-              file: {
-                href: attachment.filePath,
-              },
-            };
-          })
+              page.dependencies = page.dependencies || [];
+              page.dependencies.push(id);
+              return {
+                identifier: id,
+                type: "webcontent",
+                file: {
+                  href: attachment.filePath,
+                },
+              };
+            })
           : []
       ),
     []

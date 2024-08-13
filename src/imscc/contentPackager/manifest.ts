@@ -1,6 +1,11 @@
 import { randomId } from "../common";
 
-export const manifestTemplate = (manifestId: string, description: string, quizId: string, assessmentMetaId: string) => {
+export const manifestTemplate = (
+  manifestId: string,
+  description: string,
+  quizId: string,
+  assessmentMetaId: string
+) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <manifest identifier="${manifestId}" xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1" xmlns:lom="http://ltsc.ieee.org/xsd/imsccv1p1/LOM/resource" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://ltsc.ieee.org/xsd/imsccv1p1/LOM/resource http://www.imsglobal.org/profile/cc/ccv1p1/LOM/ccv1p1_lomresource_v1p0.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd">
   <metadata>
@@ -25,11 +30,11 @@ export const manifestTemplate = (manifestId: string, description: string, quizId
     </resource>
   </resources>
 </manifest>
-`};
-
+`;
+};
 
 export const manifestXml = (quizId: string, description: string) => {
-  const assessmentMetaId = randomId('ASSESSMENT_META');
-  const manifestId = randomId('MANIFEST');
+  const assessmentMetaId = randomId("ASSESSMENT_META");
+  const manifestId = randomId("MANIFEST");
   return manifestTemplate(manifestId, description, quizId, assessmentMetaId);
 };

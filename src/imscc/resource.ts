@@ -5,7 +5,14 @@ import { ImsResource } from "./coursePackager/manifest/types";
 import { discussionDocument } from "./resource/discussion";
 import { htmlDocument } from "./resource/html";
 import { quizDocument } from "./resource/quiz";
-import { Config, IMS_RESOURCE_TYPES, Page, ResourceAttachment, ResourcePage, ResourceType } from "./types";
+import {
+  Config,
+  IMS_RESOURCE_TYPES,
+  Page,
+  ResourceAttachment,
+  ResourcePage,
+  ResourceType,
+} from "./types";
 
 export const DOCUMENT_GENERATORS: Record<
   ResourceType,
@@ -98,7 +105,6 @@ export const nextFilePath = (
   fileTitle: string,
   ext: string
 ): string => {
-
   let prefix = pathPrefix ? `${pathPrefix}_` : "";
 
   let filePath = `${prefix}${fileTitle}.${ext}`;
@@ -112,11 +118,18 @@ export const nextFilePath = (
   return filePath;
 };
 
-export const addPage = (zip: JSZip, page: Page, pathPrefix: string, files: {
-  content: Set<string>;
-  attachments: Set<string>;
-  activities: Set<string>;
-}, globalDependencies: ImsResource[], options: Config | undefined) => {
+export const addPage = (
+  zip: JSZip,
+  page: Page,
+  pathPrefix: string,
+  files: {
+    content: Set<string>;
+    attachments: Set<string>;
+    activities: Set<string>;
+  },
+  globalDependencies: ImsResource[],
+  options: Config | undefined
+) => {
   const idPrefix = {
     webcontent: "CONTENT",
     assessment: "ASSESSMENT",
@@ -126,11 +139,7 @@ export const addPage = (zip: JSZip, page: Page, pathPrefix: string, files: {
 
   const id = randomId(idPrefix);
 
-  const { ext, content } = DOCUMENT_GENERATORS[page.type](
-    page,
-    id,
-    options
-  );
+  const { ext, content } = DOCUMENT_GENERATORS[page.type](page, id, options);
   const fileTitle = page.title.replace(/[^a-z0-9]/gi, "-").toLowerCase();
 
   // TODO: pathPrefix should be {quiz_id} for page.type === "assessment" (ignored)
@@ -139,11 +148,11 @@ export const addPage = (zip: JSZip, page: Page, pathPrefix: string, files: {
   const filePath =
     page.type === "webcontent"
       ? `${CONTENT_DIR}/${nextFilePath(
-        files.content,
-        pathPrefix,
-        fileTitle,
-        ext
-      )}`
+          files.content,
+          pathPrefix,
+          fileTitle,
+          ext
+        )}`
       : nextFilePath(files.activities, pathPrefix, fileTitle, ext);
 
   const resourcePage: ResourcePage = {
@@ -164,8 +173,7 @@ export const addPage = (zip: JSZip, page: Page, pathPrefix: string, files: {
           throw new Error("Attachment must have a placeholder property");
         }
         const placeholder = attachment.placeholder;
-        const [attachmentTitle, attachmentExt] =
-          attachment.filename.split(".");
+        const [attachmentTitle, attachmentExt] = attachment.filename.split(".");
         const attachmentFilePath = nextFilePath(
           files.attachments,
           pathPrefix,
@@ -204,4 +212,4 @@ export const addPage = (zip: JSZip, page: Page, pathPrefix: string, files: {
   zip.file(filePath, resourcePage.content);
 
   return resourcePage;
-}
+};
