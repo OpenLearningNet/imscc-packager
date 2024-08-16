@@ -10,6 +10,15 @@ export type ImsResourceType =
   | "imsdt_xmlv1p1"
   | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment";
 
+export type MattexType = "text/html" | "text/plain";
+
+export type QtiQuestionType =
+  | "multiple_choice_question"
+  | "matching_question"
+  | "numerical_question"
+  | "multiple_answers_question"
+  | "short_answer_question";
+
 export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   webcontent: "webcontent",
   weblink: "imswl_xmlv1p1",
