@@ -153,6 +153,18 @@ export const varequal = (varequalTag: string, varequalContent: string) => {
   `;
 };
 
+export const vargte = (vargteTag: string, vargteContent: string) => {
+  return `
+    <vargte ${vargteTag}>${vargteContent}</vargte>
+  `;
+};
+
+export const varlte = (varlteTag: string, varlteContent: string) => {
+  return `
+    <varlte ${varlteTag}>${varlteContent}</varlte>
+  `;
+};
+
 export const displayfeedbackSelfClosing = (displayfeedbackTag: string) => {
   return `
     <displayfeedback ${displayfeedbackTag}/>
@@ -194,5 +206,21 @@ export const renderFib = (renderFibTag: string, renderFibContent: string) => {
     <render_fib ${renderFibTag}>
       ${renderFibContent}
     </render_fib>
+  `;
+};
+
+export const or = (orContent: string) => {
+  return `
+    <or>
+      ${orContent}
+    </or>
+  `;
+};
+
+export const and = (andContent: string) => {
+  return `
+    <and>
+      ${andContent}
+    </and>
   `;
 };
