@@ -1,10 +1,16 @@
-export const assessmentMetadataTemplate = (
-  quizTitle: string,
-  quizId: string,
-  assignmentId: string,
-  description: string,
-  pointsPossible: number
-) => {
+import { randomId } from "../common";
+export const assessmentMetadataTemplate = ({
+  quizTitle,
+  quizId,
+  description,
+  pointsPossible,
+}: {
+  quizTitle: string;
+  quizId: string;
+  description: string;
+  pointsPossible: string;
+}) => {
+  const assignmentId = randomId("ASSIGNMENT");
   return `
     <?xml version="1.0" encoding="UTF-8"?>
     <quiz identifier="${quizId}"
