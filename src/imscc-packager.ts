@@ -1,6 +1,6 @@
 export {
   packageCourse,
-  packageContent,
+  packageQuizContent,
   generateImscc,
   generateContentPackage,
 } from "./imscc/packager";
