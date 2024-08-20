@@ -71,6 +71,7 @@ export interface Page {
   content: string;
   attachments?: Attachment[];
   sections?: SectionType[];
+  description?: string;
 }
 
 export interface Module {
