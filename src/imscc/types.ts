@@ -26,6 +26,38 @@ export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   assessment: "imsqti_xmlv1p2/imscc_xmlv1p1/assessment",
 };
 
+export type SelectionType = "single" | "multiple";
+
+export type SectionType =
+  | ShortAnswerSection
+  | MultipleChoiceSection
+  | NumericalQuestionSection;
+
+export interface Choice {
+  text: string;
+  feedback?: string;
+  isCorrect?: boolean;
+}
+
+export interface Section {
+  type: QtiQuestionType;
+  question: string;
+  point?: number;
+}
+
+export interface ShortAnswerSection extends Section {
+  answers?: string[];
+}
+
+export interface MultipleChoiceSection extends Section {
+  selection: SelectionType;
+  choices?: Choice[];
+}
+
+export interface NumericalQuestionSection extends Section {
+  answers?: string[];
+}
+
 export interface Attachment {
   blob?: Blob;
   base64?: string;
@@ -38,6 +70,7 @@ export interface Page {
   type: ResourceType;
   content: string;
   attachments?: Attachment[];
+  sections?: SectionType[];
 }
 
 export interface Module {

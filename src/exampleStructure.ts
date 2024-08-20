@@ -45,6 +45,27 @@ export const COURSE: Course = {
 export const PAGE: Page = {
   title: "Example Page",
   type: "assessment",
-  content: "TODO!!!",
+  content: "",
+  sections: [
+    {
+      type: "short_answer_question",
+      question: "What is the capital of France?",
+      answers: ["Paris"],
+    },
+    {
+      type: "multiple_answers_question",
+      question: "What is the capital of France?",
+      selection: "single",
+      choices: [
+        { text: "New Delhi", feedback: "wrong", isCorrect: false },
+        { text: "Paris", feedback: "correct", isCorrect: true },
+      ],
+    },
+    {
+      type: "multiple_choice_question",
+      question: "What is the capital of France?",
+      answers: ["Paris"],
+    },
+  ],
   attachments: [],
 };
