@@ -28,21 +28,26 @@ export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
 
 export type SelectionType = "single" | "multiple";
 
-export type SectionType =
-  | ShortAnswerSection
-  | MultipleChoiceSection
-  | NumericalQuestionSection;
+// export type SectionType =
+//   | ShortAnswerSection
+//   | MultipleChoiceSection
+//   | NumericalQuestionSection;
 
 export interface Choice {
   text: string;
+  id?: string;
   feedback?: string;
   isCorrect?: boolean;
 }
 
 export interface Section {
+  title: string;
   type: QtiQuestionType;
   question: string;
   point?: number;
+  answers?: string[];
+  selection?: SelectionType;
+  choices?: Choice[];
 }
 
 export interface ShortAnswerSection extends Section {
@@ -70,7 +75,7 @@ export interface Page {
   type: ResourceType;
   content: string;
   attachments?: Attachment[];
-  sections?: SectionType[];
+  sections?: Section[];
   description?: string;
 }
 

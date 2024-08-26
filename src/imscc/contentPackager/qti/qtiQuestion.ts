@@ -1,69 +1,7 @@
-import { MattexType, QtiQuestionType } from "../../types";
-import {
-  material,
-  presentation,
-  qtiMetadata,
-  qtiMetadataField,
-  renderChoice,
-  responseLabel,
-  responseLid,
-} from "./qtiTag";
-
-function generateId() {
-  return crypto.randomUUID();
-}
-
-function generateQtiMetadataContent(questionType: string) {
-  const questionTypeXml = qtiMetadataField("question_type", questionType);
-  const pointsPossible = qtiMetadataField("points_possible", "1.0");
-  const originalAnswerIds = qtiMetadataField("original_answer_ids", "1,2,3");
-  const assessmentQuestionIdentifierRef = qtiMetadataField(
-    "assessment_question_identifierref",
-    generateId()
-  );
-  return (
-    questionTypeXml +
-    pointsPossible +
-    originalAnswerIds +
-    assessmentQuestionIdentifierRef
-  );
-}
-
-function generateQtiMetadata(questionType: QtiQuestionType) {
-  return qtiMetadata(generateQtiMetadataContent(questionType));
-}
-
-function generateItemMetadata(questionType: QtiQuestionType) {
-  return generateQtiMetadata(questionType);
-}
-
-function generateMaterial(textType: MattexType, content: string) {
-  const textTypeTag = `texttype="${textType}"`;
-  return material(textTypeTag, content);
-}
-
-function generateResponseLid(responseLidTag: string) {
-  const responseLidContent = renderChoice(
-    generateResponseLabelFromQuizAnswers("asdf")
-  );
-  return responseLid(responseLidTag, responseLidContent);
-}
-
-function generateResponseLabelFromQuizAnswers(answers: any) {
-  let result = "";
-  for (const answer of answers) {
-    const responseLabelContent = material("text/plain", answer);
-    const responseLabelTag = `ident="${generateId()}"`;
-    result += responseLabel(responseLabelTag, responseLabelContent);
-  }
-  return result;
-}
-
-function generatePresentation(materialContent: string, responseLidTag: string) {
-  const presentationContent =
-    generateMaterial("text/html", "") + generateResponseLid(responseLidTag);
-  return presentation(presentationContent);
-}
+import { Section } from "../../types";
+import { item } from "./qtiTag";
+import { generateItemMetadata } from "./section/itemMetadata";
+import { generateMultipleChoiceQuestionPresentation } from "./section/presentation";
 
 /*
     <item ident="g2018b19fd9d88ce3e6a21a5af5eeda92" title="Question">
@@ -163,16 +101,13 @@ function generatePresentation(materialContent: string, responseLidTag: string) {
         </itemfeedback>
     </item>
 */
-export function multipleChoiceQuestion({
-  itemId,
-  pointsPossible,
-  children,
-}: {
-  itemId: string;
-  pointsPossible: string;
-  children: Element;
-}) {
-  console.log(itemId, pointsPossible, children);
+export function multipleChoiceQuestion({ quiz }: { quiz: Section }) {
+  let itemMetadata = generateItemMetadata(quiz);
+  let presentation = generateMultipleChoiceQuestionPresentation(quiz);
+  let resprocessing = "";
+  let itemFeedback = "";
+  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  return item(itemContent, quiz.title);
 }
 
 /*
@@ -293,7 +228,14 @@ export function multipleChoiceQuestion({
     </resprocessing>
 </item>
 */
-export function matchingQuestion() {}
+export function matchingQuestion({ quiz }: { quiz: Section }) {
+  let itemMetadata = generateItemMetadata(quiz);
+  let presentation = "";
+  let resprocessing = "";
+  let itemFeedback = "";
+  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  return item(itemContent, quiz.title);
+}
 
 /*
 <item ident="g1072bc03221aa98d204b0f107cb857e2" title="Question">
@@ -382,8 +324,14 @@ export function matchingQuestion() {}
     </resprocessing>
 </item>
 */
-export function numericalQuestion() {}
-
+export function numericalQuestion({ quiz }: { quiz: Section }) {
+  let itemMetadata = generateItemMetadata(quiz);
+  let presentation = "";
+  let resprocessing = "";
+  let itemFeedback = "";
+  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  return item(itemContent, quiz.title);
+}
 /*
 <item ident="g40c8e21454b58a6e82cb53d534500c0f" title="Question">
     <itemmetadata>
@@ -449,8 +397,14 @@ export function numericalQuestion() {}
     </resprocessing>
 </item>
 */
-export function multipleAnswersQuestion() {}
-
+export function multipleAnswersQuestion({ quiz }: { quiz: Section }) {
+  let itemMetadata = generateItemMetadata(quiz);
+  let presentation = "";
+  let resprocessing = "";
+  let itemFeedback = "";
+  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  return item(itemContent, quiz.title);
+}
 /*
 <item ident="ge40bd95aae92d2c2c7c2e7da6711385d" title="Question">
     <itemmetadata>
@@ -497,4 +451,11 @@ export function multipleAnswersQuestion() {}
     </resprocessing>
 </item>
 */
-export function shortAnswerQuestion() {}
+export function shortAnswerQuestion({ quiz }: { quiz: Section }) {
+  let itemMetadata = generateItemMetadata(quiz);
+  let presentation = "";
+  let resprocessing = "";
+  let itemFeedback = "";
+  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  return item(itemContent, quiz.title);
+}

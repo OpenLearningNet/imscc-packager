@@ -1,3 +1,5 @@
+import { generateId } from "../../common";
+
 export const quiz = (
   quizId: string,
   quizTitle: string,
@@ -21,9 +23,9 @@ export const quiz = (
 `;
 };
 
-export const item = (itemContent: string) => {
+export const item = (itemContent: string, title: string) => {
   return `
-    <item ident="g2018b19fd9d88ce3e6a21a5af5eeda92" title="Question">
+    <item ident="${generateId()}" title="${title}">
         ${itemContent}
     </item>
   `;
@@ -136,6 +138,14 @@ export const respcondition = (
     <respcondition ${respconditionTag}>
       ${respconditionContent}
     </respcondition>
+  `;
+};
+
+export const setvar = (setvarTag: string, setvarContent: string) => {
+  return `
+    <setvar ${setvarTag}>
+      ${setvarContent}
+    </setvar>
   `;
 };
 

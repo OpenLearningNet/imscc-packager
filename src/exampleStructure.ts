@@ -48,11 +48,13 @@ export const PAGE: Page = {
   content: "",
   sections: [
     {
+      title: "Section 1",
       type: "short_answer_question",
       question: "What is the capital of France?",
       answers: ["Paris"],
     },
     {
+      title: "Section 2",
       type: "multiple_answers_question",
       question: "What is the capital of France?",
       selection: "single",
@@ -62,6 +64,7 @@ export const PAGE: Page = {
       ],
     },
     {
+      title: "Section 3",
       type: "multiple_choice_question",
       question: "What is the capital of France?",
       answers: ["Paris"],

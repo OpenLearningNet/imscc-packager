@@ -27,10 +27,7 @@ export const generateContentPackage = async (
   page: Page,
   description: string
 ): Promise<Blob> => {
-  const [zip, _manifest] = await packageQuizContent(
-    page,
-    page.description || description
-  );
+  const [zip, _manifest] = await packageQuizContent(page);
   const zipBlob = await zip.generateAsync({ type: "blob" });
   return zipBlob;
 };
