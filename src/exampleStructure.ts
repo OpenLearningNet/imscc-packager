@@ -50,22 +50,25 @@ export const PAGE: Page = {
     {
       title: "Section 1",
       type: "short_answer_question",
+      point: 5,
       question: "What is the capital of France?",
       answers: ["Paris"],
     },
     {
       title: "Section 2",
       type: "multiple_answers_question",
+      point: 10,
       question: "What is the capital of France?",
       selection: "single",
       choices: [
-        { text: "New Delhi", feedback: "wrong", isCorrect: false },
-        { text: "Paris", feedback: "correct", isCorrect: true },
+        { id: "1", text: "New Delhi", feedback: "wrong", isCorrect: false },
+        { id: "2", text: "Paris", feedback: "correct", isCorrect: true },
       ],
     },
     {
       title: "Section 3",
       type: "multiple_choice_question",
+      point: 1,
       question: "What is the capital of France?",
       answers: ["Paris"],
     },

@@ -23,7 +23,7 @@ export const quiz = (
 `;
 };
 
-export const item = (itemContent: string, title: string) => {
+export const item = (title: string, itemContent: string) => {
   return `
     <item ident="${generateId()}" title="${title}">
         ${itemContent}

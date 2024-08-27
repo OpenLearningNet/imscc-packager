@@ -43,17 +43,14 @@ export const packageQuizContent = async (
 
   zip.file(`${quizId}/assessment_meta.xml`, assessmentMetadata);
 
-  const quizzes = processQuiz({
-    quizId: quizId,
-    quizTitle: content.title,
-    quizzes: content.sections ?? [],
-    pointsPossible: pointsPossible.toString(),
-  });
-
-  zip.file(`${quizId}/${quizId}.xml`, quizzes);
-
-  const quizContent = "";
-  zip.file(`${quizId}/${quizId}.xml`, quizContent);
+  zip.file(
+    `${quizId}/${quizId}.xml`,
+    processQuiz({
+      quizId: quizId,
+      quizTitle: content.title,
+      quizzes: content.sections ?? [],
+    })
+  );
 
   return [zip, manifestFileContents];
 };
@@ -62,38 +59,36 @@ function processQuiz({
   quizId,
   quizTitle,
   quizzes,
-  pointsPossible,
 }: {
   quizId: string;
   quizTitle: string;
   quizzes: Section[];
-  pointsPossible: string;
 }) {
   return quiz(quizId, quizTitle, generateQuizContent(quizzes));
 }
 
 function generateQuizContent(quizzes: Section[]) {
-  let quizItems = "";
+  let quizContents = "";
   for (const quiz of quizzes) {
     switch (quiz.type) {
       case "multiple_choice_question":
-        quizItems += multipleChoiceQuestion({ quiz: quiz });
+        quizContents += multipleChoiceQuestion({ quiz: quiz });
         break;
       case "matching_question":
-        quizItems += matchingQuestion({ quiz: quiz });
+        quizContents += matchingQuestion({ quiz: quiz });
         break;
       case "numerical_question":
-        quizItems += numericalQuestion({ quiz: quiz });
+        quizContents += numericalQuestion({ quiz: quiz });
         break;
       case "multiple_answers_question":
-        quizItems += multipleAnswersQuestion({ quiz: quiz });
+        quizContents += multipleAnswersQuestion({ quiz: quiz });
         break;
       case "short_answer_question":
-        quizItems += shortAnswerQuestion({ quiz: quiz });
+        quizContents += shortAnswerQuestion({ quiz: quiz });
         break;
       default:
         continue;
     }
   }
-  return quizItems;
+  return quizContents;
 }
