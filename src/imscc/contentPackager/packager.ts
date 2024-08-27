@@ -3,7 +3,7 @@ import { Page, Section } from "../types";
 import { manifestXml } from "./qti/manifest";
 import { randomId } from "../common";
 import { assessmentMetadataTemplate } from "./qti/assessmentMetadata";
-import { item, quiz } from "./qti/qtiTag";
+import { quiz } from "./qti/qtiTag";
 import {
   matchingQuestion,
   multipleAnswersQuestion,

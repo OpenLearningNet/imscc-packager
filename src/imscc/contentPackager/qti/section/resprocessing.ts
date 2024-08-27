@@ -1,41 +1,36 @@
 import { Section } from "../../../types";
-import {
-  conditionvar,
-  decvarSelfClosing,
-  displayfeedbackSelfClosing,
-  outcomes,
-  respcondition,
-  resprocessing,
-  setvar,
-  varequal,
-} from "../qtiTag";
+import { respcondition } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionReprosessing(quiz: Section) {
-  let resprocessingContent = "";
-  const outcomesContent = decvarSelfClosing(
-    `maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"`
-  );
-  const outcome = outcomes(outcomesContent);
   let respconditions = "";
   for (const choice of quiz.choices || []) {
-    let choiceContent = "";
-    const respconditionTag = ``;
-    const varEqual = varequal(`action="Set" varname="SCORE"`, choice.id || "");
-    const conditionVar = conditionvar(varEqual);
-    choiceContent += conditionVar;
-
+    let respconditionTag = "";
+    let respconditionContent = "";
     if (choice.isCorrect) {
-      const setVar = setvar(`action="Set"`, "100");
-      choiceContent += setVar;
+      respconditionTag += `continue="No"`;
+      respconditionContent += `
+        <conditionvar>
+            <varequal respident="response1">${choice.id}</varequal>
+        </conditionvar>
+        <setvar action="Set" varname="SCORE">100</setvar>`;
     } else {
-      const displayFeedback = displayfeedbackSelfClosing(
-        `feedbacktype="Response" linkrefid="${choice.id || ""}_fb"`
-      );
-      choiceContent += displayFeedback;
+      respconditionTag += `continue="Yes"`;
+      respconditionContent += `
+        <conditionvar>
+            <varequal respident="response1">${choice.id}</varequal>
+        </conditionvar>
+        <displayfeedback feedbacktype="Response" linkrefid="${choice.id}_fb"/>
+      `;
     }
-    let rp = respcondition(respconditionTag, choiceContent);
+    let rp = respcondition(respconditionTag, respconditionContent);
     respconditions += rp;
   }
-  resprocessingContent += outcome + respconditions;
-  return resprocessing(resprocessingContent);
+  return `
+    <resprocessing>
+        <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+        </outcomes>
+        ${respconditions}
+    </resprocessing>
+  `;
 }
