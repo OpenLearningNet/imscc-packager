@@ -10,7 +10,7 @@ export function generateItemMetadata(quiz: Section) {
   );
   const originalAnswerIds = qtiMetadataField(
     "original_answer_ids",
-    quiz.choices?.forEach((choice) => choice.text) || ""
+    quiz.choices?.map((choice) => choice.id || generateId()).join(",") || ""
   );
   const assessmentQuestionIdentifierRef = qtiMetadataField(
     "assessment_question_identifierref",
