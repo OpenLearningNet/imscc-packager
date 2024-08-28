@@ -39,20 +39,20 @@ export function generateMultipleAnswersQuestionResprocessing(quiz: Section) {
   let correctAnswers = "";
   let wrongAnswers = "";
   for (const choice of quiz.choices || []) {
-    let respconditionTag = "";
-    let respconditionContent = "";
-    respconditionTag += `continue="Yes"`;
-    respconditionContent += `
+    const respconditionTag = `continue="Yes"`;
+    const respconditionContent = `
       <conditionvar>
           <varequal respident="response1">${choice.id}</varequal>
       </conditionvar>
       <displayfeedback feedbacktype="Response" linkrefid="${choice.id}_fb"/>
     `;
     respconditions += respcondition(respconditionTag, respconditionContent);
+
+    const varequal = `<varequal respident="response1">${choice.id}</varequal>`;
     if (choice.isCorrect) {
-      correctAnswers += `<varequal respident="response1">${choice.id}</varequal>`;
+      correctAnswers += varequal;
     } else {
-      wrongAnswers += `<varequal respident="response1">${choice.id}</varequal>`;
+      wrongAnswers += varequal;
     }
   }
 
@@ -69,6 +69,58 @@ export function generateMultipleAnswersQuestionResprocessing(quiz: Section) {
       <setvar action="Set" varname="SCORE">100</setvar>
     </respcondition>
   `;
+
+  return `
+    <resprocessing>
+        <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+        </outcomes>
+        ${respconditions}
+    </resprocessing>
+  `;
+}
+
+export function generateNumericalQuestionResprocessing(quiz: Section) {
+  let respconditions = "";
+  for (const answer of quiz.answers || []) {
+    respconditions += `
+      <respcondition continue="No">
+        <conditionvar>
+          <or>
+            <varequal respident="response1">${answer.text}</varequal>
+            <and>
+              <vargte respident="response1">${answer.text}</vargte>
+              <varlte respident="response1">${answer.text}</varlte>
+            </and>
+          </or>
+        </conditionvar>
+        <setvar action="Set" varname="SCORE">100</setvar>
+      </respcondition>
+    `;
+  }
+
+  return `
+    <resprocessing>
+        <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+        </outcomes>
+        ${respconditions}
+    </resprocessing>
+  `;
+}
+
+export function generateShortAnswerQuestionResprocessing(quiz: Section) {
+  let varequals = "";
+  for (const answer of quiz.answers || []) {
+    varequals += `<varequal respident="response1">${answer.text}</varequal>`;
+  }
+  const respconditions = `
+    <respcondition continue="No">
+      <conditionvar>
+        ${varequals}
+      </conditionvar>
+      <setvar action="Set" varname="SCORE">100</setvar>
+    </respcondition>`;
 
   return `
     <resprocessing>

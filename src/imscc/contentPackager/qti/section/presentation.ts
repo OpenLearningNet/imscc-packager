@@ -35,33 +35,47 @@ export function generateMatchingQuestionPresentation(quiz: Section) {
 }
 
 export function generateNumericalQuestionPresentation(quiz: Section) {
-  let presentationContent = "";
-  let multipleChoiceQuestionMaterial = material("text/html", quiz.question);
-  let multipleChoiceQuestionResponseLid =
-    generateMultipleChoiceQuestionResponseLabel(quiz);
-  presentationContent +=
-    multipleChoiceQuestionMaterial + multipleChoiceQuestionResponseLid;
-  return presentation(presentationContent);
-}
+  let materialMattextTag = "";
+  if (quiz.question.includes("&lt;div&gt;")) {
+    materialMattextTag += `texttype="text/html"`;
+  } else {
+    materialMattextTag += `texttype="text/plain"`;
+  }
 
-export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
-  let presentationContent = "";
-  let multipleChoiceQuestionMaterial = material("text/html", quiz.question);
-  let multipleChoiceQuestionResponseLid =
-    generateMultipleChoiceQuestionResponseLabel(quiz);
-  presentationContent +=
-    multipleChoiceQuestionMaterial + multipleChoiceQuestionResponseLid;
-  return presentation(presentationContent);
+  return `
+    <presentation>
+        <material>
+            <mattext ${materialMattextTag}>${quiz.question}</mattext>
+        </material>
+        <response_str ident="response1" rcardinality="Single">
+            <render_fib fibtype="Decimal">
+                <response_label ident="answer1"/>
+            </render_fib>
+        </response_str>
+    </presentation>
+    `;
 }
 
 export function generateShortAnswerQuestionPresentation(quiz: Section) {
-  let presentationContent = "";
-  let multipleChoiceQuestionMaterial = material("text/html", quiz.question);
-  let multipleChoiceQuestionResponseLid =
-    generateMultipleChoiceQuestionResponseLabel(quiz);
-  presentationContent +=
-    multipleChoiceQuestionMaterial + multipleChoiceQuestionResponseLid;
-  return presentation(presentationContent);
+  let materialMattextTag = "";
+  if (quiz.question.includes("&lt;div&gt;")) {
+    materialMattextTag += `texttype="text/html"`;
+  } else {
+    materialMattextTag += `texttype="text/plain"`;
+  }
+
+  return `
+      <presentation>
+          <material>
+              <mattext ${materialMattextTag}>${quiz.question}</mattext>
+          </material>
+          <response_str ident="response1" rcardinality="Single">
+            <render_fib>
+              <response_label ident="answer1" rshuffle="No"/>
+            </render_fib>
+          </response_str>
+      </presentation>
+      `;
 }
 
 function generateMultipleChoiceQuestionResponseLabel(quiz: Section) {
