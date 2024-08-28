@@ -23,7 +23,7 @@ export const generateImscc = async (
   return zipBlob;
 };
 
-export const generateContentPackage = async (
+export const generateQtiQuiz = async (
   page: Page,
   description: string
 ): Promise<Blob> => {
