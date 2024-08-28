@@ -64,10 +64,6 @@ function processQuiz({
   quizTitle: string;
   quizzes: Section[];
 }) {
-  return quiz(quizId, quizTitle, generateQuizContent(quizzes));
-}
-
-function generateQuizContent(quizzes: Section[]) {
   let quizContents = "";
   for (const quiz of quizzes) {
     switch (quiz.type) {
@@ -90,5 +86,5 @@ function generateQuizContent(quizzes: Section[]) {
         continue;
     }
   }
-  return quizContents;
+  return quiz(quizId, quizTitle, quizContents);
 }

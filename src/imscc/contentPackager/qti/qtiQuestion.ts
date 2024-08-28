@@ -1,6 +1,5 @@
 import { Section } from "../../types";
 import { item } from "./qtiTag";
-import { generateItemFeedback } from "./section/itemFeedback";
 import { generateItemMetadata } from "./section/itemMetadata";
 import {
   generateMultipleChoiceQuestionPresentation,
@@ -18,8 +17,7 @@ export function multipleChoiceQuestion({ quiz }: { quiz: Section }) {
   let itemMetadata = generateItemMetadata(quiz);
   let presentation = generateMultipleChoiceQuestionPresentation(quiz);
   let resprocessing = generateMultipleChoiceQuestionResprocessing(quiz);
-  let itemFeedback = generateItemFeedback(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  let itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
@@ -145,8 +143,7 @@ export function matchingQuestion({ quiz }: { quiz: Section }) {
   let itemMetadata = generateItemMetadata(quiz);
   let presentation = "";
   let resprocessing = "";
-  let itemFeedback = "";
-  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  let itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
@@ -162,8 +159,7 @@ export function multipleAnswersQuestion({ quiz }: { quiz: Section }) {
   let itemMetadata = generateItemMetadata(quiz);
   let presentation = generateMultipleChoiceQuestionPresentation(quiz);
   let resprocessing = generateMultipleAnswersQuestionResprocessing(quiz);
-  let itemFeedback = generateItemFeedback(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing + itemFeedback;
+  let itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 

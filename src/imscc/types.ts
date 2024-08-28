@@ -35,17 +35,12 @@ export interface Choice {
   isCorrect?: boolean;
 }
 
-export interface Answer {
-  text: string;
-  id?: string;
-}
-
 export interface Section {
   title: string;
   type: QtiQuestionType;
   question: string;
   point?: number;
-  answers?: Answer[];
+  answers?: Choice[];
   selection?: SelectionType;
   choices?: Choice[];
 }

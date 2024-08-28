@@ -19,7 +19,6 @@ export function generateMultipleChoiceQuestionResprocessing(quiz: Section) {
         <conditionvar>
             <varequal respident="response1">${choice.id}</varequal>
         </conditionvar>
-        <displayfeedback feedbacktype="Response" linkrefid="${choice.id}_fb"/>
       `;
     }
     respconditions += respcondition(respconditionTag, respconditionContent);
@@ -44,7 +43,6 @@ export function generateMultipleAnswersQuestionResprocessing(quiz: Section) {
       <conditionvar>
           <varequal respident="response1">${choice.id}</varequal>
       </conditionvar>
-      <displayfeedback feedbacktype="Response" linkrefid="${choice.id}_fb"/>
     `;
     respconditions += respcondition(respconditionTag, respconditionContent);
 
@@ -52,7 +50,10 @@ export function generateMultipleAnswersQuestionResprocessing(quiz: Section) {
     if (choice.isCorrect) {
       correctAnswers += varequal;
     } else {
-      wrongAnswers += varequal;
+      wrongAnswers += `
+        <not>
+          ${varequal}
+        </not>`;
     }
   }
 
@@ -61,9 +62,7 @@ export function generateMultipleAnswersQuestionResprocessing(quiz: Section) {
       <conditionvar>
         <and>
           ${correctAnswers}
-          <not>
-            ${wrongAnswers}
-          </not>
+          ${wrongAnswers}
         </and>
       </conditionvar>
       <setvar action="Set" varname="SCORE">100</setvar>
