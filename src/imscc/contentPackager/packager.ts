@@ -1,7 +1,7 @@
 import JSZip from "jszip";
 import { Page, Section } from "../types";
 import { manifestXml } from "./qti/manifest";
-import { randomId } from "../common";
+import { generateId } from "../common";
 import { assessmentMetadataTemplate } from "./qti/assessmentMetadata";
 import { quiz } from "./qti/qtiTag";
 import {
@@ -21,7 +21,7 @@ export const packageQuizContent = async (
     return [zip, ""];
   }
 
-  const quizId = randomId("QUIZ");
+  const quizId = generateId();
 
   const manifestFileContents = manifestXml({
     quizId: quizId,
@@ -65,32 +65,34 @@ function processQuiz({
   quizzes: Section[];
 }) {
   let id = 1;
-  for (const quiz of quizzes) {
+  for (let quiz of quizzes) {
     switch (quiz.type) {
       case "multiple_choice_question":
-        for (const choice of quiz.choices || []) {
+        for (let choice of quiz.choices || []) {
           choice.id = id.toString();
           id += 1;
         }
         break;
       case "multiple_answers_question":
-        for (const choice of quiz.choices || []) {
+        for (let choice of quiz.choices || []) {
           choice.id = id.toString();
           id += 1;
         }
         break;
       case "short_answer_question":
-        for (const answer of quiz.answers || []) {
+        for (let answer of quiz.answers || []) {
           answer.id = id.toString();
           id += 1;
         }
         break;
       case "numerical_question":
-        for (const answer of quiz.answers || []) {
+        for (let answer of quiz.answers || []) {
           answer.id = id.toString();
           id += 1;
         }
         break;
+      default:
+        continue;
     }
   }
 
