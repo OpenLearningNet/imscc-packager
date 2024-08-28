@@ -64,20 +64,50 @@ function processQuiz({
   quizTitle: string;
   quizzes: Section[];
 }) {
+  let id = 1;
+  for (const quiz of quizzes) {
+    switch (quiz.type) {
+      case "multiple_choice_question":
+        for (const choice of quiz.choices || []) {
+          choice.id = id.toString();
+          id += 1;
+        }
+        break;
+      case "multiple_answers_question":
+        for (const choice of quiz.choices || []) {
+          choice.id = id.toString();
+          id += 1;
+        }
+        break;
+      case "short_answer_question":
+        for (const answer of quiz.answers || []) {
+          answer.id = id.toString();
+          id += 1;
+        }
+        break;
+      case "numerical_question":
+        for (const answer of quiz.answers || []) {
+          answer.id = id.toString();
+          id += 1;
+        }
+        break;
+    }
+  }
+
   let quizContents = "";
   for (const quiz of quizzes) {
     switch (quiz.type) {
       case "multiple_choice_question":
         quizContents += multipleChoiceQuestion({ quiz: quiz });
         break;
+      case "multiple_answers_question":
+        quizContents += multipleAnswersQuestion({ quiz: quiz });
+        break;
       case "matching_question":
         quizContents += matchingQuestion({ quiz: quiz });
         break;
       case "numerical_question":
         quizContents += numericalQuestion({ quiz: quiz });
-        break;
-      case "multiple_answers_question":
-        quizContents += multipleAnswersQuestion({ quiz: quiz });
         break;
       case "short_answer_question":
         quizContents += shortAnswerQuestion({ quiz: quiz });

@@ -9,15 +9,15 @@ export function generateItemMetadata(quiz: Section) {
     `${quiz.point || 1}.0`
   );
   let ids = "";
-  switch (quiz.type) {
-    case "multiple_choice_question" || "multiple_answers_question":
+  if (quiz.type === "multiple_choice_question" || "multiple_answers_question") {
+    ids =
       quiz.choices?.map((choice) => choice.id || generateId()).join(",") || "";
-      break;
-    case "short_answer_question" || "numerical_question":
+  } else if (
+    quiz.type === "short_answer_question" ||
+    quiz.type === "numerical_question"
+  ) {
+    ids =
       quiz.answers?.map((answer) => answer.id || generateId()).join(",") || "";
-      break;
-    default:
-      ids = "";
   }
   const originalAnswerIds = qtiMetadataField("original_answer_ids", ids);
   const assessmentQuestionIdentifierRef = qtiMetadataField(
