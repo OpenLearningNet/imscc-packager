@@ -9,7 +9,10 @@ export function generateItemMetadata(quiz: Section) {
     `${quiz.point || 1}.0`
   );
   let ids = "";
-  if (quiz.type === "multiple_choice_question" || "multiple_answers_question") {
+  if (
+    quiz.type === "multiple_choice_question" ||
+    quiz.type === "multiple_answers_question"
+  ) {
     ids =
       quiz.choices?.map((choice) => choice.id || generateId()).join(",") || "";
   } else if (
