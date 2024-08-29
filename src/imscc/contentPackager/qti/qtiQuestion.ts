@@ -2,6 +2,7 @@ import { Section } from "../../types";
 import { item } from "./qtiTag";
 import { generateItemMetadata } from "./section/itemMetadata";
 import {
+  generateMultipleAnswersQuestionPresentation,
   generateMultipleChoiceQuestionPresentation,
   generateNumericalQuestionPresentation,
   generateShortAnswerQuestionPresentation,
@@ -157,7 +158,7 @@ export function numericalQuestion({ quiz }: { quiz: Section }) {
 
 export function multipleAnswersQuestion({ quiz }: { quiz: Section }) {
   let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateMultipleChoiceQuestionPresentation(quiz);
+  let presentation = generateMultipleAnswersQuestionPresentation(quiz);
   let resprocessing = generateMultipleAnswersQuestionResprocessing(quiz);
   let itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);

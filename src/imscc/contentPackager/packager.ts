@@ -83,8 +83,9 @@ function processQuiz({
         quizContents += multipleAnswersQuestion({ quiz: quiz });
         break;
       case "matching_question":
-        quizContents += matchingQuestion({ quiz: quiz });
-        break;
+        continue;
+      // quizContents += matchingQuestion({ quiz: quiz });
+      // break;
       case "numerical_question":
         for (let answer of quiz.answers || []) {
           answer.id = id.toString();

@@ -24,6 +24,28 @@ export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
         </presentation>`;
 }
 
+export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
+  let materialMattextTag = "";
+  if (quiz.question.includes("&lt;div&gt;")) {
+    materialMattextTag += `texttype="text/html"`;
+  } else {
+    materialMattextTag += `texttype="text/plain"`;
+  }
+
+  const responseLabels = generateMultipleChoiceQuestionResponseLabel(quiz);
+  return `
+          <presentation>
+              <material>
+                  <mattext ${materialMattextTag}>${quiz.question}</mattext>
+              </material>
+              <response_lid ident="response1" rcardinality="Multiple">
+                  <render_choice>
+                      ${responseLabels}
+                  </render_choice>
+              </response_lid>
+          </presentation>`;
+}
+
 export function generateMatchingQuestionPresentation(quiz: Section) {
   let presentationContent = "";
   let multipleChoiceQuestionMaterial = material("text/html", quiz.question);

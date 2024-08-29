@@ -43,7 +43,7 @@ export const COURSE: Course = {
 };
 
 export const PAGE: Page = {
-  title: "Example Page",
+  title: "Quiz Generated From CourseMagic",
   type: "assessment",
   content: "",
   sections: [
