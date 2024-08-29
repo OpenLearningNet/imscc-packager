@@ -65,6 +65,7 @@ function processQuiz({
   quizzes: Section[];
 }) {
   let id = 1;
+  let quizContents = "";
   for (let quiz of quizzes) {
     switch (quiz.type) {
       case "multiple_choice_question":
@@ -72,46 +73,30 @@ function processQuiz({
           choice.id = id.toString();
           id += 1;
         }
+        quizContents += multipleChoiceQuestion({ quiz: quiz });
         break;
       case "multiple_answers_question":
         for (let choice of quiz.choices || []) {
           choice.id = id.toString();
           id += 1;
         }
-        break;
-      case "short_answer_question":
-        for (let answer of quiz.answers || []) {
-          answer.id = id.toString();
-          id += 1;
-        }
-        break;
-      case "numerical_question":
-        for (let answer of quiz.answers || []) {
-          answer.id = id.toString();
-          id += 1;
-        }
-        break;
-      default:
-        continue;
-    }
-  }
-
-  let quizContents = "";
-  for (const quiz of quizzes) {
-    switch (quiz.type) {
-      case "multiple_choice_question":
-        quizContents += multipleChoiceQuestion({ quiz: quiz });
-        break;
-      case "multiple_answers_question":
         quizContents += multipleAnswersQuestion({ quiz: quiz });
         break;
       case "matching_question":
         quizContents += matchingQuestion({ quiz: quiz });
         break;
       case "numerical_question":
+        for (let answer of quiz.answers || []) {
+          answer.id = id.toString();
+          id += 1;
+        }
         quizContents += numericalQuestion({ quiz: quiz });
         break;
       case "short_answer_question":
+        for (let answer of quiz.answers || []) {
+          answer.id = id.toString();
+          id += 1;
+        }
         quizContents += shortAnswerQuestion({ quiz: quiz });
         break;
       default:
