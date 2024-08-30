@@ -141,7 +141,7 @@ export function generateMatchingQuestionResprocessing(quiz: Section) {
       <conditionvar>
         <varequal respident="response_${match.pair[0].id}">${match.pair[1].id}</varequal>
       </conditionvar>
-      <setvar action="Set" varname="SCORE">${setScoreTo}</setvar>
+      <setvar varname="SCORE" action="Add">${setScoreTo}</setvar>
     </respcondition>`;
   }
 
