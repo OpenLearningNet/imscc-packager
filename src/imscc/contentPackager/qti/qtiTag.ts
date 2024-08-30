@@ -5,22 +5,20 @@ export const quiz = (
   quizTitle: string,
   quizContent: string
 ) => {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-        <assessment ident="${quizId}" title="${quizTitle}">
-            <qtimetadata>
-            <qtimetadatafield>
-                <fieldlabel>cc_maxattempts</fieldlabel>
-                <fieldentry>1</fieldentry>
-            </qtimetadatafield>
-            </qtimetadata>
-            <section ident="root_section">
-                ${quizContent}
-            </section>
-        </assessment>
-    </questestinterop>
-`;
+  return `<?xml version="1.0" encoding="UTF-8"?>
+            <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+                <assessment ident="${quizId}" title="${quizTitle}">
+                    <qtimetadata>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_maxattempts</fieldlabel>
+                        <fieldentry>1</fieldentry>
+                    </qtimetadatafield>
+                    </qtimetadata>
+                    <section ident="root_section">
+                        ${quizContent}
+                    </section>
+                </assessment>
+            </questestinterop>`;
 };
 
 export const item = (title: string, itemContent: string) => {
