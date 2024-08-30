@@ -83,14 +83,38 @@ export const PAGE: Page = {
       title: "Section 4",
       type: "matching_question",
       point: 1,
-      question: "What is the ingredient of a spaghetti?",
-      selection: "multiple",
-      choices: [
-        { id: "1", text: "tomato", feedback: "correct", isCorrect: true },
-        { id: "2", text: "pasta", feedback: "correct", isCorrect: true },
-        { id: "3", text: "paprika", feedback: "correct", isCorrect: true },
-        { id: "4", text: "coconut", feedback: "wrong" },
-        { id: "5", text: "tamarind", feedback: "wrong" },
+      question: "Match the color with the ingredient!",
+      matches: [
+        {
+          pair: [
+            { text: "tomato", feedback: "correct" },
+            { text: "red", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "pasta", feedback: "correct" },
+            { text: "white", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "paprika", feedback: "correct" },
+            { text: "green", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "coconut", feedback: "wrong" },
+            { text: "yellow", feedback: "wrong" },
+          ],
+        },
+        {
+          pair: [
+            { text: "tamarind", feedback: "wrong" },
+            { text: "orange", feedback: "wrong" },
+          ],
+        },
       ],
     },
     {

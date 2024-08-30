@@ -1,6 +1,6 @@
 import { generateId } from "../../../common";
-import { Section } from "../../../types";
-import { material, responseLabel, presentation } from "../qtiTag";
+import { Match, Section } from "../../../types";
+import { material, responseLabel } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
   let materialMattextTag = "";
@@ -47,13 +47,20 @@ export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
 }
 
 export function generateMatchingQuestionPresentation(quiz: Section) {
-  let presentationContent = "";
-  let multipleChoiceQuestionMaterial = material("text/html", quiz.question);
-  let multipleChoiceQuestionResponseLid =
-    generateMultipleChoiceQuestionResponseLabel(quiz);
-  presentationContent +=
-    multipleChoiceQuestionMaterial + multipleChoiceQuestionResponseLid;
-  return presentation(presentationContent);
+  let materialMattextTag = "";
+  if (quiz.question.includes("&lt;div&gt;")) {
+    materialMattextTag += `texttype="text/html"`;
+  } else {
+    materialMattextTag += `texttype="text/plain"`;
+  }
+  let responseLids = generateMatchingQuestionResponseLids(quiz.matches || []);
+  return `
+    <presentation>
+      <material>
+          <mattext ${materialMattextTag}>${quiz.question}</mattext>
+      </material>
+      ${responseLids}
+    </presentation>`;
 }
 
 export function generateNumericalQuestionPresentation(quiz: Section) {
@@ -113,4 +120,37 @@ function generateMultipleChoiceQuestionResponseLabel(quiz: Section) {
     );
   }
   return responselabels;
+}
+
+function generateMatchingQuestionResponseLabel(matches: Match[]) {
+  let responselabels = "";
+  for (const match of matches || []) {
+    const responselabel = `
+      <response_label ident="${match.pair[1].id}">
+        <material>
+          <mattext>${match.pair[1].text}</mattext>
+        </material>
+      </response_label>`;
+    responselabels += responselabel;
+  }
+  return responselabels;
+}
+
+function generateMatchingQuestionResponseLids(matches: Match[]) {
+  let responseLids = "";
+  const responseLabels = generateMatchingQuestionResponseLabel(matches);
+  for (const match of matches || []) {
+    const responseLid = `
+    <response_lid ident="response_${match.pair[0].id}">
+      <material>
+        <mattext texttype="text/plain">${match.pair[0].text}</mattext>
+      </material>
+      <render_choice>
+        ${responseLabels}
+      </render_choice>
+    </response_lid>
+    `;
+    responseLids += responseLid;
+  }
+  return responseLids;
 }

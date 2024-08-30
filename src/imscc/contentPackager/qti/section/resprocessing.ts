@@ -130,3 +130,27 @@ export function generateShortAnswerQuestionResprocessing(quiz: Section) {
     </resprocessing>
   `;
 }
+
+export function generateMatchingQuestionResprocessing(quiz: Section) {
+  let respconditions = "";
+  const setScoreTo = (100 / (quiz.matches?.length || 10)).toFixed(2);
+
+  for (const match of quiz.matches || []) {
+    respconditions += `
+    <respcondition>
+      <conditionvar>
+        <varequal respident="response_${match.pair[0].id}">${match.pair[1].id}</varequal>
+      </conditionvar>
+      <setvar action="Set" varname="SCORE">${setScoreTo}</setvar>
+    </respcondition>`;
+  }
+
+  return `
+    <resprocessing>
+        <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+        </outcomes>
+        ${respconditions}
+    </resprocessing>
+  `;
+}

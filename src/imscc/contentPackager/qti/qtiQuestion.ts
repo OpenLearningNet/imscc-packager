@@ -2,12 +2,14 @@ import { Section } from "../../types";
 import { item } from "./qtiTag";
 import { generateItemMetadata } from "./section/itemMetadata";
 import {
+  generateMatchingQuestionPresentation,
   generateMultipleAnswersQuestionPresentation,
   generateMultipleChoiceQuestionPresentation,
   generateNumericalQuestionPresentation,
   generateShortAnswerQuestionPresentation,
 } from "./section/presentation";
 import {
+  generateMatchingQuestionResprocessing,
   generateMultipleAnswersQuestionResprocessing,
   generateMultipleChoiceQuestionResprocessing,
   generateNumericalQuestionResprocessing,
@@ -142,8 +144,8 @@ export function multipleChoiceQuestion({ quiz }: { quiz: Section }) {
 */
 export function matchingQuestion({ quiz }: { quiz: Section }) {
   let itemMetadata = generateItemMetadata(quiz);
-  let presentation = "";
-  let resprocessing = "";
+  let presentation = generateMatchingQuestionPresentation(quiz);
+  let resprocessing = generateMatchingQuestionResprocessing(quiz);
   let itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }

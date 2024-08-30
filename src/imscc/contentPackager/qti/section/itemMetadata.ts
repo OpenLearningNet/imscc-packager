@@ -21,6 +21,11 @@ export function generateItemMetadata(quiz: Section) {
   ) {
     ids =
       quiz.answers?.map((answer) => answer.id || generateId()).join(",") || "";
+  } else if (quiz.type === "matching_question") {
+    ids =
+      quiz.matches
+        ?.map((answer) => answer.pair[0].id || generateId())
+        .join(",") || "";
   }
   const originalAnswerIds = qtiMetadataField("original_answer_ids", ids);
   const assessmentQuestionIdentifierRef = qtiMetadataField(

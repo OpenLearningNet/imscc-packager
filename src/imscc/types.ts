@@ -28,11 +28,18 @@ export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
 
 export type SelectionType = "single" | "multiple";
 
-export interface Choice {
+export interface Answer {
   text: string;
   id?: string;
   feedback?: string;
+}
+
+export interface Choice extends Answer {
   isCorrect?: boolean;
+}
+
+export interface Match {
+  pair: [Answer, Answer];
 }
 
 export interface Section {
@@ -40,9 +47,10 @@ export interface Section {
   type: QtiQuestionType;
   question: string;
   point?: number;
-  answers?: Choice[];
+  answers?: Answer[];
   selection?: SelectionType;
   choices?: Choice[];
+  matches?: Match[];
 }
 
 export interface Attachment {
