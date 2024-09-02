@@ -37,94 +37,12 @@ export const itemMetadata = (itemMetadataContent: string) => {
   `;
 };
 
-export const qtiMetadata = (qtiMetadataFields: string) => {
-  return `
-    <qtimetadata>
-        ${qtiMetadataFields}
-    </qtimetadata>
-  `;
-};
-
 export const qtiMetadataField = (fieldLabel: string, fieldEntry: string) => {
   return `
     <qtimetadatafield>
         <fieldlabel>${fieldLabel}</fieldlabel>
         <fieldentry>${fieldEntry}</fieldentry>
     </qtimetadatafield>
-  `;
-};
-
-export const presentation = (presentationContent: string) => {
-  return `
-    <presentation>
-      ${presentationContent}
-    </presentation>
-  `;
-};
-
-export const responseLid = (
-  responseLidTag: string,
-  responseLidContent: string
-) => {
-  return `
-    <response_lid ${responseLidTag}>
-      ${responseLidContent}
-    </response_lid>
-  `;
-};
-
-export const renderChoice = (renderChoiceContent: string) => {
-  return `
-    <render_choice>
-      ${renderChoiceContent}
-    </render_choice>
-  `;
-};
-
-export const responseLabel = (
-  responseLabelTag: string,
-  responseLabelContent: string
-) => {
-  return `
-    <response_label ${responseLabelTag}>
-      ${responseLabelContent}
-    </response_label>
-  `;
-};
-
-export const responseLabelSelfClosing = (responseLabelTag: string) => {
-  return `
-    <response_label ${responseLabelTag}/>
-  `;
-};
-
-export const material = (mattextTag: string, mattextContent: string) => {
-  return `
-    <material>
-      <mattext ${mattextTag}>${mattextContent}</mattext>
-    </material>
-  `;
-};
-
-export const resprocessing = (resprocessingContent: string) => {
-  return `
-  <resprocessing>
-    ${resprocessingContent}
-  </resprocessing>
-  `;
-};
-
-export const outcomes = (outcomesContent: string) => {
-  return `
-    <outcomes>
-      ${outcomesContent}
-    </outcomes>
-  `;
-};
-
-export const decvarSelfClosing = (decvarTag: string) => {
-  return `
-    <decvar ${decvarTag}/>
   `;
 };
 
@@ -139,96 +57,21 @@ export const respcondition = (
   `;
 };
 
-export const setvar = (setvarTag: string, setvarContent: string) => {
+export const material = (mattextTag: string, mattextContent: string) => {
   return `
-    <setvar ${setvarTag}>
-      ${setvarContent}
-    </setvar>
+    <material>
+      <mattext ${mattextTag}>${mattextContent}</mattext>
+    </material>
   `;
 };
 
-export const conditionvar = (conditionvarContent: string) => {
-  return `
-    <conditionvar>
-      ${conditionvarContent}
-    </conditionvar>
-  `;
-};
-
-export const varequal = (varequalTag: string, varequalContent: string) => {
-  return `
-    <varequal ${varequalTag}>${varequalContent}</varequal>
-  `;
-};
-
-export const vargte = (vargteTag: string, vargteContent: string) => {
-  return `
-    <vargte ${vargteTag}>${vargteContent}</vargte>
-  `;
-};
-
-export const varlte = (varlteTag: string, varlteContent: string) => {
-  return `
-    <varlte ${varlteTag}>${varlteContent}</varlte>
-  `;
-};
-
-export const displayfeedbackSelfClosing = (displayfeedbackTag: string) => {
-  return `
-    <displayfeedback ${displayfeedbackTag}/>
-  `;
-};
-
-export const itemfeedback = (
-  itemfeedbackTag: string,
-  itemfeedbackContent: string
+export const responseLabel = (
+  responseLabelTag: string,
+  responseLabelContent: string
 ) => {
   return `
-    <itemfeedback ${itemfeedbackTag}>
-      ${itemfeedbackContent}
-    </itemfeedback>
-  `;
-};
-
-export const flowMat = (flowMatContent: string) => {
-  return `
-    <flow_mat>
-      ${flowMatContent}
-    </flow_mat>
-  `;
-};
-
-export const responseStr = (
-  responseStrTag: string,
-  responseStrContent: string
-) => {
-  return `
-    <response_str ${responseStrTag}>
-      ${responseStrContent}
-    </response_str>
-  `;
-};
-
-export const renderFib = (renderFibTag: string, renderFibContent: string) => {
-  return `
-    <render_fib ${renderFibTag}>
-      ${renderFibContent}
-    </render_fib>
-  `;
-};
-
-export const or = (orContent: string) => {
-  return `
-    <or>
-      ${orContent}
-    </or>
-  `;
-};
-
-export const and = (andContent: string) => {
-  return `
-    <and>
-      ${andContent}
-    </and>
+    <response_label ${responseLabelTag}>
+      ${responseLabelContent}
+    </response_label>
   `;
 };
