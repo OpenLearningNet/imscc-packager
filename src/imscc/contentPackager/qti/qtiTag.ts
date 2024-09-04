@@ -1,4 +1,4 @@
-import { generateId } from "../../common";
+import { generateStrippedUuId } from "../../common";
 
 export const quiz = (
   quizId: string,
@@ -23,7 +23,7 @@ export const quiz = (
 
 export const item = (title: string, itemContent: string) => {
   return `
-    <item ident="${generateId()}" title="${title}">
+    <item ident="${generateStrippedUuId()}" title="${title}">
         ${itemContent}
     </item>
   `;

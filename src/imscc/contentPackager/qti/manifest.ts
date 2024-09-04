@@ -1,6 +1,6 @@
-import { randomId } from "../../common";
+import { generateStrippedUuId } from "../../common";
 
-export const manifestTemplate = ({
+export const imsManifestTemplate = ({
   manifestId,
   title,
   date,
@@ -55,17 +55,17 @@ export const manifestTemplate = ({
 `;
 };
 
-export const manifestXml = ({
+export const generateImsManifest = ({
   quizId,
   title,
 }: {
   quizId: string;
   title: string;
 }) => {
-  const assessmentMetaId = randomId("ASSESSMENT_META");
-  const manifestId = randomId("MANIFEST");
+  const assessmentMetaId = generateStrippedUuId();
+  const manifestId = generateStrippedUuId();
   const date = new Date().toISOString().split("T")[0];
-  return manifestTemplate({
+  return imsManifestTemplate({
     manifestId: manifestId,
     title: title,
     date: date,

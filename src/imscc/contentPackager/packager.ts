@@ -1,7 +1,7 @@
 import JSZip from "jszip";
 import { Answer, Page, Section } from "../types";
-import { manifestXml } from "./qti/manifest";
-import { generateId } from "../common";
+import { generateImsManifest } from "./qti/manifest";
+import { generateStrippedUuId } from "../common";
 import { assessmentMetadataTemplate } from "./qti/assessmentMetadata";
 import { quiz } from "./qti/qtiTag";
 import {
@@ -21,9 +21,9 @@ export const packageQuizContent = async (
     return [zip, ""];
   }
 
-  const quizId = generateId();
+  const quizId = generateStrippedUuId();
 
-  const manifestFileContents = manifestXml({
+  const manifestFileContents = generateImsManifest({
     quizId: quizId,
     title: content.title,
   });
