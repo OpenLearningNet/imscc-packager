@@ -1,4 +1,4 @@
-import { generateStrippedUuId } from "../../../common";
+import { strippedUuid } from "../../../common";
 import { Match, Section } from "../../../types";
 import { material, responseLabel } from "../qtiTag";
 
@@ -110,7 +110,7 @@ export function generateShortAnswerQuestionPresentation(quiz: Section) {
 function generateMultipleChoiceQuestionResponseLabel(quiz: Section) {
   let responselabels = "";
   for (const choice of quiz.choices || []) {
-    const responseLabelTag = `ident="${choice.id || generateStrippedUuId()}"`;
+    const responseLabelTag = `ident="${choice.id || strippedUuid()}"`;
     const mattextTag = choice.text.includes("&lt;div&gt;")
       ? `texttype="text/html"`
       : `texttype="text/plain"`;

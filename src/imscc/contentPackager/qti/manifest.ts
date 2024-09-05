@@ -1,4 +1,4 @@
-import { generateStrippedUuId } from "../../common";
+import { strippedUuid } from "../../common";
 
 export const imsManifestTemplate = ({
   manifestId,
@@ -62,8 +62,8 @@ export const generateImsManifest = ({
   quizId: string;
   title: string;
 }) => {
-  const assessmentMetaId = generateStrippedUuId();
-  const manifestId = generateStrippedUuId();
+  const assessmentMetaId = strippedUuid();
+  const manifestId = strippedUuid();
   const date = new Date().toISOString().split("T")[0];
   return imsManifestTemplate({
     manifestId: manifestId,
