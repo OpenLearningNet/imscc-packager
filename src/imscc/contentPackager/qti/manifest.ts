@@ -21,7 +21,7 @@ export const imsManifestTemplate = ({
     <imsmd:lom>
       <imsmd:general>
         <imsmd:title>
-          <imsmd:string>QTI Quiz Export for course "${title}"</imsmd:string>
+          <imsmd:string>${title}</imsmd:string>
         </imsmd:title>
       </imsmd:general>
       <imsmd:lifeCycle>

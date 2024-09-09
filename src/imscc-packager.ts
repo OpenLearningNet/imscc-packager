@@ -2,6 +2,6 @@ export {
   packageCourse,
   packageQuizContent,
   generateImscc,
-  generateQtiQuiz,
+  generateImscp,
 } from "./imscc/packager";
 export type { Course, Page, Module, Attachment } from "./imscc/types";

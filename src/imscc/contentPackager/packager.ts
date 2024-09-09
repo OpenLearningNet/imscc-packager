@@ -12,8 +12,17 @@ import {
   shortAnswerQuestion,
 } from "./qti/qtiQuestion";
 
+export const packageWebContent = async (
+  content: Page,
+  title: string
+): Promise<[JSZip, string]> => {
+  throw new Error("Not implemented");
+  // TODO: Implement this
+};
+
 export const packageQuizContent = async (
-  content: Page
+  content: Page,
+  title: string
 ): Promise<[JSZip, string]> => {
   const zip = new JSZip();
 
@@ -25,7 +34,7 @@ export const packageQuizContent = async (
 
   const manifestFileContents = generateImsManifest({
     quizId: quizId,
-    title: content.title,
+    title: title,
   });
   zip.file("imsmanifest.xml", manifestFileContents);
 
