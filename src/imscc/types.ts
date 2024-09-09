@@ -63,9 +63,8 @@ export interface Attachment {
 export interface Page {
   title: string;
   type: ResourceType;
-  content: string;
+  content: string | Section[];
   attachments?: Attachment[];
-  sections?: Section[];
   description?: string;
 }
 
@@ -99,6 +98,7 @@ export interface ResourceAttachment extends Attachment {
 export interface ResourcePage extends Page {
   id: string;
   filePath: string;
+  content: string;
   dependencies?: string[];
   attachments?: ResourceAttachment[];
 }

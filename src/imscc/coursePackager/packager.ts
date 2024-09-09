@@ -49,7 +49,7 @@ export const packageCourse = async (
 
   courseContent.modules.forEach((module, i) => {
     const moduleNumber = i + 1;
-    const pathPrefix = `module_${moduleNumber}`;
+    const modulePrefix = `module_${moduleNumber}`;
 
     modules.push({
       title: module.title,
@@ -57,7 +57,7 @@ export const packageCourse = async (
         addPage(
           zip,
           page,
-          pathPrefix,
+          modulePrefix,
           {
             content: contentFiles,
             attachments: attachmentFiles,

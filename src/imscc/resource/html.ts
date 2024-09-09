@@ -34,7 +34,40 @@ ${page.content}
 </html>`;
 };
 
+const processHtml = (
+  content: string,
+  options?: Config
+): string => {
+  if (!options) {
+    return content;
+  }
+  
+  if (
+    options.cssMode === "stylesheet-tag" ||
+    options.cssMode === "stylesheet-link"
+  ) {
+    return content;
+  }
+
+  const classes = options.classes;
+
+  const document = new DOMParser().parseFromString(content, "text/html");
+
+  for (const [className, style] of Object.entries(classes)) {
+    const elements = document.getElementsByClassName(className);
+    for (const element of elements) {
+      if (options.cssMode === "inline-replace") {
+        element.classList.remove(className);
+      }
+      const existingStyle = element.getAttribute("style") || "";
+      element.setAttribute("style", `${existingStyle}${style}`);
+    }
+  }
+
+  return document.documentElement.outerHTML;
+};
+
 export const htmlDocument = (page: Page, id: string, options?: Config) => ({
   ext: "html",
-  content: templateHtml(page, id, options),
+  content: processHtml(templateHtml(page, id, options), options),
 });

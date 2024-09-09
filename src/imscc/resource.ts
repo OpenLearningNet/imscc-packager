@@ -4,7 +4,7 @@ import { CONTENT_DIR, FILEBASE_PLACEHOLDER, FILES_DIR } from "./constants";
 import { ImsResource } from "./coursePackager/manifest/types";
 import { discussionDocument } from "./resource/discussion";
 import { htmlDocument } from "./resource/html";
-import { quizDocument } from "./resource/quiz";
+import { quizDocument, quizMetadata } from "./resource/quiz";
 import {
   Config,
   IMS_RESOURCE_TYPES,
@@ -12,6 +12,7 @@ import {
   ResourceAttachment,
   ResourcePage,
   ResourceType,
+  Section,
 } from "./types";
 
 export const DOCUMENT_GENERATORS: Record<
@@ -65,40 +66,6 @@ export const pageResource = (page: ResourcePage): ImsResource => {
   return resource;
 };
 
-export const processContent = (
-  page: Page,
-  content: string,
-  options?: Config
-): string => {
-  if (!options || page.type !== "webcontent") {
-    return content;
-  }
-
-  if (
-    options.cssMode === "stylesheet-tag" ||
-    options.cssMode === "stylesheet-link"
-  ) {
-    return content;
-  }
-
-  const classes = options.classes;
-
-  const document = new DOMParser().parseFromString(content, "text/html");
-
-  for (const [className, style] of Object.entries(classes)) {
-    const elements = document.getElementsByClassName(className);
-    for (const element of elements) {
-      if (options.cssMode === "inline-replace") {
-        element.classList.remove(className);
-      }
-      const existingStyle = element.getAttribute("style") || "";
-      element.setAttribute("style", `${existingStyle}${style}`);
-    }
-  }
-
-  return document.documentElement.outerHTML;
-};
-
 export const nextFilePath = (
   filenames: Set<string>,
   pathPrefix: string,
@@ -118,10 +85,9 @@ export const nextFilePath = (
   return filePath;
 };
 
-export const addPage = (
-  zip: JSZip,
+const packagePageForImscc = (
   page: Page,
-  pathPrefix: string,
+  modulePrefix: string,
   files: {
     content: Set<string>;
     attachments: Set<string>;
@@ -129,7 +95,7 @@ export const addPage = (
   },
   globalDependencies: ImsResource[],
   options: Config | undefined
-) => {
+): [string, string, ResourcePage] => {
   const idPrefix = {
     webcontent: "CONTENT",
     assessment: "ASSESSMENT",
@@ -140,32 +106,67 @@ export const addPage = (
   const id = randomId(idPrefix);
 
   const { ext, content } = DOCUMENT_GENERATORS[page.type](page, id, options);
+
   const fileTitle = page.title.replace(/[^a-z0-9]/gi, "-").toLowerCase();
 
-  // TODO: pathPrefix should be {quiz_id} for page.type === "assessment" (ignored)
-  // TODO: filePath should be {quiz_id}/{quiz_id}.xml for page.type === "assessment"
-  // TODO: turn into a function
-  const filePath =
-    page.type === "webcontent"
-      ? `${CONTENT_DIR}/${nextFilePath(
+  const filePathOptions = {
+    webcontent: () => `${CONTENT_DIR}/${nextFilePath(
           files.content,
-          pathPrefix,
+          modulePrefix,
           fileTitle,
           ext
-        )}`
-      : nextFilePath(files.activities, pathPrefix, fileTitle, ext);
+        )}`,
+    
+    // filePath should be {quiz_id}/{quiz_id}.xml for page.type === "assessment"
+    assessment: () => `${id}/${id}.${ext}`,
+    weblink: () => "",
+    discussion: () => nextFilePath(files.activities, modulePrefix, fileTitle, ext),
+  }
+
+  // pathPrefix should be {quiz_id} for page.type === "assessment"
+  const pathPrefixOptions = {
+    webcontent: modulePrefix,
+    assessment: id,
+    weblink: id,
+    discussion: modulePrefix,
+  }
+
+  const pathPrefix = pathPrefixOptions[page.type];
+  const filePath = filePathOptions[page.type]();
 
   const resourcePage: ResourcePage = {
     title: page.title,
     type: page.type,
-    content: processContent(page, content, options),
+    content,
     filePath,
     id,
     dependencies: globalDependencies.map((dep) => dep.identifier),
   };
 
-  // TODO: add a {quiz_id}/assessment_meta.xml file for each quiz
+  return [pathPrefix, filePath, resourcePage];
+}
 
+const addSupportingFiles = (
+  zip: JSZip,
+  page: Page,
+  resourcePage: ResourcePage,
+  pathPrefix: string
+) => {
+  if (page.type === "assessment") {
+    const assessmentMeta = quizMetadata();
+    zip.file(`${pathPrefix}/assessment_meta.xml`, assessmentMeta);
+  }
+}
+
+const addAttachments = (
+  zip: JSZip,
+  page: Page,
+  resourcePage: ResourcePage,
+  pathPrefix: string,
+  files: {
+    attachments: Set<string>;
+  },
+) => {
   if (page.attachments) {
     const resourceAttachments = page.attachments.map(
       (attachment): ResourceAttachment => {
@@ -208,6 +209,33 @@ export const addPage = (
 
     resourcePage.attachments = resourceAttachments;
   }
+}
+
+export const addPage = (
+  zip: JSZip,
+  page: Page,
+  modulePrefix: string,
+  files: {
+    content: Set<string>;
+    attachments: Set<string>;
+    activities: Set<string>;
+  },
+  globalDependencies: ImsResource[],
+  options: Config | undefined
+) => {
+  // resourcePage is the file that will be added to the zip
+  const [pathPrefix, filePath, resourcePage] = packagePageForImscc(
+    page,
+    modulePrefix,
+    files,
+    globalDependencies,
+    options
+  );
+
+  addSupportingFiles(zip, page, resourcePage, pathPrefix);
+
+  // This may modify resourcePage.content before adding it to the zip
+  addAttachments(zip, page, resourcePage, pathPrefix, files);
 
   zip.file(filePath, resourcePage.content);
 

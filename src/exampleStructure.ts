@@ -45,8 +45,7 @@ export const COURSE: Course = {
 export const PAGE: Page = {
   title: "Quiz Generated From CourseMagic",
   type: "assessment",
-  content: "",
-  sections: [
+  content: [
     {
       title: "Section 1",
       type: "short_answer_question",

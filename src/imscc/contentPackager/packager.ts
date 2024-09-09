@@ -13,7 +13,7 @@ import {
 } from "./qti/qtiQuestion";
 
 export const packageWebContent = async (
-  content: Page,
+  page: Page,
   title: string
 ): Promise<[JSZip, string]> => {
   throw new Error("Not implemented");
@@ -21,12 +21,12 @@ export const packageWebContent = async (
 };
 
 export const packageQuizContent = async (
-  content: Page,
+  page: Page,
   title: string
 ): Promise<[JSZip, string]> => {
   const zip = new JSZip();
 
-  if (content.type != "assessment") {
+  if (page.type != "assessment") {
     return [zip, ""];
   }
 
@@ -38,15 +38,21 @@ export const packageQuizContent = async (
   });
   zip.file("imsmanifest.xml", manifestFileContents);
 
+  if (typeof page.content === "string") {
+    throw new Error("Invalid content: Must be an array of sections");
+  }
+
+  const sections = page.content;
+
   const pointsPossible =
-    content.sections?.reduce(
+    sections?.reduce(
       (prevValue, currentValue) => prevValue + (currentValue.point || 1),
       0
     ) || 1;
   const assessmentMetadata = assessmentMetadataTemplate({
-    quizTitle: content.title,
+    quizTitle: page.title,
     quizId: quizId,
-    description: content.description || "",
+    description: page.description || "",
     pointsPossible: pointsPossible.toString(),
   });
 
@@ -56,8 +62,8 @@ export const packageQuizContent = async (
     `${quizId}/${quizId}.xml`,
     processQuiz({
       quizId: quizId,
-      quizTitle: content.title,
-      quizzes: content.sections ?? [],
+      quizTitle: page.title,
+      quizzes: sections ?? [],
     })
   );
 
