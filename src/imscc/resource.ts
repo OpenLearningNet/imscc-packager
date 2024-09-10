@@ -12,7 +12,6 @@ import {
   ResourceAttachment,
   ResourcePage,
   ResourceType,
-  Section,
 } from "./types";
 
 export const DOCUMENT_GENERATORS: Record<
@@ -110,18 +109,20 @@ const packagePageForImscc = (
   const fileTitle = page.title.replace(/[^a-z0-9]/gi, "-").toLowerCase();
 
   const filePathOptions = {
-    webcontent: () => `${CONTENT_DIR}/${nextFilePath(
-          files.content,
-          modulePrefix,
-          fileTitle,
-          ext
-        )}`,
-    
+    webcontent: () =>
+      `${CONTENT_DIR}/${nextFilePath(
+        files.content,
+        modulePrefix,
+        fileTitle,
+        ext
+      )}`,
+
     // filePath should be {quiz_id}/{quiz_id}.xml for page.type === "assessment"
     assessment: () => `${id}/${id}.${ext}`,
     weblink: () => "",
-    discussion: () => nextFilePath(files.activities, modulePrefix, fileTitle, ext),
-  }
+    discussion: () =>
+      nextFilePath(files.activities, modulePrefix, fileTitle, ext),
+  };
 
   // pathPrefix should be {quiz_id} for page.type === "assessment"
   const pathPrefixOptions = {
@@ -129,7 +130,7 @@ const packagePageForImscc = (
     assessment: id,
     weblink: id,
     discussion: modulePrefix,
-  }
+  };
 
   const pathPrefix = pathPrefixOptions[page.type];
   const filePath = filePathOptions[page.type]();
@@ -144,7 +145,7 @@ const packagePageForImscc = (
   };
 
   return [pathPrefix, filePath, resourcePage];
-}
+};
 
 const addSupportingFiles = (
   zip: JSZip,
@@ -156,7 +157,7 @@ const addSupportingFiles = (
     const assessmentMeta = quizMetadata();
     zip.file(`${pathPrefix}/assessment_meta.xml`, assessmentMeta);
   }
-}
+};
 
 const addAttachments = (
   zip: JSZip,
@@ -165,7 +166,7 @@ const addAttachments = (
   pathPrefix: string,
   files: {
     attachments: Set<string>;
-  },
+  }
 ) => {
   if (page.attachments) {
     const resourceAttachments = page.attachments.map(
@@ -209,7 +210,7 @@ const addAttachments = (
 
     resourcePage.attachments = resourceAttachments;
   }
-}
+};
 
 export const addPage = (
   zip: JSZip,

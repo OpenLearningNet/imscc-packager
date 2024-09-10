@@ -10,12 +10,12 @@ export const quizDocument = (page: Page, id: string, options?: Config) => {
   return {
     ext: "xml",
     content: "TODO", // Use the _placeholder_quizid_.xml file
-  }
+  };
 };
 
-export const quizMetadata = (
+export const quizMetadata = () =>
   // TODO
-) => {
-  // TODO: add a {quiz_id}/assessment_meta.xml file for each quiz
-  return "TODO";
-}
+  {
+    // TODO: add a {quiz_id}/assessment_meta.xml file for each quiz
+    return "TODO";
+  };

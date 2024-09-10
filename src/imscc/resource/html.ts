@@ -34,14 +34,11 @@ ${page.content}
 </html>`;
 };
 
-const processHtml = (
-  content: string,
-  options?: Config
-): string => {
+const processHtml = (content: string, options?: Config): string => {
   if (!options) {
     return content;
   }
-  
+
   if (
     options.cssMode === "stylesheet-tag" ||
     options.cssMode === "stylesheet-link"
