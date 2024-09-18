@@ -7,6 +7,7 @@ import {
   generateMultipleChoiceQuestionPresentation,
   generateNumericalQuestionPresentation,
   generateShortAnswerQuestionPresentation,
+  generateTextOnlyQuestionPresentation,
 } from "./section/presentation";
 import {
   generateMatchingQuestionResprocessing,
@@ -17,41 +18,48 @@ import {
 } from "./section/resprocessing";
 
 export function multipleChoiceQuestion({ quiz }: { quiz: Section }) {
-  let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateMultipleChoiceQuestionPresentation(quiz);
-  let resprocessing = generateMultipleChoiceQuestionResprocessing(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing;
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateMultipleChoiceQuestionPresentation(quiz);
+  const resprocessing = generateMultipleChoiceQuestionResprocessing(quiz);
+  const itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
 export function matchingQuestion({ quiz }: { quiz: Section }) {
-  let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateMatchingQuestionPresentation(quiz);
-  let resprocessing = generateMatchingQuestionResprocessing(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing;
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateMatchingQuestionPresentation(quiz);
+  const resprocessing = generateMatchingQuestionResprocessing(quiz);
+  const itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
 export function numericalQuestion({ quiz }: { quiz: Section }) {
-  let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateNumericalQuestionPresentation(quiz);
-  let resprocessing = generateNumericalQuestionResprocessing(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing;
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateNumericalQuestionPresentation(quiz);
+  const resprocessing = generateNumericalQuestionResprocessing(quiz);
+  const itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
 export function multipleAnswersQuestion({ quiz }: { quiz: Section }) {
-  let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateMultipleAnswersQuestionPresentation(quiz);
-  let resprocessing = generateMultipleAnswersQuestionResprocessing(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing;
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateMultipleAnswersQuestionPresentation(quiz);
+  const resprocessing = generateMultipleAnswersQuestionResprocessing(quiz);
+  const itemContent = itemMetadata + presentation + resprocessing;
   return item(quiz.title, itemContent);
 }
 
 export function shortAnswerQuestion({ quiz }: { quiz: Section }) {
-  let itemMetadata = generateItemMetadata(quiz);
-  let presentation = generateShortAnswerQuestionPresentation(quiz);
-  let resprocessing = generateShortAnswerQuestionResprocessing(quiz);
-  let itemContent = itemMetadata + presentation + resprocessing;
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateShortAnswerQuestionPresentation(quiz);
+  const resprocessing = generateShortAnswerQuestionResprocessing(quiz);
+  const itemContent = itemMetadata + presentation + resprocessing;
+  return item(quiz.title, itemContent);
+}
+
+export function textOnlyQuestion({ quiz }: { quiz: Section }) {
+  const itemMetadata = generateItemMetadata(quiz);
+  const presentation = generateTextOnlyQuestionPresentation(quiz);
+  const itemContent = itemMetadata + presentation;
   return item(quiz.title, itemContent);
 }

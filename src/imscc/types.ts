@@ -17,7 +17,8 @@ export type QtiQuestionType =
   | "matching_question"
   | "numerical_question"
   | "multiple_answers_question"
-  | "short_answer_question";
+  | "short_answer_question"
+  | "text_only_question";
 
 export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   webcontent: "webcontent",

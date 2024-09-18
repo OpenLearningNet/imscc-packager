@@ -10,6 +10,7 @@ import {
   multipleChoiceQuestion,
   numericalQuestion,
   shortAnswerQuestion,
+  textOnlyQuestion,
 } from "./qti/qtiQuestion";
 
 export const packageWebContent = async (
@@ -131,6 +132,9 @@ function processQuiz({
           answerId += 1;
         }
         quizContents += shortAnswerQuestion({ quiz: quiz });
+        break;
+      case "text_only_question":
+        quizContents += textOnlyQuestion({ quiz: quiz });
         break;
       default:
         continue;

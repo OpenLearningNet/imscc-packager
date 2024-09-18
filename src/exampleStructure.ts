@@ -50,7 +50,7 @@ export const PAGE: Page = {
       title: "Section 1",
       type: "short_answer_question",
       point: 5,
-      question: "What is the capital of France?",
+      question: `<p><strong>What</strong> is <em>the</em> <span style="text-decoration: underline;">capital</span> of <span style="color: #e67e23;">France</span>?</p>`,
       answers: [{ text: "Paris" }],
     },
     {

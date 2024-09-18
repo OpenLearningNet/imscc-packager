@@ -1,20 +1,20 @@
-import { strippedUuid } from "../../../common";
+import { containsHTML, strippedUuid, wrapHtmlwithCData } from "../../../common";
 import { Match, Section } from "../../../types";
 import { material, responseLabel } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
-  let materialMattextTag = "";
-  if (quiz.question.includes("&lt;div&gt;")) {
-    materialMattextTag += `texttype="text/html"`;
-  } else {
-    materialMattextTag += `texttype="text/plain"`;
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
   }
 
   const responseLabels = generateMultipleChoiceQuestionResponseLabel(quiz);
   return `
         <presentation>
             <material>
-                <mattext ${materialMattextTag}>${quiz.question}</mattext>
+                <mattext ${materialMattextTag}>${question}</mattext>
             </material>
             <response_lid ident="response1" rcardinality="Single">
                 <render_choice>
@@ -25,18 +25,18 @@ export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
 }
 
 export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
-  let materialMattextTag = "";
-  if (quiz.question.includes("&lt;div&gt;")) {
-    materialMattextTag += `texttype="text/html"`;
-  } else {
-    materialMattextTag += `texttype="text/plain"`;
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
   }
 
   const responseLabels = generateMultipleChoiceQuestionResponseLabel(quiz);
   return `
           <presentation>
               <material>
-                  <mattext ${materialMattextTag}>${quiz.question}</mattext>
+                  <mattext ${materialMattextTag}>${question}</mattext>
               </material>
               <response_lid ident="response1" rcardinality="Multiple">
                   <render_choice>
@@ -47,34 +47,34 @@ export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
 }
 
 export function generateMatchingQuestionPresentation(quiz: Section) {
-  let materialMattextTag = "";
-  if (quiz.question.includes("&lt;div&gt;")) {
-    materialMattextTag += `texttype="text/html"`;
-  } else {
-    materialMattextTag += `texttype="text/plain"`;
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
   }
   let responseLids = generateMatchingQuestionResponseLids(quiz.matches || []);
   return `
     <presentation>
       <material>
-          <mattext ${materialMattextTag}>${quiz.question}</mattext>
+          <mattext ${materialMattextTag}>${question}</mattext>
       </material>
       ${responseLids}
     </presentation>`;
 }
 
 export function generateNumericalQuestionPresentation(quiz: Section) {
-  let materialMattextTag = "";
-  if (quiz.question.includes("&lt;div&gt;")) {
-    materialMattextTag += `texttype="text/html"`;
-  } else {
-    materialMattextTag += `texttype="text/plain"`;
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
   }
 
   return `
     <presentation>
         <material>
-            <mattext ${materialMattextTag}>${quiz.question}</mattext>
+            <mattext ${materialMattextTag}>${question}</mattext>
         </material>
         <response_str ident="response1" rcardinality="Single">
             <render_fib fibtype="Decimal">
@@ -86,17 +86,17 @@ export function generateNumericalQuestionPresentation(quiz: Section) {
 }
 
 export function generateShortAnswerQuestionPresentation(quiz: Section) {
-  let materialMattextTag = "";
-  if (quiz.question.includes("&lt;div&gt;")) {
-    materialMattextTag += `texttype="text/html"`;
-  } else {
-    materialMattextTag += `texttype="text/plain"`;
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
   }
 
   return `
       <presentation>
           <material>
-              <mattext ${materialMattextTag}>${quiz.question}</mattext>
+              <mattext ${materialMattextTag}>${question}</mattext>
           </material>
           <response_str ident="response1" rcardinality="Single">
             <render_fib>
@@ -107,16 +107,36 @@ export function generateShortAnswerQuestionPresentation(quiz: Section) {
       `;
 }
 
+export function generateTextOnlyQuestionPresentation(quiz: Section) {
+  let materialMattextTag = `texttype="text/plain"`;
+  let question = quiz.question;
+  if (containsHTML(quiz.question)) {
+    materialMattextTag = `texttype="text/html"`;
+    question = wrapHtmlwithCData(quiz.question);
+  }
+
+  return `
+      <presentation>
+          <material>
+              <mattext ${materialMattextTag}>${question}</mattext>
+          </material>
+      </presentation>
+      `;
+}
+
 function generateMultipleChoiceQuestionResponseLabel(quiz: Section) {
   let responselabels = "";
   for (const choice of quiz.choices || []) {
     const responseLabelTag = `ident="${choice.id || strippedUuid()}"`;
-    const mattextTag = choice.text.includes("&lt;div&gt;")
-      ? `texttype="text/html"`
-      : `texttype="text/plain"`;
+    let mattextTag = `texttype="text/plain"`;
+    let text = choice.text;
+    if (containsHTML(choice.text)) {
+      mattextTag = `texttype="text/html"`;
+      text = wrapHtmlwithCData(choice.text);
+    }
     responselabels += responseLabel(
       responseLabelTag,
-      material(mattextTag, choice.text)
+      material(mattextTag, text)
     );
   }
   return responselabels;
