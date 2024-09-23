@@ -5,12 +5,7 @@ export function strippedUuid() {
   return crypto.randomUUID().replace(/-/g, "");
 }
 
-export function containsHTML(str: string) {
-  // Regular expression to match any HTML tags
-  const regex = /<\/?[a-z][\s\S]*?>/i;
-  return regex.test(str);
-}
-
-export function wrapHtmlwithCData(html: string) {
-  return `<![CDATA[${html}]]>`;
+export function containsEscapedHTML(str: string) {
+  const escapedHtmlPattern = /&lt;|&gt;|&amp;|&quot;|&#39;/;
+  return escapedHtmlPattern.test(str);
 }

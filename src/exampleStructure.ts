@@ -43,14 +43,15 @@ export const COURSE: Course = {
 };
 
 export const PAGE: Page = {
-  title: "Quiz Generated From CourseMagic",
+  title: "Quiz Generated From CourseMagic" + new Date().toISOString(),
   type: "assessment",
   content: [
     {
       title: "Section 1",
       type: "short_answer_question",
       point: 5,
-      question: `<p><strong>What</strong> is <em>the</em> <span style="text-decoration: underline;">capital</span> of <span style="color: #e67e23;">France</span>?</p>`,
+      question:
+        '&lt;div&gt;&lt;p&gt;&lt;strong&gt;What&lt;/strong&gt; is &lt;em&gt;the&lt;/em&gt; &lt;span style="text-decoration: underline;"&gt;capital&lt;/span&gt; of &lt;span style="color: #e67e23;"&gt;France&lt;/span&gt;?&lt;/p&gt;&lt;/div&gt;',
       answers: [{ text: "Paris" }],
     },
     {
@@ -130,6 +131,11 @@ export const PAGE: Page = {
         { text: "12" },
         { text: "14" },
       ],
+    },
+    {
+      title: "Section 6",
+      type: "text_only_question",
+      question: "Answer this question with a text only",
     },
   ],
   attachments: [],

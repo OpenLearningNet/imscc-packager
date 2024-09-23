@@ -1,14 +1,13 @@
-import { containsHTML, wrapHtmlwithCData } from "../../../common";
+import { containsEscapedHTML } from "../../../common";
 import { Section } from "../../../types";
 
 export function generateItemFeedback(quiz: Section) {
   let itemFeedbacks = "";
   for (const choice of quiz.choices || []) {
     let mattextTag = `texttype="text/plain"`;
-    let feedback = choice.feedback;
-    if (containsHTML(choice.feedback || "")) {
+    let feedback = choice.feedback || "";
+    if (containsEscapedHTML(choice.feedback || "")) {
       mattextTag = `texttype="text/html"`;
-      feedback = wrapHtmlwithCData(choice.feedback || "");
     }
 
     let itemFeedback = `
