@@ -13,16 +13,16 @@ export function containsEscapedHTML(jsonField: string) {
 
   // Check if the field contains any HTML entities
   const containsEscapedHtml = escapedHtmlPattern.test(jsonField);
+  return containsEscapedHtml;
+}
 
+export function isEscapedProperly(jsonField: string) {
   // Decode the string to check if it results in HTML tags
   const decoded = he.decode(jsonField);
 
   // Create a temporary element to see if the decoded string contains valid HTML tags
   const tempElement = document.createElement("div");
   tempElement.innerHTML = decoded;
-
   const containsValidHtml = tempElement.children.length > 0;
-
-  // If it contains escaped HTML and turns into valid HTML after decoding, it's escaped HTML
-  return containsEscapedHtml && containsValidHtml;
+  return containsValidHtml;
 }
