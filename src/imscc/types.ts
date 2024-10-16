@@ -27,8 +27,6 @@ export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   assessment: "imsqti_xmlv1p2/imscc_xmlv1p1/assessment",
 };
 
-export type SelectionType = "single" | "multiple";
-
 export interface Answer {
   text: string;
   id?: string;
@@ -49,7 +47,6 @@ export interface Section {
   question: string;
   point?: number;
   answers?: Answer[];
-  selection?: SelectionType;
   choices?: Choice[];
   matches?: Match[];
 }

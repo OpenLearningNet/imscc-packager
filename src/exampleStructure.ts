@@ -59,7 +59,6 @@ export const PAGE: Page = {
       type: "multiple_choice_question",
       point: 10,
       question: "What is the capital of France?",
-      selection: "single",
       choices: [
         { text: "New Delhi", feedback: "wrong" },
         { text: "Paris", feedback: "correct", isCorrect: true },
@@ -70,7 +69,6 @@ export const PAGE: Page = {
       type: "multiple_answers_question",
       point: 1,
       question: "What is the ingredient of a spaghetti?",
-      selection: "multiple",
       choices: [
         { text: "tomato", feedback: "correct", isCorrect: true },
         { text: "pasta", feedback: "correct", isCorrect: true },
