@@ -113,20 +113,18 @@ export function generateShortAnswerQuestionResprocessing(quiz: Section) {
   for (const answer of quiz.answers || []) {
     varequals += `<varequal respident="response1">${answer.text}</varequal>`;
   }
-  const respconditions = `
-    <respcondition continue="No">
-      <conditionvar>
-        ${varequals}
-      </conditionvar>
-      <setvar action="Set" varname="SCORE">100</setvar>
-    </respcondition>`;
 
   return `
     <resprocessing>
-        <outcomes>
-            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
-        </outcomes>
-        ${respconditions}
+      <outcomes>
+          <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+      </outcomes>
+      <respcondition continue="No">
+        <conditionvar>
+          ${varequals}
+        </conditionvar>
+        <setvar action="Set" varname="SCORE">100</setvar>
+      </respcondition>
     </resprocessing>
   `;
 }
