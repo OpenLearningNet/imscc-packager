@@ -150,7 +150,7 @@ const packagePageForImscc = (
 const addSupportingFiles = (
   zip: JSZip,
   page: Page,
-  resourcePage: ResourcePage,
+  _resourcePage: ResourcePage,
   pathPrefix: string
 ) => {
   if (page.type === "assessment") {

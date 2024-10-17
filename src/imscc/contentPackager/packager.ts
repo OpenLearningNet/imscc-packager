@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import { Answer, Page, Section } from "../types";
-import { generateImsManifest } from "./qti/manifest";
+import { generateImscpManifest } from "./qti/manifest";
 import { strippedUuid } from "../common";
 import { assessmentMetadataTemplate } from "./qti/assessmentMetadata";
 import { quiz } from "./qti/qtiTag";
@@ -14,8 +14,8 @@ import {
 } from "./qti/qtiQuestion";
 
 export const packageWebContent = async (
-  page: Page,
-  title: string
+  _page: Page,
+  _title: string
 ): Promise<[JSZip, string]> => {
   throw new Error("Not implemented");
   // TODO: Implement this
@@ -33,7 +33,7 @@ export const packageQuizContent = async (
 
   const quizId = strippedUuid();
 
-  const manifestFileContents = generateImsManifest({
+  const manifestFileContents = generateImscpManifest({
     quizId: quizId,
     title: title,
   });

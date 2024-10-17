@@ -1,6 +1,6 @@
 import { strippedUuid } from "../../common";
 
-export const imsManifestTemplate = ({
+export const imscpManifestTemplate = ({
   manifestId,
   title,
   date,
@@ -55,7 +55,7 @@ export const imsManifestTemplate = ({
 `;
 };
 
-export const generateImsManifest = ({
+export const generateImscpManifest = ({
   quizId,
   title,
 }: {
@@ -65,7 +65,7 @@ export const generateImsManifest = ({
   const assessmentMetaId = strippedUuid();
   const manifestId = strippedUuid();
   const date = new Date().toISOString().split("T")[0];
-  return imsManifestTemplate({
+  return imscpManifestTemplate({
     manifestId: manifestId,
     title: title,
     date: date,

@@ -1,11 +1,11 @@
 import { Config, Page } from "../types";
 
-export const quizDocument = (page: Page, id: string, options?: Config) => {
+export const quizDocument = (page: Page, _id: string, _options?: Config) => {
   if (typeof page.content === "string") {
     throw new Error("Quiz content must be an array of Section objects");
   }
 
-  const sections = page.content;
+  // const sections = page.content;
 
   return {
     ext: "xml",
