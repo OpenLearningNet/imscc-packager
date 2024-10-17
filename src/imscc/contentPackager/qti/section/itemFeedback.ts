@@ -1,4 +1,4 @@
-import { containsEscapedHTML } from "../../../common";
+import { isEscapedHtml } from "../../../common";
 import { Section } from "../../../types";
 
 export function generateItemFeedback(quiz: Section) {
@@ -6,7 +6,7 @@ export function generateItemFeedback(quiz: Section) {
   for (const choice of quiz.choices || []) {
     let mattextTag = `texttype="text/plain"`;
     let feedback = choice.feedback || "";
-    if (containsEscapedHTML(choice.feedback || "")) {
+    if (isEscapedHtml(choice.feedback || "")) {
       mattextTag = `texttype="text/html"`;
     }
 

@@ -1,11 +1,11 @@
-import { containsEscapedHTML, strippedUuid } from "../../../common";
+import { isEscapedHtml, strippedUuid } from "../../../common";
 import { Match, Section } from "../../../types";
 import { material, responseLabel } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
 
@@ -26,7 +26,7 @@ export function generateMultipleChoiceQuestionPresentation(quiz: Section) {
 export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
 
@@ -47,7 +47,7 @@ export function generateMultipleAnswersQuestionPresentation(quiz: Section) {
 export function generateMatchingQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
   let responseLids = generateMatchingQuestionResponseLids(quiz.matches || []);
@@ -63,7 +63,7 @@ export function generateMatchingQuestionPresentation(quiz: Section) {
 export function generateNumericalQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
 
@@ -84,7 +84,7 @@ export function generateNumericalQuestionPresentation(quiz: Section) {
 export function generateShortAnswerQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
 
@@ -105,7 +105,7 @@ export function generateShortAnswerQuestionPresentation(quiz: Section) {
 export function generateTextOnlyQuestionPresentation(quiz: Section) {
   let materialMattextTag = `texttype="text/plain"`;
   let question = quiz.question;
-  if (containsEscapedHTML(quiz.question)) {
+  if (isEscapedHtml(quiz.question)) {
     materialMattextTag = `texttype="text/html"`;
   }
 
@@ -124,7 +124,7 @@ function generateMultipleChoiceQuestionResponseLabel(quiz: Section) {
     const responseLabelTag = `ident="${choice.id || strippedUuid()}"`;
     let mattextTag = `texttype="text/plain"`;
     let text = choice.text;
-    if (containsEscapedHTML(choice.text)) {
+    if (isEscapedHtml(choice.text)) {
       mattextTag = `texttype="text/html"`;
     }
     responselabels += responseLabel(
