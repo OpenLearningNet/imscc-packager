@@ -43,8 +43,98 @@ export const COURSE: Course = {
 };
 
 export const PAGE: Page = {
-  title: "Example Page",
+  title: "Quiz Generated From CourseMagic" + new Date().toISOString(),
   type: "assessment",
-  content: "TODO!!!",
+  content: [
+    {
+      title: "Section 1",
+      type: "short_answer_question",
+      point: 5,
+      question:
+        '&lt;div&gt;&lt;p&gt;&lt;strong&gt;What&lt;/strong&gt; is &lt;em&gt;the&lt;/em&gt; &lt;span style="text-decoration: underline;"&gt;capital&lt;/span&gt; of &lt;span style="color: #e67e23;"&gt;France&lt;/span&gt;?&lt;/p&gt;&lt;/div&gt;',
+      answers: [{ text: "Paris" }],
+    },
+    {
+      title: "Section 2",
+      type: "multiple_choice_question",
+      point: 10,
+      question: "What is the capital of France?",
+      choices: [
+        { text: "New Delhi", feedback: "wrong" },
+        { text: "Paris", feedback: "correct", isCorrect: true },
+      ],
+    },
+    {
+      title: "Section 3",
+      type: "multiple_answers_question",
+      point: 1,
+      question: "What is the ingredient of a spaghetti?",
+      choices: [
+        { text: "tomato", feedback: "correct", isCorrect: true },
+        { text: "pasta", feedback: "correct", isCorrect: true },
+        { text: "paprika", feedback: "correct", isCorrect: true },
+        { text: "coconut", feedback: "wrong" },
+        { text: "tamarind", feedback: "wrong" },
+      ],
+    },
+    {
+      title: "Section 4",
+      type: "matching_question",
+      point: 1,
+      question: "Match the color with the ingredient!",
+      matches: [
+        {
+          pair: [
+            { text: "tomato", feedback: "correct" },
+            { text: "red", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "pasta", feedback: "correct" },
+            { text: "white", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "paprika", feedback: "correct" },
+            { text: "green", feedback: "correct" },
+          ],
+        },
+        {
+          pair: [
+            { text: "coconut", feedback: "wrong" },
+            { text: "yellow", feedback: "wrong" },
+          ],
+        },
+        {
+          pair: [
+            { text: "tamarind", feedback: "wrong" },
+            { text: "orange", feedback: "wrong" },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Section 5",
+      type: "numerical_question",
+      point: 5,
+      question: "Name an even number that is less than 15?",
+      answers: [
+        { text: "2" },
+        { text: "4" },
+        { text: "6" },
+        { text: "8" },
+        { text: "10" },
+        { text: "12" },
+        { text: "14" },
+      ],
+    },
+    {
+      title: "Section 6",
+      type: "text_only_question",
+      question: "Answer this question with a text only",
+    },
+  ],
   attachments: [],
 };

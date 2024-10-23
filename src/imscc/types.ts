@@ -10,12 +10,46 @@ export type ImsResourceType =
   | "imsdt_xmlv1p1"
   | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment";
 
+export type MattexType = "text/html" | "text/plain";
+
+export type QtiQuestionType =
+  | "multiple_choice_question"
+  | "matching_question"
+  | "numerical_question"
+  | "multiple_answers_question"
+  | "short_answer_question"
+  | "text_only_question";
+
 export const IMS_RESOURCE_TYPES: { [ResourceType: string]: ImsResourceType } = {
   webcontent: "webcontent",
   weblink: "imswl_xmlv1p1",
   discussion: "imsdt_xmlv1p1",
   assessment: "imsqti_xmlv1p2/imscc_xmlv1p1/assessment",
 };
+
+export interface Answer {
+  text: string;
+  id?: string;
+  feedback?: string;
+}
+
+export interface Choice extends Answer {
+  isCorrect?: boolean;
+}
+
+export interface Match {
+  pair: [Answer, Answer];
+}
+
+export interface Section {
+  title: string;
+  type: QtiQuestionType;
+  question: string;
+  point?: number;
+  answers?: Answer[];
+  choices?: Choice[];
+  matches?: Match[];
+}
 
 export interface Attachment {
   blob?: Blob;
@@ -27,8 +61,9 @@ export interface Attachment {
 export interface Page {
   title: string;
   type: ResourceType;
-  content: string;
+  content: string | Section[];
   attachments?: Attachment[];
+  description?: string;
 }
 
 export interface Module {
@@ -61,6 +96,7 @@ export interface ResourceAttachment extends Attachment {
 export interface ResourcePage extends Page {
   id: string;
   filePath: string;
+  content: string;
   dependencies?: string[];
   attachments?: ResourceAttachment[];
 }

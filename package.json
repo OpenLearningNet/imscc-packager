@@ -21,10 +21,12 @@
     "release": "rm -rf ./dist && npm run build && npm publish --access public"
   },
   "devDependencies": {
+    "@types/he": "^1.2.3",
     "typescript": "^5.2.2",
     "vite": "^5.1.6"
   },
   "dependencies": {
+    "he": "^1.2.0",
     "jszip": "^3.10.1",
     "vite-plugin-dts": "^4.0.2"
   },
