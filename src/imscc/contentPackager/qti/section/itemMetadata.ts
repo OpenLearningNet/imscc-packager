@@ -6,7 +6,7 @@ export function generateItemMetadata(quiz: Section) {
   const questionTypeXml = qtiMetadataField("question_type", quiz.type);
   const pointsPossible = qtiMetadataField(
     "points_possible",
-    `${quiz.point || 1}.0`
+    quiz.point === 0 ? '0' : `${quiz.point ?? 1}.0`
   );
   let ids = "";
   if (

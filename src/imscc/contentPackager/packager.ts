@@ -47,7 +47,7 @@ export const packageQuizContent = async (
 
   const pointsPossible =
     sections?.reduce(
-      (prevValue, currentValue) => prevValue + (currentValue.point || 1),
+      (prevValue, currentValue) => prevValue + (currentValue.point ?? 1),
       0
     ) || 1;
   const assessmentMetadata = assessmentMetadataTemplate({
