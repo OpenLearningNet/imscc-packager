@@ -1,4 +1,4 @@
-import { Section } from "../../types";
+import { Section } from "../../../types";
 import { item } from "./qtiTag";
 import { generateItemMetadata } from "./section/itemMetadata";
 import {

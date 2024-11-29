@@ -1,4 +1,4 @@
-import { strippedUuid } from "../../common";
+import { strippedUuid } from "../../../common";
 
 export const quiz = (
   quizId: string,

@@ -1,4 +1,4 @@
-import { randomId } from "../../common";
+import { randomId } from "../../../common";
 export const assessmentMetadataTemplate = ({
   quizTitle,
   quizId,
