@@ -1,33 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <question_categories>
-  <question_category id="43">
-    <name>top</name>
-    <contextid>605</contextid>
-    <contextlevel>70</contextlevel>
-    <contextinstanceid>436</contextinstanceid>
-    <info></info>
-    <infoformat>0</infoformat>
-    <stamp>openlearning.moodlecloud.com+241125065041+4MAWNv</stamp>
-    <parent>0</parent>
-    <sortorder>0</sortorder>
-    <idnumber>$@NULL@$</idnumber>
-    <question_bank_entries>
-    </question_bank_entries>
-  </question_category>
-  <question_category id="44">
-    <name>Default for Judul Quiz Sectio</name>
-    <contextid>605</contextid>
-    <contextlevel>70</contextlevel>
-    <contextinstanceid>436</contextinstanceid>
-    <info>The default category for questions shared in context 'Judul Quiz Sectio'.</info>
-    <infoformat>0</infoformat>
-    <stamp>openlearning.moodlecloud.com+241125065041+GQBBJz</stamp>
-    <parent>43</parent>
-    <sortorder>999</sortorder>
-    <idnumber>$@NULL@$</idnumber>
-    <question_bank_entries>
-    </question_bank_entries>
-  </question_category>
   <question_category id="45">
     <name>top</name>
     <contextid>603</contextid>
@@ -504,6 +476,34 @@
           </question_versions>
         </question_version>
       </question_bank_entry>
+    </question_bank_entries>
+  </question_category>
+  <question_category id="55">
+    <name>Default for Judul Quiz Sectio</name>
+    <contextid>611</contextid>
+    <contextlevel>70</contextlevel>
+    <contextinstanceid>441</contextinstanceid>
+    <info>The default category for questions shared in context 'Judul Quiz Sectio'.</info>
+    <infoformat>0</infoformat>
+    <stamp>openlearning.moodlecloud.com+241125065041+GQBBJz</stamp>
+    <parent>56</parent>
+    <sortorder>999</sortorder>
+    <idnumber>$@NULL@$</idnumber>
+    <question_bank_entries>
+    </question_bank_entries>
+  </question_category>
+  <question_category id="56">
+    <name>top</name>
+    <contextid>611</contextid>
+    <contextlevel>70</contextlevel>
+    <contextinstanceid>441</contextinstanceid>
+    <info></info>
+    <infoformat>0</infoformat>
+    <stamp>openlearning.moodlecloud.com+241202093713+tulqH5</stamp>
+    <parent>0</parent>
+    <sortorder>0</sortorder>
+    <idnumber>$@NULL@$</idnumber>
+    <question_bank_entries>
     </question_bank_entries>
   </question_category>
 </question_categories>

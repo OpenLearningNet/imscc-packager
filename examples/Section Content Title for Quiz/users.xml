@@ -11,7 +11,7 @@
     <address></address>
     <city></city>
     <country>AU</country>
-    <lastip>103.154.138.4</lastip>
+    <lastip>180.244.167.192</lastip>
     <picture>0</picture>
     <description></description>
     <descriptionformat>1</descriptionformat>
@@ -30,9 +30,9 @@
     <theme></theme>
     <timezone>Australia/Sydney</timezone>
     <firstaccess>1715054959</firstaccess>
-    <lastaccess>1732762716</lastaccess>
-    <lastlogin>1732527118</lastlogin>
-    <currentlogin>1732761777</currentlogin>
+    <lastaccess>1733133518</lastaccess>
+    <lastlogin>1732848335</lastlogin>
+    <currentlogin>1733119645</currentlogin>
     <mailformat>1</mailformat>
     <maildigest>0</maildigest>
     <maildisplay>0</maildisplay>
@@ -262,6 +262,10 @@
         <name>qtype_essay_maxbytes</name>
         <value>0</value>
       </preference>
+      <preference id="2">
+        <name>login_failed_count_since_success</name>
+        <value>0</value>
+      </preference>
       <preference id="73">
         <name>qtype_multianswer_penalty</name>
         <value>0.3333333</value>
@@ -269,6 +273,14 @@
       <preference id="74">
         <name>question_bank_qperpage</name>
         <value>100</value>
+      </preference>
+      <preference id="91">
+        <name>coursesectionspreferences_37</name>
+        <value>{"contentcollapsed":[]}</value>
+      </preference>
+      <preference id="9">
+        <name>email_send_count</name>
+        <value>31</value>
       </preference>
       <preference id="78">
         <name>coursesectionspreferences_14</name>
@@ -285,14 +297,6 @@
       <preference id="83">
         <name>coursesectionspreferences_23</name>
         <value>{"indexcollapsed":[]}</value>
-      </preference>
-      <preference id="2">
-        <name>login_failed_count_since_success</name>
-        <value>0</value>
-      </preference>
-      <preference id="9">
-        <name>email_send_count</name>
-        <value>30</value>
       </preference>
       <preference id="41">
         <name>filemanager_recentviewmode</name>

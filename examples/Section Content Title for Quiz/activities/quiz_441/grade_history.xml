@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grade_history>
   <grade_grades>
-    <grade_grade id="14">
+    <grade_grade id="30">
       <action>1</action>
-      <oldid>7</oldid>
-      <source>system</source>
+      <oldid>12</oldid>
+      <source>restore</source>
       <loggeduser>2</loggeduser>
-      <itemid>81</itemid>
+      <itemid>87</itemid>
       <userid>2</userid>
       <rawgrade>$@NULL@$</rawgrade>
-      <rawgrademax>100.00000</rawgrademax>
+      <rawgrademax>10.00000</rawgrademax>
       <rawgrademin>0.00000</rawgrademin>
-      <rawscaleid>$@NULL@$</rawscaleid>
-      <usermodified>$@NULL@$</usermodified>
+      <rawscaleid>0</rawscaleid>
+      <usermodified>2</usermodified>
+      <finalgrade>$@NULL@$</finalgrade>
+      <hidden>0</hidden>
+      <locked>0</locked>
+      <locktime>0</locktime>
+      <exported>0</exported>
+      <overridden>0</overridden>
+      <excluded>0</excluded>
+      <feedback>$@NULL@$</feedback>
+      <feedbackformat>2</feedbackformat>
+      <information>$@NULL@$</information>
+      <informationformat>2</informationformat>
+      <timemodified>1733132233</timemodified>
+    </grade_grade>
+    <grade_grade id="31">
+      <action>1</action>
+      <oldid>12</oldid>
+      <source>mod/quiz</source>
+      <loggeduser>2</loggeduser>
+      <itemid>87</itemid>
+      <userid>2</userid>
+      <rawgrade>$@NULL@$</rawgrade>
+      <rawgrademax>10.00000</rawgrademax>
+      <rawgrademin>0.00000</rawgrademin>
+      <rawscaleid>0</rawscaleid>
+      <usermodified>2</usermodified>
       <finalgrade>$@NULL@$</finalgrade>
       <hidden>0</hidden>
       <locked>0</locked>
@@ -26,18 +51,18 @@
       <informationformat>2</informationformat>
       <timemodified>1732517433</timemodified>
     </grade_grade>
-    <grade_grade id="32">
-      <action>1</action>
-      <oldid>0</oldid>
-      <source>system</source>
+    <grade_grade id="33">
+      <action>2</action>
+      <oldid>12</oldid>
+      <source>mod/quiz</source>
       <loggeduser>2</loggeduser>
-      <itemid>81</itemid>
+      <itemid>87</itemid>
       <userid>2</userid>
       <rawgrade>$@NULL@$</rawgrade>
-      <rawgrademax>100.00000</rawgrademax>
+      <rawgrademax>10.00000</rawgrademax>
       <rawgrademin>0.00000</rawgrademin>
-      <rawscaleid>0</rawscaleid>
-      <usermodified>$@NULL@$</usermodified>
+      <rawscaleid>$@NULL@$</rawscaleid>
+      <usermodified>2</usermodified>
       <finalgrade>$@NULL@$</finalgrade>
       <hidden>0</hidden>
       <locked>0</locked>
@@ -49,7 +74,7 @@
       <feedbackformat>2</feedbackformat>
       <information>$@NULL@$</information>
       <informationformat>2</informationformat>
-      <timemodified>1732517433</timemodified>
+      <timemodified>1733132248</timemodified>
     </grade_grade>
   </grade_grades>
 </grade_history>
