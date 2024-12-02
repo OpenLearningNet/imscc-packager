@@ -26,15 +26,15 @@ export function moodleBackup({
             <mnet_remoteusers>0</mnet_remoteusers>
             <include_files>1</include_files>
             <include_file_references_to_external_content>0</include_file_references_to_external_content>
-            <original_wwwroot>https://openlearning.moodlecloud.com</original_wwwroot>
-            <original_site_identifier_hash>5dd3a01ea044079402084df8461aabd6</original_site_identifier_hash>
-            <original_course_id>36</original_course_id>
-            <original_course_format>topics</original_course_format>
-            <original_course_fullname>Coursemagic Quiz Import</original_course_fullname>
-            <original_course_shortname>CQI</original_course_shortname>
-            <original_course_startdate>1732539600</original_course_startdate>
-            <original_course_enddate>1764075600</original_course_enddate>
-            <original_course_contextid>603</original_course_contextid>
+            <original_wwwroot></original_wwwroot>
+            <original_site_identifier_hash></original_site_identifier_hash>
+            <original_course_id>1</original_course_id>
+            <original_course_format></original_course_format>
+            <original_course_fullname></original_course_fullname>
+            <original_course_shortname></original_course_shortname>
+            <original_course_startdate></original_course_startdate>
+            <original_course_enddate></original_course_enddate>
+            <original_course_contextid>1</original_course_contextid>
             <original_system_contextid>1</original_system_contextid>
             <details>
             <detail backup_id="${strippedUuid()}">
