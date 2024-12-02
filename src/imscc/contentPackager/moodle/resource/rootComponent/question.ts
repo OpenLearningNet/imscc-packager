@@ -1,4 +1,4 @@
-export function question() {
+export function questions() {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
 <question_categories>
@@ -509,4 +509,103 @@ export function question() {
     </question_bank_entries>
   </question_category>
 </question_categories>`;
+}
+
+export function questionBankEntry() {
+  return `      
+      <question_bank_entry id="54">
+        <questioncategoryid>46</questioncategoryid>
+        <idnumber>$@NULL@$</idnumber>
+        <ownerid>2</ownerid>
+        <question_version>
+          <question_versions id="62">
+            <version>1</version>
+            <status>ready</status>
+            <questions>
+              <question id="62">
+                <parent>0</parent>
+                <name>Judul quiz multiple choice</name>
+                <questiontext>&lt;p&gt;pertanyaan multiple choice&lt;/p&gt;</questiontext>
+                <questiontextformat>1</questiontextformat>
+                <generalfeedback></generalfeedback>
+                <generalfeedbackformat>1</generalfeedbackformat>
+                <defaultmark>1.0000000</defaultmark>
+                <penalty>0.3333333</penalty>
+                <qtype>multichoice</qtype>
+                <length>1</length>
+                <stamp>openlearning.moodlecloud.com+241125065323+WCmXkc</stamp>
+                <timecreated>1732517603</timecreated>
+                <timemodified>1732517603</timemodified>
+                <createdby>2</createdby>
+                <modifiedby>2</modifiedby>
+                <plugin_qtype_multichoice_question>
+                  <answers>
+                    <answer id="94">
+                      <answertext>&lt;p&gt;choice 1&lt;/p&gt;</answertext>
+                      <answerformat>1</answerformat>
+                      <fraction>1.0000000</fraction>
+                      <feedback>&lt;p&gt;feedback choice 1&lt;/p&gt;</feedback>
+                      <feedbackformat>1</feedbackformat>
+                    </answer>
+                    <answer id="95">
+                      <answertext>&lt;p&gt;choice 2&lt;/p&gt;</answertext>
+                      <answerformat>1</answerformat>
+                      <fraction>0.0000000</fraction>
+                      <feedback>&lt;p&gt;choice 2 feedback&lt;/p&gt;</feedback>
+                      <feedbackformat>1</feedbackformat>
+                    </answer>
+                    <answer id="96">
+                      <answertext>&lt;p&gt;choice 3&lt;/p&gt;</answertext>
+                      <answerformat>1</answerformat>
+                      <fraction>0.0000000</fraction>
+                      <feedback>&lt;p&gt;choice 3 feedback&lt;/p&gt;</feedback>
+                      <feedbackformat>1</feedbackformat>
+                    </answer>
+                    <answer id="97">
+                      <answertext>&lt;p&gt;choice 4&lt;/p&gt;</answertext>
+                      <answerformat>1</answerformat>
+                      <fraction>0.0000000</fraction>
+                      <feedback>&lt;p&gt;choice 4 feedback&lt;/p&gt;</feedback>
+                      <feedbackformat>1</feedbackformat>
+                    </answer>
+                    <answer id="98">
+                      <answertext>&lt;p&gt;choice 5&lt;/p&gt;</answertext>
+                      <answerformat>1</answerformat>
+                      <fraction>0.0000000</fraction>
+                      <feedback>&lt;p&gt;choice 5 feedback&lt;/p&gt;</feedback>
+                      <feedbackformat>1</feedbackformat>
+                    </answer>
+                  </answers>
+                  <multichoice id="17">
+                    <layout>0</layout>
+                    <single>1</single>
+                    <shuffleanswers>1</shuffleanswers>
+                    <correctfeedback>&lt;p&gt;Your answer is correct.&lt;/p&gt;</correctfeedback>
+                    <correctfeedbackformat>1</correctfeedbackformat>
+                    <partiallycorrectfeedback>&lt;p&gt;Your answer is partially correct.&lt;/p&gt;</partiallycorrectfeedback>
+                    <partiallycorrectfeedbackformat>1</partiallycorrectfeedbackformat>
+                    <incorrectfeedback>&lt;p&gt;Your answer is incorrect.&lt;/p&gt;</incorrectfeedback>
+                    <incorrectfeedbackformat>1</incorrectfeedbackformat>
+                    <answernumbering>ABCD</answernumbering>
+                    <shownumcorrect>1</shownumcorrect>
+                    <showstandardinstruction>0</showstandardinstruction>
+                  </multichoice>
+                </plugin_qtype_multichoice_question>
+                <plugin_qbank_comment_question>
+                  <comments>
+                  </comments>
+                </plugin_qbank_comment_question>
+                <plugin_qbank_customfields_question>
+                  <customfields>
+                  </customfields>
+                </plugin_qbank_customfields_question>
+                <question_hints>
+                </question_hints>
+                <tags>
+                </tags>
+              </question>
+            </questions>
+          </question_versions>
+        </question_version>
+      </question_bank_entry>`;
 }

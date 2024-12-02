@@ -1,14 +1,28 @@
-export function moodleBackup() {
+import { strippedUuid } from "../../../../common";
+
+export function moodleBackup({
+  backUpName,
+  quizActivityFolderName,
+  moduleId,
+  sectionId,
+  activitTitle,
+}: {
+  backUpName: string;
+  quizActivityFolderName: string;
+  moduleId: string;
+  sectionId: string;
+  activitTitle: string;
+}) {
   return `
     <?xml version="1.0" encoding="UTF-8"?>
     <moodle_backup>
         <information>
-            <name>Section Content Title for Quiz.mbz</name>
+            <name>${backUpName}.mbz</name>
             <moodle_version>2024100700</moodle_version>
             <moodle_release>4.5 (Build: 20241007)</moodle_release>
             <backup_version>2024100700</backup_version>
             <backup_release>4.5</backup_release>
-            <backup_date>1732762750</backup_date>
+            <backup_date>${Math.floor(Date.now() / 1000)}</backup_date>
             <mnet_remoteusers>0</mnet_remoteusers>
             <include_files>1</include_files>
             <include_file_references_to_external_content>0</include_file_references_to_external_content>
@@ -23,7 +37,7 @@ export function moodleBackup() {
             <original_course_contextid>603</original_course_contextid>
             <original_system_contextid>1</original_system_contextid>
             <details>
-            <detail backup_id="873bd76d62d2aa4282b8677508fa2a43">
+            <detail backup_id="${strippedUuid()}">
                 <type>activity</type>
                 <format>moodle2</format>
                 <interactive>1</interactive>
@@ -35,11 +49,11 @@ export function moodleBackup() {
             <contents>
             <activities>
                 <activity>
-                <moduleid>436</moduleid>
-                <sectionid>222</sectionid>
+                <moduleid>${moduleId}</moduleid>
+                <sectionid>${sectionId}</sectionid>
                 <modulename>quiz</modulename>
-                <title>Section Content Title for Quiz</title>
-                <directory>activities/quiz_436</directory>
+                <title>${activitTitle}</title>
+                <directory>activities/quiz_${moduleId}</directory>
                 <insubsection></insubsection>
                 </activity>
             </activities>
@@ -48,7 +62,7 @@ export function moodleBackup() {
             <setting>
                 <level>root</level>
                 <name>filename</name>
-                <value>Section Content Title for Quiz.mbz</value>
+                <value>${activitTitle}.mbz</value>
             </setting>
             <setting>
                 <level>root</level>
@@ -152,14 +166,14 @@ export function moodleBackup() {
             </setting>
             <setting>
                 <level>activity</level>
-                <activity>quiz_436</activity>
-                <name>quiz_436_included</name>
+                <activity>${quizActivityFolderName}</activity>
+                <name>${quizActivityFolderName + "_included"}</name>
                 <value>1</value>
             </setting>
             <setting>
                 <level>activity</level>
-                <activity>quiz_436</activity>
-                <name>quiz_436_userinfo</name>
+                <activity>${quizActivityFolderName}</activity>
+                <name>${quizActivityFolderName + "_userinfo"}</name>
                 <value>1</value>
             </setting>
             </settings>
