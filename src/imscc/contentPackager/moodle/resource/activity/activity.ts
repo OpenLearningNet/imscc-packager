@@ -75,7 +75,7 @@ export function gradeHistory() {
     </grade_history>`;
 }
 
-export function grades() {
+export function activityGradebook() {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
 <activity_gradebook>
