@@ -28,6 +28,7 @@
   "dependencies": {
     "he": "^1.2.0",
     "jszip": "^3.10.1",
+    "tar": "^7.4.3",
     "vite-plugin-dts": "^4.0.2"
   },
   "description": "Package JSON course structure into an IMSCC package",
