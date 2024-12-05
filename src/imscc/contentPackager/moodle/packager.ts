@@ -1,52 +1,48 @@
-import JSZip from "jszip";
-import { strippedUuid } from "../../common";
 import { Page } from "../../types";
-import { assessmentMetadataTemplate } from "../canvas/resource/assessmentMetadata";
-import { generateImscpManifest } from "../canvas/resource/manifest";
-import { processCanvasQuiz } from "../canvas/quiz";
+import * as tar from "tar";
+import { writeFile, rm, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+import { Blob } from "buffer";
+import { buffer } from "node:stream/consumers";
 
 export async function packageMoodleQuiz(
   page: Page,
   title: string
-): Promise<[JSZip, string]> {
-  const zip = new JSZip();
+): Promise<[Buffer, string]> {
+  const quizId = "mocked-uuid"; // Example ID
+  const tempDir = join(process.cwd(), "temp", quizId);
 
-  const quizId = strippedUuid();
+  await mkdir(tempDir, { recursive: true });
 
-  const manifestFileContents = generateImscpManifest({
-    quizId: quizId,
-    title: title,
-  });
-  zip.file("imsmanifest.xml", manifestFileContents);
+  // Generate sample files
+  const manifestContent = "<manifest>Sample Manifest</manifest>";
+  await writeFile(join(tempDir, "imsmanifest.xml"), manifestContent);
 
-  if (typeof page.content === "string") {
-    throw new Error("Invalid content: Must be an array of sections");
-  }
+  const quizContent = "<quiz>Sample Quiz Content</quiz>";
+  await writeFile(join(tempDir, `${quizId}/quiz.xml`), quizContent);
 
-  const sections = page.content;
-
-  const pointsPossible =
-    sections?.reduce(
-      (prevValue, currentValue) => prevValue + (currentValue.point ?? 1),
-      0
-    ) || 1;
-  const assessmentMetadata = assessmentMetadataTemplate({
-    quizTitle: page.title,
-    quizId: quizId,
-    description: page.description || "",
-    pointsPossible: pointsPossible.toString(),
-  });
-
-  zip.file(`${quizId}/assessment_meta.xml`, assessmentMetadata);
-
-  zip.file(
-    `${quizId}/${quizId}.xml`,
-    processCanvasQuiz({
-      quizId: quizId,
-      quizTitle: page.title,
-      quizzes: sections ?? [],
-    })
+  // Generate tar.gz (tgz) archive
+  const tarStream = tar.c(
+    {
+      gzip: true,
+      cwd: tempDir,
+      prefix: quizId,
+    },
+    ["imsmanifest.xml", `${quizId}/quiz.xml`]
   );
 
-  return [zip, manifestFileContents];
+  const tgzBuffer = await buffer(tarStream);
+
+  // Clean up temporary directory
+  await rm(tempDir, { recursive: true, force: true });
+
+  return [tgzBuffer, ""];
 }
+
+const generateAssessmentPackage = async (
+  page: Page,
+  packageTitle: string
+): Promise<Blob> => {
+  const [tgzBuffer, _ayam] = await packageMoodleQuiz(page, packageTitle);
+  return new Blob([tgzBuffer], { type: "application/gzip" });
+};
