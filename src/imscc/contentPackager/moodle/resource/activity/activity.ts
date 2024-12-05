@@ -108,12 +108,18 @@ export function logstore() {
 </logstores>`;
 }
 
-export function module() {
+export function module({
+  moduleId,
+  sectionId,
+}: {
+  moduleId: string;
+  sectionId: string;
+}) {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
-<module id="436" version="2024100700">
+<module id="${moduleId}" version="2024100700">
   <modulename>quiz</modulename>
-  <sectionid>222</sectionid>
+  <sectionid>${sectionId}</sectionid>
   <sectionnumber>1</sectionnumber>
   <idnumber></idnumber>
   <added>1732517432</added>
