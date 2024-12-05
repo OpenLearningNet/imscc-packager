@@ -1,4 +1,4 @@
-import { strippedUuid } from "../../../../common";
+import { getRandomNumberInRange, strippedUuid } from "../../../../common";
 
 export function moodleBackup({
   backUpName,
@@ -28,14 +28,23 @@ export function moodleBackup({
             <include_file_references_to_external_content>0</include_file_references_to_external_content>
             <original_wwwroot></original_wwwroot>
             <original_site_identifier_hash></original_site_identifier_hash>
-            <original_course_id>1</original_course_id>
+            <original_course_id>${getRandomNumberInRange(
+              1000,
+              9999
+            )}</original_course_id>
             <original_course_format></original_course_format>
             <original_course_fullname></original_course_fullname>
             <original_course_shortname></original_course_shortname>
             <original_course_startdate></original_course_startdate>
             <original_course_enddate></original_course_enddate>
-            <original_course_contextid>1</original_course_contextid>
-            <original_system_contextid>1</original_system_contextid>
+            <original_course_contextid>${getRandomNumberInRange(
+              1000,
+              9999
+            )}</original_course_contextid>
+            <original_system_contextid>${getRandomNumberInRange(
+              1000,
+              9999
+            )}</original_system_contextid>
             <details>
             <detail backup_id="${strippedUuid()}">
                 <type>activity</type>
