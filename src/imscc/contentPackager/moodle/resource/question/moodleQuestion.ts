@@ -1,7 +1,115 @@
+import { getRandomNumberInRange } from "../../../../common";
 import { Section } from "../../../../types";
-import { multipleChoiceQuestionAnswer } from "./moodleAnswer";
+import {
+  multipleChoiceQuestionAnswer,
+  matchingQuestionAnswer,
+  numericalQuestionAnswer,
+  multipleAnswersQuestionAnswer,
+  shortAnswerQuestionAnswer,
+} from "./moodleAnswer";
 
-export function multipleChoiceQuestion({
+export function sectionsToMoodleQuestionBank({
+  sections,
+  questionCategoryId,
+  questionCategoryName,
+  questionCateogryInfo,
+}: {
+  sections: Section[];
+  questionCategoryId: string;
+  questionCategoryName: string;
+  questionCateogryInfo: string;
+}) {
+  let questionBankEntries = "";
+  for (let section of sections) {
+    switch (section.type) {
+      case "multiple_choice_question":
+        questionBankEntries += multipleChoiceQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questioncategoryid: questionCategoryId,
+        });
+        break;
+      case "multiple_answers_question":
+        questionBankEntries += multipleAnswersQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+        });
+        break;
+      case "matching_question":
+        questionBankEntries += matchingQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+        });
+        break;
+      case "numerical_question":
+        questionBankEntries += numericalQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+        });
+        break;
+      case "short_answer_question":
+        questionBankEntries += shortAnswerQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+        });
+        break;
+      case "text_only_question":
+        questionBankEntries += textOnlyQuestion({
+          quiz: section,
+          questionVersionId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+        });
+        break;
+      default:
+        continue;
+    }
+  }
+  return moodleQuestionBank({
+    questionCategoryId: questionCategoryId,
+    questionCategoryName: questionCategoryName,
+    questionCateogryInfo: questionCateogryInfo,
+    questionBankEntries: questionBankEntries,
+  });
+}
+
+function moodleQuestionBank({
+  questionCategoryId,
+  questionCategoryName,
+  questionCateogryInfo,
+  questionBankEntries,
+}: {
+  questionCategoryId: string;
+  questionCategoryName: string;
+  questionCateogryInfo: string;
+  questionBankEntries: string;
+}) {
+  return `
+<?xml version="1.0" encoding="UTF-8"?>
+<question_categories>
+  <question_category id="${questionCategoryId}">
+    <name>${questionCategoryName}</name>
+    <contextid>${getRandomNumberInRange(1000, 9999)}</contextid>
+    <contextlevel>50</contextlevel>
+    <contextinstanceid>36</contextinstanceid>
+    <info>${questionCateogryInfo}</info>
+    <infoformat>0</infoformat>
+    <stamp>coursemagic</stamp>
+    <parent>45</parent>
+    <sortorder>999</sortorder>
+    <idnumber>$@NULL@$</idnumber>
+    <question_bank_entries>
+    ${questionBankEntries}
+    </question_bank_entries>
+  </question_category>
+</question_categories>`;
+}
+
+function multipleChoiceQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -29,11 +137,13 @@ export function multipleChoiceQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>1.0000000</defaultmark>
+                <defaultmark>${quiz.point
+                  ?.toPrecision(7)
+                  .toString()}</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>multichoice</qtype>
                 <length>1</length>
-                <stamp></stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>
@@ -80,7 +190,7 @@ export function multipleChoiceQuestion({
     </question_bank_entry>`;
 }
 
-export function matchingQuestion({
+function matchingQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -101,16 +211,18 @@ export function matchingQuestion({
             <questions>
               <question id="${questionVersionId}">
                 <parent>0</parent>
-                <name>Judul matching question</name>
+                <name>${quiz.title}</name>
                 <questiontext>${quiz.question}</questiontext>
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>1.0000000</defaultmark>
+                <defaultmark>${quiz.point
+                  ?.toPrecision(7)
+                  .toString()}</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>match</qtype>
                 <length>1</length>
-                <stamp></stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>
@@ -127,21 +239,10 @@ export function matchingQuestion({
                     <shownumcorrect>1</shownumcorrect>
                   </matchoptions>
                   <matches>
-                    <match id="19">
-                      <questiontext>&lt;p&gt;isi pertanyaan 1&lt;/p&gt;</questiontext>
-                      <questiontextformat>1</questiontextformat>
-                      <answertext>jawaban pertanyaan 1</answertext>
-                    </match>
-                    <match id="20">
-                      <questiontext>&lt;p&gt;isi pertanyaan 2&lt;/p&gt;</questiontext>
-                      <questiontextformat>1</questiontextformat>
-                      <answertext>jawaban pertanyaan 2</answertext>
-                    </match>
-                    <match id="21">
-                      <questiontext>&lt;p&gt;isi pertanyaan 3&lt;/p&gt;</questiontext>
-                      <questiontextformat>1</questiontextformat>
-                      <answertext>jawaban pertanyaan 3</answertext>
-                    </match>
+                  ${matchingQuestionAnswer({
+                    matches: quiz.matches,
+                    answerId: "1",
+                  })}
                   </matches>
                 </plugin_qtype_match_question>
                 <plugin_qbank_comment_question>
@@ -163,7 +264,7 @@ export function matchingQuestion({
       </question_bank_entry>`;
 }
 
-export function numericalQuestion({
+function numericalQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -184,43 +285,28 @@ export function numericalQuestion({
             <questions>
               <question id="${questionVersionId}">
                 <parent>0</parent>
-                <name>judul Numerical question</name>
+                <name>${quiz.title}</name>
                 <questiontext>${quiz.question}</questiontext>
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>1.0000000</defaultmark>
+                <defaultmark>${quiz.point
+                  ?.toPrecision(7)
+                  .toString()}</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>numerical</qtype>
                 <length>1</length>
-                <stamp>openlearning.moodlecloud.com+241128025017+C3VJ0k</stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>
                 <modifiedby>2</modifiedby>
                 <plugin_qtype_numerical_question>
                   <answers>
-                    <answer id="106">
-                      <answertext>11</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>1.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 1&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="107">
-                      <answertext>1</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 2&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="108">
-                      <answertext>10</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 3&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
+                  ${numericalQuestionAnswer({
+                    answers: quiz.answers,
+                    answerId: "1",
+                  })}
                   </answers>
                   <numerical_units>
                   </numerical_units>
@@ -266,7 +352,7 @@ export function numericalQuestion({
       </question_bank_entry>`;
 }
 
-export function multipleAnswersQuestion({
+function multipleAnswersQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -292,52 +378,24 @@ export function multipleAnswersQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>1.0000000</defaultmark>
+                <defaultmark>${quiz.point
+                  ?.toPrecision(7)
+                  .toString()}</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>multichoice</qtype>
                 <length>1</length>
-                <stamp>openlearning.moodlecloud.com+241205044613+4Cmdjq</stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>
                 <modifiedby>2</modifiedby>
                 <plugin_qtype_multichoice_question>
                   <answers>
-                    <answer id="154">
-                      <answertext>&lt;p&gt;Choice 1&lt;/p&gt;</answertext>
-                      <answerformat>1</answerformat>
-                      <fraction>0.3333333</fraction>
-                      <feedback></feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="155">
-                      <answertext>&lt;p&gt;Choice 2&lt;/p&gt;</answertext>
-                      <answerformat>1</answerformat>
-                      <fraction>0.3333333</fraction>
-                      <feedback></feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="156">
-                      <answertext>&lt;p&gt;Choice 3&lt;/p&gt;</answertext>
-                      <answerformat>1</answerformat>
-                      <fraction>0.3333333</fraction>
-                      <feedback></feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="157">
-                      <answertext>&lt;p&gt;Choice 4&lt;/p&gt;</answertext>
-                      <answerformat>1</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback></feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="158">
-                      <answertext>&lt;p&gt;Choice 5&lt;/p&gt;</answertext>
-                      <answerformat>1</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback></feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
+                  ${multipleAnswersQuestionAnswer({
+                    choices: quiz.choices,
+                    answerId: "1",
+                    score: quiz.point ?? 1,
+                  })}
                   </answers>
                   <multichoice id="21">
                     <layout>0</layout>
@@ -373,7 +431,7 @@ export function multipleAnswersQuestion({
       </question_bank_entry>`;
 }
 
-export function shortAnswerQuestion({
+function shortAnswerQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -399,38 +457,23 @@ export function shortAnswerQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>1.0000000</defaultmark>
+                <defaultmark>${quiz.point
+                  ?.toPrecision(7)
+                  .toString()}</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>shortanswer</qtype>
                 <length>1</length>
-                <stamp>openlearning.moodlecloud.com+241128024637+69TTEL</stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>
                 <modifiedby>2</modifiedby>
                 <plugin_qtype_shortanswer_question>
                   <answers>
-                    <answer id="103">
-                      <answertext>Answer 1</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>1.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 1&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="104">
-                      <answertext>Answer 2</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 2&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
-                    <answer id="105">
-                      <answertext>Answer 3</answertext>
-                      <answerformat>0</answerformat>
-                      <fraction>0.0000000</fraction>
-                      <feedback>&lt;p&gt;Feedback Answer 3&lt;/p&gt;</feedback>
-                      <feedbackformat>1</feedbackformat>
-                    </answer>
+                  ${shortAnswerQuestionAnswer({
+                    answers: quiz.answers,
+                    answerId: "1",
+                  })}
                   </answers>
                   <shortanswer id="5">
                     <usecase>0</usecase>
@@ -455,7 +498,7 @@ export function shortAnswerQuestion({
       </question_bank_entry>`;
 }
 
-export function textOnlyQuestion({
+function textOnlyQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
@@ -476,7 +519,7 @@ export function textOnlyQuestion({
             <questions>
               <question id="${questionVersionId}">
                 <parent>0</parent>
-                <name>Text Only Question</name>
+                <name>${quiz.title}</name>
                 <questiontext>${quiz.question}</questiontext>
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
@@ -485,7 +528,7 @@ export function textOnlyQuestion({
                 <penalty>0.0000000</penalty>
                 <qtype>description</qtype>
                 <length>0</length>
-                <stamp></stamp>
+                <stamp>coursemagic</stamp>
                 <timecreated>${Math.floor(Date.now() / 1000)}</timecreated>
                 <timemodified>${Math.floor(Date.now() / 1000)}</timemodified>
                 <createdby>2</createdby>

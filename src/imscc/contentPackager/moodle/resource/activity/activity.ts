@@ -21,7 +21,7 @@ export function competencies() {
     </course_module_competencies>`;
 }
 
-export function completion() {
+export function activityCompletion() {
   return `
     <?xml version="1.0" encoding="UTF-8"?>
     <completions>
@@ -61,32 +61,23 @@ export function activityGradebook() {
 </activity_gradebook>`;
 }
 
-export function inforef() {
+export function inforef({
+  questionCategoryId,
+}: {
+  questionCategoryId: string;
+}) {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
 <inforef>
   <userref>
     <user>
-      <id>2</id>
     </user>
   </userref>
   <grade_itemref>
-    <grade_item>
-      <id>82</id>
-    </grade_item>
   </grade_itemref>
   <question_categoryref>
     <question_category>
-      <id>43</id>
-    </question_category>
-    <question_category>
-      <id>44</id>
-    </question_category>
-    <question_category>
-      <id>45</id>
-    </question_category>
-    <question_category>
-      <id>46</id>
+      <id>${questionCategoryId}</id>
     </question_category>
   </question_categoryref>
 </inforef>`;
@@ -144,7 +135,7 @@ export function module({
 </module>`;
 }
 
-export function roles() {
+export function activityRoles() {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
 <roles>

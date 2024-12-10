@@ -1,11 +1,67 @@
-export function quiz({
-  activityId,
+/*
+quizId is the activityId
+
+<question_instance id="46">
+<quizid>15</quizid>
+<slot>1</slot>
+<page>1</page>
+<displaynumber>$@NULL@$</displaynumber>
+<requireprevious>0</requireprevious>
+<maxmark>1.0000000</maxmark>
+<quizgradeitemid>$@NULL@$</quizgradeitemid>
+<question_reference id="46">
+  <usingcontextid>611</usingcontextid>
+  <component>mod_quiz</component>
+  <questionarea>slot</questionarea>
+  <questionbankentryid>54</questionbankentryid>
+  <version>$@NULL@$</version>
+</question_reference>
+</question_instance>
+*/
+
+function questionInstance({
+  questionId,
+  quizId,
+  sequence,
+  quizContextId,
+  questionBankEntryId,
+}: {
+  questionId: string;
+  quizId: string;
+  sequence: string;
+  quizContextId: string;
+  questionBankEntryId: string;
+}) {
+  return `
+<question_instance id="${questionId}">
+  <quizid>${quizId}</quizid>
+  <slot>${sequence}</slot>
+  <page>${sequence}</page>
+  <displaynumber>$@NULL@$</displaynumber>
+  <requireprevious>0</requireprevious>
+  <maxmark>1.0000000</maxmark>
+  <quizgradeitemid>$@NULL@$</quizgradeitemid>
+  <question_reference id="${questionId}">
+    <usingcontextid>${quizContextId}</usingcontextid>
+    <component>mod_quiz</component>
+    <questionarea>slot</questionarea>
+    <questionbankentryid>${questionBankEntryId}</questionbankentryid>
+    <version>$@NULL@$</version>
+  </question_reference>
+</question_instance>
+  `;
+}
+
+function quiz({
+  quizId,
+  moduleId,
   activityTitle,
   questionInstances,
   quizContextId,
   totalScore,
 }: {
-  activityId: string;
+  quizId: string;
+  moduleId: string;
   activityTitle: string;
   questionInstances: string;
   quizContextId: string;
@@ -13,8 +69,8 @@ export function quiz({
 }) {
   return `
 <?xml version="1.0" encoding="UTF-8"?>
-<activity id="${activityId}" moduleid="441" modulename="quiz" contextid="${quizContextId}">
-  <quiz id="${activityId}">
+<activity id="${quizId}" moduleid="${moduleId}" modulename="quiz" contextid="${quizContextId}">
+  <quiz id="${quizId}">
     <name>${activityTitle}</name>
     <intro></intro>
     <introformat>1</introformat>
@@ -61,19 +117,13 @@ export function quiz({
     </quiz_grade_items>
     ${questionInstances}
     <sections>
-      <section id="${activityId}">
+      <section id="${quizId}">
         <firstslot>1</firstslot>
         <heading></heading>
         <shufflequestions>0</shufflequestions>
       </section>
     </sections>
     <feedbacks>
-      <feedback id="17">
-        <feedbacktext></feedbacktext>
-        <feedbacktextformat>1</feedbacktextformat>
-        <mingrade>0.00000</mingrade>
-        <maxgrade>11.00000</maxgrade>
-      </feedback>
     </feedbacks>
     <overrides>
     </overrides>
@@ -85,56 +135,37 @@ export function quiz({
 </activity>`;
 }
 
-/*
-quizId is the activityId
-
-<question_instance id="46">
-<quizid>15</quizid>
-<slot>1</slot>
-<page>1</page>
-<displaynumber>$@NULL@$</displaynumber>
-<requireprevious>0</requireprevious>
-<maxmark>1.0000000</maxmark>
-<quizgradeitemid>$@NULL@$</quizgradeitemid>
-<question_reference id="46">
-  <usingcontextid>611</usingcontextid>
-  <component>mod_quiz</component>
-  <questionarea>slot</questionarea>
-  <questionbankentryid>54</questionbankentryid>
-  <version>$@NULL@$</version>
-</question_reference>
-</question_instance>
-*/
-
-export function quizQuestionInstance({
-  questionId,
-  quizId,
+export function generateMoodleQuiz({
+  questionBankEntryIds,
+  moduleId,
   quizContextId,
-  questionBankEntryId,
-  sequence,
+  quizId,
+  activityTitle,
+  totalScore,
 }: {
-  questionId: string;
-  quizId: string;
+  questionBankEntryIds: string[];
+  moduleId: string;
   quizContextId: string;
-  questionBankEntryId: string;
-  sequence: string;
+  quizId: string;
+  activityTitle: string;
+  totalScore: string;
 }) {
-  return `
-<question_instance id="${questionId}">
-  <quizid>${quizId}</quizid>
-  <slot>${sequence}</slot>
-  <page>${sequence}</page>
-  <displaynumber>$@NULL@$</displaynumber>
-  <requireprevious>0</requireprevious>
-  <maxmark>1.0000000</maxmark>
-  <quizgradeitemid>$@NULL@$</quizgradeitemid>
-  <question_reference id="${questionId}">
-    <usingcontextid>${quizContextId}</usingcontextid>
-    <component>mod_quiz</component>
-    <questionarea>slot</questionarea>
-    <questionbankentryid>${questionBankEntryId}</questionbankentryid>
-    <version>$@NULL@$</version>
-  </question_reference>
-</question_instance>
-  `;
+  let questionInstances = "";
+  for (let i = 0; i < questionBankEntryIds.length; i++) {
+    questionInstances += questionInstance({
+      questionId: questionBankEntryIds[i],
+      quizId: quizId,
+      quizContextId: quizContextId,
+      questionBankEntryId: questionBankEntryIds[i],
+      sequence: (i + 1).toString(),
+    });
+  }
+  return quiz({
+    questionInstances: questionInstances,
+    totalScore: totalScore,
+    quizId: quizId,
+    moduleId: moduleId,
+    activityTitle: activityTitle,
+    quizContextId: quizContextId,
+  });
 }
