@@ -5,7 +5,7 @@ import { assessmentMetadataTemplate } from "./resource/assessmentMetadata";
 import { generateImscpManifest } from "./resource/manifest";
 import { processCanvasQuiz } from "./quiz";
 
-export async function packageCanvasQuiz(
+export async function packageCanvasQuizContent(
   page: Page,
   title: string
 ): Promise<[JSZip, string]> {
