@@ -1,9 +1,4 @@
 import { Page } from "../../types";
-import * as tar from "tar";
-import { writeFile, rm, mkdir } from "node:fs/promises";
-import { join } from "node:path";
-import { Blob } from "buffer";
-import { buffer } from "node:stream/consumers";
 import { getRandomNumberInRange } from "../../common";
 import {
   badges,
@@ -34,11 +29,12 @@ import {
 import { moodleBackup } from "./resource/rootComponent/moodleBackup";
 import { sectionsToMoodleQuestionBank } from "./resource/question/moodleQuestion";
 import { generateMoodleQuiz } from "./resource/activity/quiz";
+import JSZip from "jszip";
 
-export async function packageMoodleQuiz(
+export async function packageMoodleQuizContent(
   page: Page,
   title: string
-): Promise<[Buffer, string]> {
+): Promise<JSZip> {
   if (page.type != "assessment") {
     throw new Error("Invalid page type: Must be an assessment");
   }
@@ -57,7 +53,7 @@ export async function packageMoodleQuiz(
   const quizContextId = getRandomNumberInRange(1, 1000).toString();
   const quizId = getRandomNumberInRange(1, 1000).toString();
   /*
-  questionBankEntryId is also used in quiz.xml so generate it here than pass it when needed 
+  questionBankEntryId is also used in quiz.xml so generate it here than pass it when needed
   */
   const qustionBankEntryIds = [];
   for (let i = 0; i < page.content.length; i++) {
@@ -87,7 +83,7 @@ export async function packageMoodleQuiz(
   // Create all xml's that need arguments in the root folder
   const moodleBackupXml = moodleBackup({
     backUpName: title,
-    quizActivityFolderName: title,
+    quizActivityFolderName: `quiz_${moduleId}`,
     moduleId: moduleId.toString(),
     sectionId: sectionId.toString(),
     activitTitle: title,
@@ -95,6 +91,7 @@ export async function packageMoodleQuiz(
 
   const questionsXml = sectionsToMoodleQuestionBank({
     sections: page.content,
+    qustionBankEntryIds: qustionBankEntryIds,
     questionCategoryId: questionCategoryId,
     questionCategoryName: questionCategoryName,
     questionCateogryInfo: questionCateogryInfo,
@@ -130,61 +127,36 @@ export async function packageMoodleQuiz(
     totalScore: pointsPossible.toString(),
   });
 
-  const rootDir = join(process.cwd(), "temp", quizId);
-  const activityDir = join(rootDir, "activities", `quiz_${moduleId}`);
-  await mkdir(activityDir, { recursive: true });
+  const zip = new JSZip();
+  zip.file("badges.xml", badgesXml);
+  zip.file("completion.xml", completionXml);
+  zip.file("files.xml", filesXml);
+  zip.file("grade_history.xml", gradeHistoryXml);
+  zip.file("gradebook.xml", gradebookXml);
+  zip.file("groups.xml", groupsXml);
+  zip.file("moodle_backup.xml", moodleBackupXml);
+  zip.file("outcomes.xml", outcomesXml);
+  zip.file("questions.xml", questionsXml);
+  zip.file("roles.xml", rolesXml);
+  zip.file("scales.xml", scalesXml);
+  zip.file("users.xml", userXml);
 
-  await mkdir(rootDir, { recursive: true });
-  await writeFile(join(rootDir, "badges.xml"), badgesXml);
-  await writeFile(join(rootDir, "completion.xml"), completionXml);
-  await writeFile(join(rootDir, "files.xml"), filesXml);
-  await writeFile(join(rootDir, "grade_history.xml"), gradeHistoryXml);
-  await writeFile(join(rootDir, "gradebook.xml"), gradebookXml);
-  await writeFile(join(rootDir, "groups.xml"), groupsXml);
-  await writeFile(join(rootDir, "moodle_backup.xml"), moodleBackupXml);
-  await writeFile(join(rootDir, "outcomes.xml"), outcomesXml);
-  await writeFile(join(rootDir, "questions.xml"), questionsXml);
-  await writeFile(join(rootDir, "roles.xml"), rolesXml);
-  await writeFile(join(rootDir, "scales.xml"), scalesXml);
-  await writeFile(join(rootDir, "users.xml"), userXml);
+  const activityFolder = `activities/quiz_${moduleId}`;
 
-  await writeFile(join(activityDir, "calendar.xml"), calendarXml);
-  await writeFile(join(activityDir, "comments.xml"), commentsXml);
-  await writeFile(join(activityDir, "competencies.xml"), compentenciesXml);
-  await writeFile(join(activityDir, "completion.xml"), activityCompletionXml);
-  await writeFile(join(activityDir, "filters.xml"), filtersXml);
-  await writeFile(
-    join(activityDir, "grade_history.xml"),
-    gradeHistoryActivityXml
-  );
-  await writeFile(join(activityDir, "grades.xml"), gradesXml);
-  await writeFile(join(activityDir, "inforef.xml"), inforefXml);
-  await writeFile(join(activityDir, "logs.xml"), logsXml);
-  await writeFile(join(activityDir, "logstores.xml"), logstoreXml);
-  await writeFile(join(activityDir, "module.xml"), moduleXml);
-  await writeFile(join(activityDir, "quiz.xml"), quizXml);
-  await writeFile(join(activityDir, "roles.xml"), rolesActivityXml);
-  await writeFile(join(activityDir, "xapistate.xml"), xapistateXml);
+  zip.file(`${activityFolder}/calendar.xml`, calendarXml);
+  zip.file(`${activityFolder}/comments.xml`, commentsXml);
+  zip.file(`${activityFolder}/competencies.xml`, compentenciesXml);
+  zip.file(`${activityFolder}/completion.xml`, activityCompletionXml);
+  zip.file(`${activityFolder}/filters.xml`, filtersXml);
+  zip.file(`${activityFolder}/grade_history.xml`, gradeHistoryActivityXml);
+  zip.file(`${activityFolder}/grades.xml`, gradesXml);
+  zip.file(`${activityFolder}/inforef.xml`, inforefXml);
+  zip.file(`${activityFolder}/logs.xml`, logsXml);
+  zip.file(`${activityFolder}/logstores.xml`, logstoreXml);
+  zip.file(`${activityFolder}/module.xml`, moduleXml);
+  zip.file(`${activityFolder}/quiz.xml`, quizXml);
+  zip.file(`${activityFolder}/roles.xml`, rolesActivityXml);
+  zip.file(`${activityFolder}/xapistate.xml`, xapistateXml);
 
-  // Generate tar.gz (tgz) archive
-  const tarStream = tar.c({
-    gzip: true,
-    cwd: rootDir,
-    prefix: quizId,
-  });
-
-  const tgzBuffer = await buffer(tarStream);
-
-  // Clean up temporary directory
-  await rm(rootDir, { recursive: true, force: true });
-
-  return [tgzBuffer, ""];
+  return zip;
 }
-
-const generateAssessmentPackage = async (
-  page: Page,
-  packageTitle: string
-): Promise<Blob> => {
-  const [tgzBuffer, _ayam] = await packageMoodleQuiz(page, packageTitle);
-  return new Blob([tgzBuffer], { type: "application/gzip" });
-};

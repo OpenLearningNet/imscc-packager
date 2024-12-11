@@ -1,20 +1,17 @@
 export function calendar() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <events>
     </events>`;
 }
 
 export function comments() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <comments>
     </comments>`;
 }
 
 export function competencies() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <course_module_competencies>s
         <competencies>
         </competencies>
@@ -22,8 +19,7 @@ export function competencies() {
 }
 
 export function activityCompletion() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <completions>
         <completionviews>
         </completionviews>
@@ -31,8 +27,7 @@ export function activityCompletion() {
 }
 
 export function filters() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <filters>
         <filter_actives>
         </filter_actives>
@@ -42,8 +37,7 @@ export function filters() {
 }
 
 export function gradeHistory() {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <grade_history>
         <grade_grades>
         </grade_grades>
@@ -51,8 +45,7 @@ export function gradeHistory() {
 }
 
 export function activityGradebook() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <activity_gradebook>
   <grade_items>
   </grade_items>
@@ -66,8 +59,7 @@ export function inforef({
 }: {
   questionCategoryId: string;
 }) {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <inforef>
   <userref>
     <user>
@@ -84,15 +76,13 @@ export function inforef({
 }
 
 export function logs() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <logs>
 </logs>`;
 }
 
 export function logstore() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <logstores>
   <logstore>
   </logstore>
@@ -106,8 +96,7 @@ export function module({
   moduleId: string;
   sectionId: string;
 }) {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <module id="${moduleId}" version="2024100700">
   <modulename>quiz</modulename>
   <sectionid>${sectionId}</sectionid>
@@ -136,8 +125,7 @@ export function module({
 }
 
 export function activityRoles() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <roles>
   <role_overrides>
   </role_overrides>
@@ -147,8 +135,7 @@ export function activityRoles() {
 }
 
 export function xapistate() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <states>
 </states>`;
 }

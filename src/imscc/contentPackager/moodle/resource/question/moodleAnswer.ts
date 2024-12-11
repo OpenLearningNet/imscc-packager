@@ -1,3 +1,4 @@
+import { getRandomNumberInRange } from "../../../../common";
 import { Answer, Choice, Match } from "../../../../types";
 
 function answer({
@@ -9,8 +10,7 @@ function answer({
   answerText: string;
   score: string;
 }) {
-  return `
-<answer id="${answerId}">
+  return `<answer id="${answerId}">
 	<answertext>${answerText}</answertext>
 	<answerformat>1</answerformat>
 	<fraction>${score}</fraction>
@@ -28,8 +28,7 @@ function matchAnswer({
   questionText: string;
   answerText: string;
 }) {
-  return `
-    <match id="${answerId}">
+  return `<match id="${answerId}">
         <questiontext>${questionText}</questiontext>
         <questiontextformat>1</questiontextformat>
         <answertext>${answerText}</answertext>
@@ -38,11 +37,9 @@ function matchAnswer({
 
 export function multipleChoiceQuestionAnswer({
   choices,
-  answerId,
   score,
 }: {
   choices?: Choice[];
-  answerId: string;
   score: number;
 }) {
   let result: string = "";
@@ -51,7 +48,7 @@ export function multipleChoiceQuestionAnswer({
   }
   for (let choice of choices) {
     result += answer({
-      answerId: answerId,
+      answerId: getRandomNumberInRange(1, 1000).toString(),
       answerText: choice.text,
       score: choice.isCorrect ? score.toPrecision(7).toString() : "0.0000000",
     });
@@ -59,34 +56,24 @@ export function multipleChoiceQuestionAnswer({
   return result;
 }
 
-export function numericalQuestionAnswer({
-  answers,
-  answerId,
-}: {
-  answers?: Answer[];
-  answerId: string;
-}) {
+export function numericalQuestionAnswer({ answers }: { answers?: Answer[] }) {
   let result: string = "";
   if (!answers) {
     return result;
   }
-  for (let ans of answers) {
-    result += answer({
-      answerId: answerId,
-      answerText: ans.text,
-      score: "1.0000000",
-    });
-  }
+  result += answer({
+    answerId: getRandomNumberInRange(1, 1000).toString(),
+    answerText: answers.at(0)?.text || "0",
+    score: "1.0000000",
+  });
   return result;
 }
 
 export function multipleAnswersQuestionAnswer({
   choices,
-  answerId,
   score,
 }: {
   choices?: Choice[];
-  answerId: string;
   score: number;
 }) {
   let result: string = "";
@@ -99,7 +86,7 @@ export function multipleAnswersQuestionAnswer({
   );
   for (let choice of choices) {
     result += answer({
-      answerId: answerId,
+      answerId: getRandomNumberInRange(1, 1000).toString(),
       answerText: choice.text,
       score: choice.isCorrect
         ? (score / correctChoicesCount).toPrecision(7).toString()
@@ -109,20 +96,14 @@ export function multipleAnswersQuestionAnswer({
   return result;
 }
 
-export function shortAnswerQuestionAnswer({
-  answers,
-  answerId,
-}: {
-  answers?: Answer[];
-  answerId: string;
-}) {
+export function shortAnswerQuestionAnswer({ answers }: { answers?: Answer[] }) {
   let result: string = "";
   if (!answers) {
     return result;
   }
   for (let ans of answers) {
     result += answer({
-      answerId: answerId,
+      answerId: getRandomNumberInRange(1, 1000).toString(),
       answerText: ans.text,
       score: "1.0000000",
     });
@@ -130,20 +111,14 @@ export function shortAnswerQuestionAnswer({
   return result;
 }
 
-export function matchingQuestionAnswer({
-  matches,
-  answerId,
-}: {
-  matches?: Match[];
-  answerId: string;
-}) {
+export function matchingQuestionAnswer({ matches }: { matches?: Match[] }) {
   let result: string = "";
   if (!matches) {
     return result;
   }
   for (let match of matches) {
     result += matchAnswer({
-      answerId: answerId,
+      answerId: getRandomNumberInRange(1, 1000).toString(),
       questionText: match.pair[0].text,
       answerText: match.pair[1].text,
     });

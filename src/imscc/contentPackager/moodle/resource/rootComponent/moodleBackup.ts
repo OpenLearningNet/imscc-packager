@@ -13,8 +13,7 @@ export function moodleBackup({
   sectionId: string;
   activitTitle: string;
 }) {
-  return `
-    <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <moodle_backup>
         <information>
             <name>${backUpName}.mbz</name>

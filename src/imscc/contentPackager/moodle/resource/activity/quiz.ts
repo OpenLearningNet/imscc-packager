@@ -1,23 +1,4 @@
-/*
-quizId is the activityId
-
-<question_instance id="46">
-<quizid>15</quizid>
-<slot>1</slot>
-<page>1</page>
-<displaynumber>$@NULL@$</displaynumber>
-<requireprevious>0</requireprevious>
-<maxmark>1.0000000</maxmark>
-<quizgradeitemid>$@NULL@$</quizgradeitemid>
-<question_reference id="46">
-  <usingcontextid>611</usingcontextid>
-  <component>mod_quiz</component>
-  <questionarea>slot</questionarea>
-  <questionbankentryid>54</questionbankentryid>
-  <version>$@NULL@$</version>
-</question_reference>
-</question_instance>
-*/
+import { getRandomNumberInRange } from "../../../../common";
 
 function questionInstance({
   questionId,
@@ -32,8 +13,7 @@ function questionInstance({
   quizContextId: string;
   questionBankEntryId: string;
 }) {
-  return `
-<question_instance id="${questionId}">
+  return `<question_instance id="${questionId}">
   <quizid>${quizId}</quizid>
   <slot>${sequence}</slot>
   <page>${sequence}</page>
@@ -67,8 +47,7 @@ function quiz({
   quizContextId: string;
   totalScore: string;
 }) {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <activity id="${quizId}" moduleid="${moduleId}" modulename="quiz" contextid="${quizContextId}">
   <quiz id="${quizId}">
     <name>${activityTitle}</name>
@@ -115,7 +94,9 @@ function quiz({
     </subplugin_quizaccess_seb_quiz>
     <quiz_grade_items>
     </quiz_grade_items>
+    <question_instances>
     ${questionInstances}
+    </question_instances>
     <sections>
       <section id="${quizId}">
         <firstslot>1</firstslot>
@@ -153,7 +134,7 @@ export function generateMoodleQuiz({
   let questionInstances = "";
   for (let i = 0; i < questionBankEntryIds.length; i++) {
     questionInstances += questionInstance({
-      questionId: questionBankEntryIds[i],
+      questionId: getRandomNumberInRange(1, 1000).toString(),
       quizId: quizId,
       quizContextId: quizContextId,
       questionBankEntryId: questionBankEntryIds[i],

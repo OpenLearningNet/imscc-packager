@@ -1,27 +1,23 @@
 export function badges() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <badges>
   </badges>`;
 }
 
 export function completion() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <course_completion>
   </course_completion>`;
 }
 
 export function files() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <files>
   </files>`;
 }
 
 export function gradeHistory() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <grade_history>
   <grade_grades>
   </grade_grades>
@@ -29,8 +25,7 @@ export function gradeHistory() {
 }
 
 export function gradebook() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <gradebook>
   <attributes>
   </attributes>
@@ -46,8 +41,7 @@ export function gradebook() {
 }
 
 export function groups() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <groups>
     <groupcustomfields>
     </groupcustomfields>
@@ -59,29 +53,25 @@ export function groups() {
 }
 
 export function outcomes() {
-  return `\
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <outcomes_definition>
   </outcomes_definition>`;
 }
 
 export function roles() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <roles_definition>
   </roles_definition>`;
 }
 
 export function scales() {
-  return `
-  <?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <scales_definition>
   </scales_definition>`;
 }
 
 export function user() {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <users>
   <user id="999" contextid="999">
     <username></username>

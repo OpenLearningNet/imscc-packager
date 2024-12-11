@@ -10,23 +10,27 @@ import {
 
 export function sectionsToMoodleQuestionBank({
   sections,
+  qustionBankEntryIds,
   questionCategoryId,
   questionCategoryName,
   questionCateogryInfo,
 }: {
   sections: Section[];
+  qustionBankEntryIds: string[];
   questionCategoryId: string;
   questionCategoryName: string;
   questionCateogryInfo: string;
 }) {
   let questionBankEntries = "";
-  for (let section of sections) {
+  for (let i = 0; i < sections.length; i++) {
+    let section = sections[i];
+    const qustionBankEntryId = qustionBankEntryIds[i];
     switch (section.type) {
       case "multiple_choice_question":
         questionBankEntries += multipleChoiceQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
           questioncategoryid: questionCategoryId,
         });
         break;
@@ -34,35 +38,40 @@ export function sectionsToMoodleQuestionBank({
         questionBankEntries += multipleAnswersQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
+          questioncategoryid: questionCategoryId,
         });
         break;
       case "matching_question":
         questionBankEntries += matchingQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
+          questioncategoryid: questionCategoryId,
         });
         break;
       case "numerical_question":
         questionBankEntries += numericalQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
+          questioncategoryid: questionCategoryId,
         });
         break;
       case "short_answer_question":
         questionBankEntries += shortAnswerQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
+          questioncategoryid: questionCategoryId,
         });
         break;
       case "text_only_question":
         questionBankEntries += textOnlyQuestion({
           quiz: section,
           questionVersionId: getRandomNumberInRange(1, 1000).toString(),
-          questionBankEntryId: getRandomNumberInRange(1, 1000).toString(),
+          questionBankEntryId: qustionBankEntryId,
+          questioncategoryid: questionCategoryId,
         });
         break;
       default:
@@ -88,8 +97,7 @@ function moodleQuestionBank({
   questionCateogryInfo: string;
   questionBankEntries: string;
 }) {
-  return `
-<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <question_categories>
   <question_category id="${questionCategoryId}">
     <name>${questionCategoryName}</name>
@@ -120,9 +128,8 @@ function multipleChoiceQuestion({
   questionBankEntryId: string;
   questioncategoryid: string;
 }) {
-  return `
-    <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>${questioncategoryid}}</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
@@ -152,7 +159,6 @@ function multipleChoiceQuestion({
                   <answers>
                   ${multipleChoiceQuestionAnswer({
                     choices: quiz.choices,
-                    answerId: "1",
                     score: quiz.point ?? 1,
                   })}
                   </answers>
@@ -194,14 +200,15 @@ function matchingQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
+  questioncategoryid,
 }: {
   quiz: Section;
   questionVersionId: string;
   questionBankEntryId: string;
+  questioncategoryid: string;
 }) {
-  return `
-      <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>999</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
@@ -241,7 +248,6 @@ function matchingQuestion({
                   <matches>
                   ${matchingQuestionAnswer({
                     matches: quiz.matches,
-                    answerId: "1",
                   })}
                   </matches>
                 </plugin_qtype_match_question>
@@ -268,14 +274,15 @@ function numericalQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
+  questioncategoryid,
 }: {
   quiz: Section;
   questionVersionId: string;
   questionBankEntryId: string;
+  questioncategoryid: string;
 }) {
-  return `
-       <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>46</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
@@ -305,7 +312,6 @@ function numericalQuestion({
                   <answers>
                   ${numericalQuestionAnswer({
                     answers: quiz.answers,
-                    answerId: "1",
                   })}
                   </answers>
                   <numerical_units>
@@ -356,14 +362,15 @@ function multipleAnswersQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
+  questioncategoryid,
 }: {
   quiz: Section;
   questionVersionId: string;
   questionBankEntryId: string;
+  questioncategoryid: string;
 }) {
-  return `      
-       <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>46</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
@@ -393,7 +400,6 @@ function multipleAnswersQuestion({
                   <answers>
                   ${multipleAnswersQuestionAnswer({
                     choices: quiz.choices,
-                    answerId: "1",
                     score: quiz.point ?? 1,
                   })}
                   </answers>
@@ -435,14 +441,15 @@ function shortAnswerQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
+  questioncategoryid,
 }: {
   quiz: Section;
   questionVersionId: string;
   questionBankEntryId: string;
+  questioncategoryid: string;
 }) {
-  return `
-      <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>999</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
@@ -472,7 +479,6 @@ function shortAnswerQuestion({
                   <answers>
                   ${shortAnswerQuestionAnswer({
                     answers: quiz.answers,
-                    answerId: "1",
                   })}
                   </answers>
                   <shortanswer id="5">
@@ -502,14 +508,15 @@ function textOnlyQuestion({
   quiz,
   questionVersionId,
   questionBankEntryId,
+  questioncategoryid,
 }: {
   quiz: Section;
   questionVersionId: string;
   questionBankEntryId: string;
+  questioncategoryid: string;
 }) {
-  return `
-       <question_bank_entry id="${questionBankEntryId}">
-        <questioncategoryid>46</questioncategoryid>
+  return `<question_bank_entry id="${questionBankEntryId}">
+        <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
         <ownerid>2</ownerid>
         <question_version>
