@@ -39,7 +39,7 @@ export const generateImscc = async (
 const generateAssessmentPackage = async (
   page: Page,
   packageTitle: string,
-  type: LmsType = "moodle"
+  type: LmsType = "canvas"
 ): Promise<Blob> => {
   switch (type) {
     case "canvas":
