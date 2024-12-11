@@ -3,7 +3,7 @@ import { strippedUuid } from "../../common";
 import { Page } from "../../types";
 import { assessmentMetadataTemplate } from "./resource/assessmentMetadata";
 import { generateImscpManifest } from "./resource/manifest";
-import { processCanvasQuiz } from "./quiz";
+import { processCanvasQuiz } from "./resource/quiz";
 
 export async function packageCanvasQuizContent(
   page: Page,

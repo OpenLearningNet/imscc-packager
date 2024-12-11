@@ -1,4 +1,4 @@
-import { Section, Answer } from "../../types";
+import { Section, Answer } from "../../../types";
 import {
   multipleChoiceQuestion,
   multipleAnswersQuestion,
@@ -6,8 +6,8 @@ import {
   numericalQuestion,
   shortAnswerQuestion,
   textOnlyQuestion,
-} from "./resource/qtiQuestion";
-import { quiz } from "./resource/qtiTag";
+} from "./qtiQuestion";
+import { quiz } from "./qtiTag";
 
 export function processCanvasQuiz({
   quizId,
