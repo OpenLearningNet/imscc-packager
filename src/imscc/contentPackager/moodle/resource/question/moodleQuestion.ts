@@ -270,6 +270,9 @@ function matchingQuestion({
       </question_bank_entry>`;
 }
 
+/**
+ * Moodle only supports numerical questions with a single answer but Canvas supports multiple answers. So, in this use case we only take the first answer. For now hardcode the <numerical_records>
+ */
 function numericalQuestion({
   quiz,
   questionVersionId,
@@ -281,6 +284,7 @@ function numericalQuestion({
   questionBankEntryId: string;
   questioncategoryid: string;
 }) {
+  const numericalAnswerId = getRandomNumberInRange(1, 1000).toString();
   return `<question_bank_entry id="${questionBankEntryId}">
         <questioncategoryid>${questioncategoryid}</questioncategoryid>
         <idnumber>$@NULL@$</idnumber>
@@ -312,29 +316,19 @@ function numericalQuestion({
                   <answers>
                   ${numericalQuestionAnswer({
                     answers: quiz.answers,
+                    answerId: numericalAnswerId,
                   })}
                   </answers>
                   <numerical_units>
                   </numerical_units>
                   <numerical_options>
-                    <numerical_option id="5">
-                      <showunits>3</showunits>
-                      <unitsleft>0</unitsleft>
-                      <unitgradingtype>0</unitgradingtype>
-                      <unitpenalty>0.1000000</unitpenalty>
-                    </numerical_option>
                   </numerical_options>
                   <numerical_records>
-                    <numerical_record id="6">
-                      <answer>106</answer>
-                      <tolerance>0</tolerance>
-                    </numerical_record>
-                    <numerical_record id="7">
-                      <answer>107</answer>
-                      <tolerance>0</tolerance>
-                    </numerical_record>
-                    <numerical_record id="8">
-                      <answer>108</answer>
+                    <numerical_record id="${getRandomNumberInRange(
+                      1,
+                      1000
+                    ).toString()}">
+                      <answer>${numericalAnswerId}</answer>
                       <tolerance>0</tolerance>
                     </numerical_record>
                   </numerical_records>
