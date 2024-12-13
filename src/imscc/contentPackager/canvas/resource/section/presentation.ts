@@ -1,5 +1,5 @@
-import { isEscapedHtml, strippedUuid } from "../../../common";
-import { Match, Section } from "../../../types";
+import { isEscapedHtml, strippedUuid } from "../../../../common";
+import { Match, Section } from "../../../../types";
 import { material, responseLabel } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionPresentation(quiz: Section) {

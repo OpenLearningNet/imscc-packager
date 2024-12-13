@@ -1,14 +1,15 @@
-import { Config, Course, Page, ResourceType } from "./types";
+import { Config, Course, LmsType, Page, ResourceType } from "./types";
 
 import { Version } from "./coursePackager/versions";
 import { packageCourse } from "./coursePackager/packager";
-import {
-  packageQuizContent,
-  packageWebContent,
-} from "./contentPackager/packager";
+import { packageWebContent } from "./contentPackager/packager";
+import { packageCanvasQuizContent } from "./contentPackager/canvas/packager";
+import { packageMoodleQuizContent } from "./contentPackager/moodle/packager";
 
 export { packageCourse } from "./coursePackager/packager";
 export { packageQuizContent } from "./contentPackager/packager";
+export { packageMoodleQuizContent } from "./contentPackager/moodle/packager";
+export { packageCanvasQuizContent } from "./contentPackager/canvas/packager";
 
 /**
  * Generates an IMS Common Cartridge (IMSCC) package for the given course.
@@ -37,11 +38,19 @@ export const generateImscc = async (
 
 const generateAssessmentPackage = async (
   page: Page,
-  packageTitle: string
+  packageTitle: string,
+  type: LmsType = "canvas"
 ): Promise<Blob> => {
-  const [zip, _manifest] = await packageQuizContent(page, packageTitle);
-  const zipBlob = await zip.generateAsync({ type: "blob" });
-  return zipBlob;
+  switch (type) {
+    case "canvas":
+      const [canvasZip, _] = await packageCanvasQuizContent(page, packageTitle);
+      return await canvasZip.generateAsync({ type: "blob" });
+    case "moodle":
+      const moodleZip = await packageMoodleQuizContent(page, packageTitle);
+      return await moodleZip.generateAsync({ type: "blob" });
+    default:
+      throw new Error(`Unsupported LMS type: ${type}`);
+  }
 };
 
 const generateWebcontentPackage = async (

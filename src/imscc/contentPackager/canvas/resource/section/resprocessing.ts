@@ -1,4 +1,4 @@
-import { Section } from "../../../types";
+import { Section } from "../../../../types";
 import { respcondition } from "../qtiTag";
 
 export function generateMultipleChoiceQuestionResprocessing(quiz: Section) {

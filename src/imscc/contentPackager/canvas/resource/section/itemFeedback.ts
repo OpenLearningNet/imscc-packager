@@ -1,5 +1,5 @@
-import { isEscapedHtml } from "../../../common";
-import { Section } from "../../../types";
+import { isEscapedHtml } from "../../../../common";
+import { Section } from "../../../../types";
 
 export function generateItemFeedback(quiz: Section) {
   let itemFeedbacks = "";

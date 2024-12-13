@@ -1,6 +1,8 @@
 export {
   packageCourse,
   packageQuizContent,
+  packageCanvasQuizContent,
+  packageMoodleQuizContent,
   generateImscc,
   generateImscp,
 } from "./imscc/packager";

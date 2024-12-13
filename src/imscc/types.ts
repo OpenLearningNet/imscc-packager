@@ -10,6 +10,8 @@ export type ImsResourceType =
   | "imsdt_xmlv1p1"
   | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment";
 
+export type LmsType = "canvas" | "moodle";
+
 export type MattexType = "text/html" | "text/plain";
 
 export type QtiQuestionType =
