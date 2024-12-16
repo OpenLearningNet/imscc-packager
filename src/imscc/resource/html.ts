@@ -1,5 +1,6 @@
 import { FILEBASE_PLACEHOLDER } from "../constants";
 import { Config, Page } from "../types";
+import DOMPurify from "dompurify";
 
 export const cssFromConfig = (config?: Config) => {
   if (!config) {
@@ -29,7 +30,11 @@ const templateHtml = (page: Page, id: string, options?: Config) => {
 <meta name="editing_roles" content="teachers"/>${styleTag}
 </head>
 <body>
-${page.content}
+${
+  typeof page.content === "string"
+    ? DOMPurify.sanitize(page.content)
+    : page.content
+}
 </body>
 </html>`;
 };
