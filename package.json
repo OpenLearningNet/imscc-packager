@@ -26,6 +26,7 @@
     "vite": "^5.1.6"
   },
   "dependencies": {
+    "dompurify": "^3.2.3",
     "he": "^1.2.0",
     "jszip": "^3.10.1",
     "vite-plugin-dts": "^4.0.2"
