@@ -21,3 +21,17 @@ export function isEscapedHtml(input: string): boolean {
 export function getRandomNumberInRange(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+/**
+ * Converts a string to kebab-case (lowercase and separated by hyphens).
+ * @param input The input string to format.
+ * @returns The formatted string.
+ */
+export function toKebabCase(input: string): string {
+  return input
+    .trim() // Remove leading and trailing whitespace
+    .toLowerCase() // Convert to lowercase
+    .replace(/[^a-z0-9\s-]/g, "") // Remove any non-alphanumeric characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-"); // Replace multiple hyphens with a single hyphen
+}
