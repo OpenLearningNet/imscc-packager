@@ -14,6 +14,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           # Defaults to the user or organization that owns the workflow file
           scope: "@openlearning"
+      - run: npm install
       - run: npm run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
