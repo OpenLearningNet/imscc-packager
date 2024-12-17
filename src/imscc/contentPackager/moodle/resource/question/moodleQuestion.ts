@@ -374,7 +374,7 @@ function multipleAnswersQuestion({
             <questions>
               <question id="${questionVersionId}">
                 <parent>0</parent>
-                <name>Multiple choice multiple answers</name>
+                <name>${quiz.title}</name>
                 <questiontext>${quiz.question}</questiontext>
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
@@ -453,7 +453,7 @@ function shortAnswerQuestion({
             <questions>
               <question id="${questionVersionId}">
                 <parent>0</parent>
-                <name>Judul short answer</name>
+                <name>${quiz.title}</name>
                 <questiontext>${quiz.question}</questiontext>
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
