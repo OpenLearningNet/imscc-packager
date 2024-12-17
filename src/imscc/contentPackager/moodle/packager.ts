@@ -47,7 +47,11 @@ export async function packageMoodleQuizContent(
   const sectionId = getRandomNumberInRange(1, 1000).toString();
   const pointsPossible =
     page.content?.reduce(
-      (prevValue, currentValue) => prevValue + (currentValue.point ?? 1),
+      (prevValue, currentValue) =>
+        prevValue +
+        (currentValue.type === "text_only_question"
+          ? 0
+          : currentValue.point ?? 1),
       0
     ) || 1;
   const quizContextId = getRandomNumberInRange(1, 1000).toString();
