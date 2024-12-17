@@ -144,9 +144,9 @@ function multipleChoiceQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>${quiz.point
-                  ?.toPrecision(7)
-                  .toString()}</defaultmark>
+                <defaultmark>${
+                  quiz.point?.toPrecision(7).toString() ?? "1.0000000"
+                }</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>multichoice</qtype>
                 <length>1</length>
@@ -223,9 +223,9 @@ function matchingQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>${quiz.point
-                  ?.toPrecision(7)
-                  .toString()}</defaultmark>
+                <defaultmark>${
+                  quiz.point?.toPrecision(7).toString() ?? "1.0000000"
+                }</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>match</qtype>
                 <length>1</length>
@@ -301,9 +301,9 @@ function numericalQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>${quiz.point
-                  ?.toPrecision(7)
-                  .toString()}</defaultmark>
+                <defaultmark>${
+                  quiz.point?.toPrecision(7).toString() ?? "1.0000000"
+                }</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>numerical</qtype>
                 <length>1</length>
@@ -379,9 +379,9 @@ function multipleAnswersQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>${quiz.point
-                  ?.toPrecision(7)
-                  .toString()}</defaultmark>
+                <defaultmark>${
+                  quiz.point?.toPrecision(7).toString() ?? "1.0000000"
+                }</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>multichoice</qtype>
                 <length>1</length>
@@ -458,9 +458,9 @@ function shortAnswerQuestion({
                 <questiontextformat>1</questiontextformat>
                 <generalfeedback></generalfeedback>
                 <generalfeedbackformat>1</generalfeedbackformat>
-                <defaultmark>${quiz.point
-                  ?.toPrecision(7)
-                  .toString()}</defaultmark>
+                <defaultmark>${
+                  quiz.point?.toPrecision(7).toString() ?? "1.0000000"
+                }</defaultmark>
                 <penalty>0.3333333</penalty>
                 <qtype>shortanswer</qtype>
                 <length>1</length>
