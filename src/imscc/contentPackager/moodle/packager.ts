@@ -34,7 +34,7 @@ import JSZip from "jszip";
 export async function packageMoodleQuizContent(
   page: Page,
   title: string
-): Promise<JSZip> {
+): Promise<Blob> {
   if (page.type != "assessment") {
     throw new Error("Invalid page type: Must be an assessment");
   }
@@ -158,5 +158,5 @@ export async function packageMoodleQuizContent(
   zip.file(`${activityFolder}/roles.xml`, rolesActivityXml);
   zip.file(`${activityFolder}/xapistate.xml`, xapistateXml);
 
-  return zip;
+  return await zip.generateAsync({ type: "blob" });
 }

@@ -43,11 +43,9 @@ const generateAssessmentPackage = async (
 ): Promise<Blob> => {
   switch (type) {
     case "canvas":
-      const [canvasZip, _] = await packageCanvasQuizContent(page, packageTitle);
-      return await canvasZip.generateAsync({ type: "blob" });
+      return await packageCanvasQuizContent(page, packageTitle);
     case "moodle":
-      const moodleZip = await packageMoodleQuizContent(page, packageTitle);
-      return await moodleZip.generateAsync({ type: "blob" });
+      return await packageMoodleQuizContent(page, packageTitle);
     default:
       throw new Error(`Unsupported LMS type: ${type}`);
   }

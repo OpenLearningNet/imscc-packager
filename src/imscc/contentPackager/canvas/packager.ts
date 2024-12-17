@@ -8,7 +8,7 @@ import { processCanvasQuiz } from "./resource/quiz";
 export async function packageCanvasQuizContent(
   page: Page,
   title: string
-): Promise<[JSZip, string]> {
+): Promise<Blob> {
   const zip = new JSZip();
 
   const quizId = strippedUuid();
@@ -48,5 +48,5 @@ export async function packageCanvasQuizContent(
     })
   );
 
-  return [zip, manifestFileContents];
+  return await zip.generateAsync({ type: "blob" });
 }
