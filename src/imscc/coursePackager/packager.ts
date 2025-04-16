@@ -20,9 +20,9 @@ const moduleItem = (module: ResourceModule): ImsItem => ({
   ),
 });
 
-const courseSetting = (courseTitle: string) => `
+const courseSetting = (courseTitle: string, courseSettingId: string) => `
 <?xml version="1.0" encoding="UTF-8"?>
-<course identifier="COURSE_SETTINGS_abcdefghijk"
+<course identifier="${courseSettingId}"
   xmlns="http://canvas.instructure.com/xsd/cccv1p0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0 https://canvas.instructure.com/xsd/cccv1p0.xsd">
@@ -164,7 +164,10 @@ export const packageCourse = async (
   };
 
   // course_settings.xml (mostly empty placeholder)
-  zip.file("course_settings/course_settings.xml", courseSetting);
+  zip.file(
+    "course_settings/course_settings.xml",
+    courseSetting(courseContent.title, courseSettingResources.identifier)
+  );
 
   // module_meta.xml (re-iterates the module layout)
   zip.file(
