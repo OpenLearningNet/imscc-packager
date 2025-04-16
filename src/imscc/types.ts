@@ -8,7 +8,8 @@ export type ImsResourceType =
   | "webcontent"
   | "imswl_xmlv1p1"
   | "imsdt_xmlv1p1"
-  | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment";
+  | "imsqti_xmlv1p2/imscc_xmlv1p1/assessment"
+  | "associatedcontent/imscc_xmlv1p1/learning-application-resource";
 
 export type LmsType = "canvas" | "moodle";
 
