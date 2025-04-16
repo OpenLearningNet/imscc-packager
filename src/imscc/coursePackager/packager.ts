@@ -6,6 +6,7 @@ import { randomId } from "../common";
 import { cssFromConfig } from "../resource/html";
 import { addPage, pageResource } from "../resource";
 import { manifestXml } from "./manifest/manifest";
+import { moduleMetaTemplate } from "./moduleMeta/moduleMeta";
 
 const moduleItem = (module: ResourceModule): ImsItem => ({
   identifier: randomId("MODULE"),
@@ -18,6 +19,21 @@ const moduleItem = (module: ResourceModule): ImsItem => ({
     })
   ),
 });
+
+const courseSetting = (courseTitle: string) => `
+<?xml version="1.0" encoding="UTF-8"?>
+<course identifier="COURSE_SETTINGS_abcdefghijk"
+  xmlns="http://canvas.instructure.com/xsd/cccv1p0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0 https://canvas.instructure.com/xsd/cccv1p0.xsd">
+  <title>${courseTitle}</title>
+  <default_view>modules</default_view>
+</course>`;
+
+const fileMeta = `
+<?xml version="1.0" encoding="UTF-8"?>
+<fileMeta xmlns="http://canvas.instructure.com/xsd/cccv1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0 https://canvas.instructure.com/xsd/cccv1p0.xsd">
+</fileMeta>`;
 
 export const packageCourse = async (
   courseContent: Course,
@@ -100,10 +116,34 @@ export const packageCourse = async (
     []
   );
 
+  const courseSettingResources: ImsResource[] = [
+    {
+      identifier: randomId("COURSE_SETTINGS"),
+      type: "associatedcontent/imscc_xmlv1p1/learning-application-resource",
+      files: [
+        {
+          href: "course_settings/course_settings.xml",
+        },
+        {
+          href: "course_settings/module_meta.xml",
+        },
+        {
+          href: "course_settings/files_meta.xml",
+        },
+        {
+          href: "course_settings/canvas_export.txt",
+        },
+      ],
+    },
+  ];
+
+  const organizationModuleItem: ImsItem[] = modules.map(moduleItem);
+
   const resources = resourcePages
     .map(pageResource)
     .concat(attachmentResources)
-    .concat(globalDependencies);
+    .concat(globalDependencies)
+    .concat(courseSettingResources);
 
   const manifest: ImsManifest = {
     generatorComment,
@@ -117,11 +157,26 @@ export const packageCourse = async (
     organizations: [
       {
         identifier: randomId("NAV"),
-        items: modules.map(moduleItem),
+        items: organizationModuleItem,
       },
     ],
     resources: resources,
   };
+
+  // course_settings.xml (mostly empty placeholder)
+  zip.file("course_settings/course_settings.xml", courseSetting);
+
+  // module_meta.xml (re-iterates the module layout)
+  zip.file(
+    "course_settings/module_meta.xml",
+    moduleMetaTemplate(organizationModuleItem)
+  );
+
+  // files_meta.xml (mostly empty placeholder)
+  zip.file("course_settings/files_meta.xml", fileMeta);
+
+  // canvas_export.txt (doesn't matter what's in it)
+  zip.file("course_settings/canvas_export.txt", "Exported from CourseMagic.ai");
 
   const manifestFileContents = manifestXml(manifest);
   zip.file("imsmanifest.xml", manifestFileContents);
