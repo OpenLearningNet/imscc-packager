@@ -116,34 +116,32 @@ export const packageCourse = async (
     []
   );
 
-  const courseSettingResources: ImsResource[] = [
-    {
-      identifier: randomId("COURSE_SETTINGS"),
-      type: "associatedcontent/imscc_xmlv1p1/learning-application-resource",
-      files: [
-        {
-          href: "course_settings/course_settings.xml",
-        },
-        {
-          href: "course_settings/module_meta.xml",
-        },
-        {
-          href: "course_settings/files_meta.xml",
-        },
-        {
-          href: "course_settings/canvas_export.txt",
-        },
-      ],
-    },
-  ];
-
+  const courseSettingResources: ImsResource = {
+    identifier: randomId("COURSE_SETTINGS"),
+    type: "associatedcontent/imscc_xmlv1p1/learning-application-resource",
+    files: [
+      {
+        href: "course_settings/course_settings.xml",
+      },
+      {
+        href: "course_settings/module_meta.xml",
+      },
+      {
+        href: "course_settings/files_meta.xml",
+      },
+      {
+        href: "course_settings/canvas_export.txt",
+      },
+    ],
+  };
   const organizationModuleItem: ImsItem[] = modules.map(moduleItem);
 
   const resources = resourcePages
     .map(pageResource)
     .concat(attachmentResources)
-    .concat(globalDependencies)
-    .concat(courseSettingResources);
+    .concat(globalDependencies);
+
+  resources.push(courseSettingResources);
 
   const manifest: ImsManifest = {
     generatorComment,
