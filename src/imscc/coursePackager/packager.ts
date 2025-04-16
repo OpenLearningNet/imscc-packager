@@ -41,9 +41,11 @@ export const packageCourse = async (
     globalDependencies.push({
       identifier: randomId("CSS"),
       type: "webcontent",
-      file: {
-        href: path,
-      },
+      files: [
+        {
+          href: path,
+        },
+      ],
     });
   }
 
@@ -86,9 +88,11 @@ export const packageCourse = async (
               return {
                 identifier: id,
                 type: "webcontent",
-                file: {
-                  href: attachment.filePath,
-                },
+                files: [
+                  {
+                    href: attachment.filePath,
+                  },
+                ],
               };
             })
           : []

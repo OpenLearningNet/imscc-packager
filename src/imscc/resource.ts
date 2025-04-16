@@ -42,17 +42,21 @@ export const pageResource = (page: ResourcePage): ImsResource => {
       identifier: page.id,
       type,
       href: page.filePath,
-      file: {
-        href: page.filePath,
-      },
+      files: [
+        {
+          href: page.filePath,
+        },
+      ],
     };
   } else if (page.type === "discussion") {
     resource = {
       identifier: page.id,
       type,
-      file: {
-        href: page.filePath,
-      },
+      files: [
+        {
+          href: page.filePath,
+        },
+      ],
     };
   } else {
     throw new Error(`Unsupported page type: ${page.type}`);

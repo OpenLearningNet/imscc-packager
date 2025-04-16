@@ -90,7 +90,7 @@ const resourceTemplate = ({
   identifier,
   type,
   href,
-  file,
+  files,
   dependencies,
 }: ImsResource) => {
   const hrefAttr = href ? ` href="${href}"` : "";
@@ -102,8 +102,14 @@ const resourceTemplate = ({
           )
           .join("\n")}`
       : "";
-  const fileTag = file ? `\n${indent(`<file href="${file.href}"/>`)}` : "";
-  const template = `<resource identifier="${identifier}" type="${type}"${hrefAttr}>${fileTag}${dependencyTags}
+
+  const fileTags =
+    files && files.length > 0
+      ? `\n${files
+          .map((file) => indent(`<file href="${file.href}"/>`))
+          .join("\n")}`
+      : "";
+  const template = `<resource identifier="${identifier}" type="${type}"${hrefAttr}>${fileTags}${dependencyTags}
 </resource>`;
   return indent(template);
 };
