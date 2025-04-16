@@ -134,7 +134,6 @@ export const packageCourse = async (
       },
     ],
   };
-  const organizationModuleItem: ImsItem[] = modules.map(moduleItem);
 
   const resources = resourcePages
     .map(pageResource)
@@ -142,6 +141,8 @@ export const packageCourse = async (
     .concat(globalDependencies);
 
   resources.push(courseSettingResources);
+
+  const organizationModuleItem: ImsItem[] = modules.map(moduleItem);
 
   const manifest: ImsManifest = {
     generatorComment,
