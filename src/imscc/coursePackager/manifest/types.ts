@@ -23,7 +23,7 @@ export interface ImsItem {
 export interface ImsResource {
   type: ImsResourceType;
   identifier: string;
-  file: ImsFile;
+  files: ImsFile[];
   href?: string;
   dependencies?: string[];
 }
