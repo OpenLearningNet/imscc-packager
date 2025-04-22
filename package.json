@@ -2,7 +2,7 @@
   "name": "@openlearning/imscc-packager",
   "type": "module",
   "private": false,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "files": [
     "dist"
   ],
