@@ -1,3 +1,4 @@
+import { escapeForXml } from "../../common";
 import { DEFAULT_VERSION, manifest_attributes_for_version } from "../versions";
 import { ImsItem, ImsManifest, ImsOrganization, ImsResource } from "./types";
 
@@ -37,11 +38,15 @@ const metadataTemplate = ({
   <lomimscc:lom>
     <lomimscc:general>
       <lomimscc:title>
-        <lomimscc:string language="${language}">${title}</lomimscc:string>
+        <lomimscc:string language="${language}">${escapeForXml(
+    title
+  )}</lomimscc:string>
       </lomimscc:title>
       <lomimscc:language>${language}</lomimscc:language>
       <lomimscc:description>
-        <lomimscc:string language="${language}">${description}</lomimscc:string>
+        <lomimscc:string language="${language}">${escapeForXml(
+    description
+  )}</lomimscc:string>
       </lomimscc:description>
     </lomimscc:general>
   </lomimscc:lom>
@@ -70,7 +75,7 @@ const organizationItemTemplate = ({
   identifierRef,
   items,
 }: ImsItem) => {
-  const titleTag = `<title>${title}</title>`;
+  const titleTag = `<title>${escapeForXml(title)}</title>`;
   const itemsTags: string =
     items && items.length > 0
       ? `\n${items.map((item) => organizationItemTemplate(item)).join("\n")}`
