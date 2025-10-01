@@ -35,3 +35,11 @@ export function toKebabCase(input: string): string {
     .replace(/\s+/g, "-") // Replace spaces with hyphens
     .replace(/-+/g, "-"); // Replace multiple hyphens with a single hyphen
 }
+
+export function escapeForXml(input: string): string {
+  return he.encode(input, {
+    // This option ensures it only escapes the 5 essential XML characters
+    useNamedReferences: false,
+    allowUnsafeSymbols: true,
+  });
+}
