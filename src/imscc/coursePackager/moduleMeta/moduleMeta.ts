@@ -4,7 +4,7 @@ const itemTemplate = (item: ImsItem, index: number) => `
     <item identifier="${item.identifier}">
         <content_type>WikiPage</content_type>
         <workflow_state>active</workflow_state>
-        <title>${item.title}</title>
+        <title><![CDATA[${item.title}]]></title>
         <identifierref>${item.identifierRef}</identifierref>
         <position>${index + 1}</position>
         <new_tab />
@@ -23,7 +23,7 @@ const itemsTemplate = (items: ImsItem[]) => `
 
 const moduleTemplate = (module: ImsItem, index: number) => `  
     <module identifier="${module.identifier}">
-    <title>${module.title}</title>
+    <title><![CDATA[${module.title}]]></title>
     <workflow_state>active</workflow_state>
     <position>${index + 1}</position>
     <locked>false</locked>
